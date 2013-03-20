@@ -1,9 +1,9 @@
 % after changing the query,
-% clear;
+clear;
 
 t1 = 'atm';
 t2 = 'pub';
-place = 'Cardiff';
+place = 'Newport';
 
 q1 = ['SELECT DISTINCT ST_X(p.way), ST_Y(p.way) '...
     'FROM planet_osm_point AS p, '...
@@ -57,7 +57,7 @@ d1 = max1 - min1;
 d2 = max2 - min2;
 
 % level of detail in longitudinal direction
-x1 = 50;
+x1 = 100;
 % level of detail in latitudinal direction calculated as a round off of the
 % proportion of the map.
 x2 = round (x1* (d2 / d1));
@@ -81,12 +81,14 @@ for i = 1:n1,
     a1(g1,g2) = a1(g1,g2) + 1;
 end
 
-for i = 1:n1,
+for i = 1:n2,
     g1 = ceil((p2(i,1) - min1)/u1);
     g2 = ceil((p2(i,2) - min2)/u2);
     a2(g1,g2) = a2(g1,g2) + 1;
 end
 
-disp(corrcoef(a1,a2));
-
+[a1s, reg] = gsmooth2(a1, 1);
+[a2s, reg] = gsmooth2(a2, 1);
+figure; subplot(1,2,1); imagesc(a1s);
+hold on; subplot(1,2,2); imagesc(a2s);
 

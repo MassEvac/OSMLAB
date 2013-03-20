@@ -81,12 +81,13 @@ for i = 1:n1,
     a1(g1,g2) = a1(g1,g2) + 1;
 end
 
-for i = 1:n1,
+for i = 1:n2,
     g1 = ceil((p2(i,1) - min1)/u1);
     g2 = ceil((p2(i,2) - min2)/u2);
     a2(g1,g2) = a2(g1,g2) + 1;
 end
 
-disp(corrcoef(a1,a2));
+disp(corrcoef(a1(:),a2(:)));
 
+h
 
