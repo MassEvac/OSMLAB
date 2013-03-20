@@ -18,7 +18,7 @@ javaclasspath('postgresql-9.2-1002.jdbc4.jar');
 
 [~, name] = system('hostname');
 
-if (strcmp(name(1:13),'bharat-ubuntu'))
+if (strcmp(name,'bharat-ubuntu') == 1)
     DBase = 'osm';
     username = 'postgres'; %username = '';
     password = 'postgres'; %password = '';             
