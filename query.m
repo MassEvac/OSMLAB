@@ -88,3 +88,5 @@ for i = 1:n1,
 end
 
 disp(corrcoef(a1,a2));
+
+
