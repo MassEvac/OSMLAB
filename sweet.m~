@@ -29,6 +29,7 @@ if ~exist('output')
 end
 
 hold on;
+legend(d);
 
 while 1
     for disaster = 1:ds
@@ -51,7 +52,6 @@ while 1
         end
     end
     output = [output;dc];
-    legend(d);
     plot(output);
     pause(5);
 end
