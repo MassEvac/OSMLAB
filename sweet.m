@@ -1,5 +1,3 @@
-clear;
-
 credentials.ConsumerKey = '2Ilp7VJlOJU17GtvL2S5Tg';
 credentials.ConsumerSecret = 'j77edX0NxgLczr7iWBYYtOMbpXMF6yCqnxQsGzEBo';
 credentials.AccessToken = '23425855-TBOpPBQydn1nKqOkMZAmKWQhVBdnGGV2vdSaQDzfR';
@@ -10,7 +8,8 @@ t = twitty(credentials);
 London = '51.5171,0.1062,100mi';
 Bristol = '51.4600,-2.6000,10mi';
 
-
+% Interval to check twitter in seconds
+interval = 30;
 
 % Disasters
 d = {'earthquake' 'tsunami' 'terror attack' 'volcano' 'avalanche' 'flood' 'cyclone' 'tornado' 'hurricane'};
@@ -51,9 +50,10 @@ while 1
         end
     end
     output = [output;dc];
-    legend(d);
+    dc = zeros(1,ds);
     plot(output);
-    pause(5);
+    legend(d);
+    pause(interval);
 end
 
 % 1. S = tw.search('matlab'); % search twitter.com for messages including the word 'matlab'.
