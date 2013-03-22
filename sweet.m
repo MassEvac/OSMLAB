@@ -3,21 +3,58 @@ credentials.ConsumerSecret = 'j77edX0NxgLczr7iWBYYtOMbpXMF6yCqnxQsGzEBo';
 credentials.AccessToken = '23425855-TBOpPBQydn1nKqOkMZAmKWQhVBdnGGV2vdSaQDzfR';
 credentials.AccessTokenSecret = 'VRCWAZcBL80jqlgRrSKz9zKePWXdAcbJ1yRRNYukc';
 
-disp(credentials);
-
 t = twitty(credentials);
 
-c = [ 51.5171 0.1062 ];
-s = cell2mat(t.geoSearch('query','london','coord',c,'granularity','city'));
-p = cell2mat(s.result.places);
-[~,n] = size(p);
+London = '51.5171,0.1062,100mi';
+Bristol = '51.4600,-2.6000,10mi';
 
+% Interval to check twitter in seconds
+interval = 30;
 
-for i = 1:n
-    results = p(i).;
-    disp(results.text);
-end    
+% Disasters
+d = {'earthquake' 'tsunami' 'terror attack' 'volcano' 'avalanche' 'flood' 'cyclone' 'tornado' 'hurricane'};
+[~,ds] = size(d);
 
+if ~exist('since')
+    since(1:ds) = {'0'};
+end
+
+if ~exist('dc')
+    dc = zeros(1,ds);
+end
+
+if ~exist('output')
+    output = zeros(1,ds);
+end
+
+hold on;
+
+while 1
+    for disaster = 1:ds
+        s = cell2mat(t.search(d(disaster),'rpp','10','since_id',since(disaster)));
+        p = s.results;
+
+        if ~isempty(p)
+            [~,n] = size(p);
+            for i = n:-1:1
+                results = cell2mat(p(i));
+                disp([results.created_at ' : ' results.text]);
+                dc(disaster) = dc(disaster) + 1;
+            end    
+
+            if ~strcmp(since(disaster),results.id_str)
+%                 disp(['Displaying results since ' since(disaster)]); 
+                disp(['News for ' d(disaster)]);
+                since(disaster) = {results.id_str};
+            end
+        end
+    end
+    output = [output;dc];
+    dc = zeros(1,ds);
+    plot(output);
+    legend(d);
+    pause(interval);
+end
 
 % 1. S = tw.search('matlab'); % search twitter.com for messages including the word 'matlab'.
 % 2. S = tw.updateStatus('Hello, Twitter!'); % or twit something cooler.

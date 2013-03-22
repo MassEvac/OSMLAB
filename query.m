@@ -1,9 +1,17 @@
-% after changing the query,
+function query(t1,t2,place)
+
+if ~exist('queried','var')
+    queried = 0;
+end
+
 % clear;
 
-t1 = 'atm';
-t2 = 'pub';
-place = 'Cardiff';
+if (nargin < 3)
+    t1 = 'atm';
+    t2 = 'pub';
+    place = 'Cardiff';
+end
+
 
 q1 = ['SELECT DISTINCT ST_X(p.way), ST_Y(p.way) '...
     'FROM planet_osm_point AS p, '...
@@ -20,12 +28,7 @@ q3 = ['SELECT ST_X((g.p).geom), ST_Y((g.p).geom) '...
     '(SELECT ST_DumpPoints(f.way) AS p FROM '...
     ' (SELECT way FROM planet_osm_polygon WHERE name = ''' place ''' ORDER BY ST_NPoints(way) DESC LIMIT 1) AS f) AS g'];
 
-
 % (g.p).path[1],(g.p).path[2], ;
-
-if ~exist('queried','var')
-    queried = 0;
-end
 
 if (~queried)
     p1 = cell2mat(importDB(q1));    
@@ -96,6 +99,11 @@ xlabel('longitude');
 ylabel('latitude');
 axis([min1 max1 min2 max2]);
 subplot(2,2,2); imagesc(corrcoef(a1s,a2s)); colorbar;
+<<<<<<< HEAD
 subplot(2,2,3); imagesc(a1s); xlabel(t1);
 subplot(2,2,4); imagesc(a2s); xlabel(t2);
 
+=======
+subplot(2,2,3); imagesc(a1s); xlabel(t1); colorbar;
+subplot(2,2,4); imagesc(a2s); xlabel(t2); colorbar;
+>>>>>>> a09b1507bcd47c2690ac56b39762a888b22d6b62
