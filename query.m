@@ -85,7 +85,6 @@ stdev = 1;
 [a1s, reg] = gsmooth2(a1, stdev);
 [a2s, reg] = gsmooth2(a2, stdev);
 
-
 f1 = figure;
 set(f1,'name',[place ' x ' t1 ' o ' t2],'numbertitle','off')
 subplot(2,2,1);
@@ -97,6 +96,6 @@ xlabel('longitude');
 ylabel('latitude');
 axis([min1 max1 min2 max2]);
 subplot(2,2,2); imagesc(corrcoef(a1s,a2s)); colorbar;
-subplot(2,2,3); imagesc(a1s); xlabel(t1); colorbar;
-subplot(2,2,4); imagesc(a2s); xlabel(t2); colorbar;
+subplot(2,2,3); imagesc(a1s); xlabel(t1);
+subplot(2,2,4); imagesc(a2s); xlabel(t2);
 
