@@ -1,4 +1,4 @@
-function query(t1,t2,place)
+function [r,s] = query(t1,t2,place)
 
 if ~exist('queried','var')
     queried = 0;
@@ -7,11 +7,10 @@ end
 % clear;
 
 if (nargin < 3)
-    t1 = 'atm';
-    t2 = 'pub';
+    t1 = 'bar';
+    t2 = 'atm';
     place = 'Cardiff';
 end
-
 
 q1 = ['SELECT DISTINCT ST_X(p.way), ST_Y(p.way) '...
     'FROM planet_osm_point AS p, '...
@@ -89,17 +88,30 @@ stdev = 1;
 [a2s, reg] = gsmooth2(a2, stdev);
 
 f1 = figure;
-set(f1,'name',[place ' x ' t1 ' o ' t2],'numbertitle','off')
-subplot(2,2,1);
+fname = [place ' x ' t1 ' o ' t2];
+set(f1,'name',fname,'numbertitle','off')
+
 hold on;
-plot(p1(:,1),p1(:,2),'x','Color','blue');
-plot(p2(:,1),p2(:,2),'o','Color','red');
-plot(p3(:,1),p3(:,2),'.','Color','green');
-xlabel('longitude');
-ylabel('latitude');
-axis([min1 max1 min2 max2]);
-[R,S] = corrcoef(a1s,a2s);
-disp(S);
-subplot(2,2,2); imagesc(R); colorbar;
-subplot(2,2,3); imagesc(a1s); xlabel(t1);
-subplot(2,2,4); imagesc(a2s); xlabel(t2);
+% % Map
+% subplot(2,2,1);
+% plot(p1(:,1),p1(:,2),'x','Color','blue');
+% plot(p2(:,1),p2(:,2),'o','Color','red');
+% plot(p3(:,1),p3(:,2),'.','Color','green');
+% xlabel('longitude'); ylabel('latitude'); axis([min1 max1 min2 max2]);
+% 
+% % Correlation
+% [R,S] = corrcoef(a1s,a2s);
+% r = R(1,2);
+% s = S(1,2);
+% subplot(2,2,2); imagesc(R); colorbar;
+
+% Point of interest 1
+colormap(gray);
+subplot(1,2,1); imagesc(a1s); xlabel(t1);
+
+% Point of interest 2
+colormap(gray);
+subplot(1,2,2); imagesc(a2s); xlabel(t2);
+
+% Save the figure as pdf
+saveas(f1,[fname '.pdf'],'pdf');
