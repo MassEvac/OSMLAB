@@ -98,12 +98,8 @@ plot(p3(:,1),p3(:,2),'.','Color','green');
 xlabel('longitude');
 ylabel('latitude');
 axis([min1 max1 min2 max2]);
-subplot(2,2,2); imagesc(corrcoef(a1s,a2s)); colorbar;
-<<<<<<< HEAD
+[R,S] = corrcoef(a1s,a2s);
+disp(S);
+subplot(2,2,2); imagesc(R); colorbar;
 subplot(2,2,3); imagesc(a1s); xlabel(t1);
 subplot(2,2,4); imagesc(a2s); xlabel(t2);
-
-=======
-subplot(2,2,3); imagesc(a1s); xlabel(t1); colorbar;
-subplot(2,2,4); imagesc(a2s); xlabel(t2); colorbar;
->>>>>>> a09b1507bcd47c2690ac56b39762a888b22d6b62
