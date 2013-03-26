@@ -56,9 +56,17 @@ x1 = 100;
 % proportion of the map.
 x2 = round (x1* (d2 / d1));
 
-% size of each unit cell
+% size of each unit cell in degrees
 u1 = d1 / x1;
 u2 = d2 / x2;
+
+% give the approximate grid cell size of the top left corner 
+% and the bottom right corner
+tdist1 = haversine([(max2) (max2 + u2)] , [(max1) (max1)]);
+tdist2 = haversine([(max2) (max2)] , [(max1) (max1 + u1)]);
+bdist1 = haversine([(min2) (min2 - u2)] , [(min1) (min1)]);
+bdist2 = haversine([(min2) (min2)] , [(min1) (min1 + u1)]);
+disp ([ tdist1 tdist2 ; bdist1 bdist2 ])
 
 % create empty matrices with zeroes to count the number of amenities that
 % fall within the each of the grid
