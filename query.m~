@@ -112,7 +112,7 @@ end
 
 for i = 1:x1,
     for j = 1:x2,
-        [min_difference, array_position] = min(abs(p4(:,2) - (max2 + j * u2)) .* abs(p4(:,1) - (min1 - i * u1)))
+        [min_difference, array_position] = min(abs(p4(:,2) - (min2 + j * u2)) .* abs(p4(:,1) - (min1 + i * u1)))
         a3(j,i) = p4(array_position,3);
     end
 end    
