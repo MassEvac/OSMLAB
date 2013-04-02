@@ -1,12 +1,11 @@
-%function [r,s,x1,x2] = query(t1,t2,place)
+function [r,s,x1,x2] = query(t1,t2,place)
 
 if ~exist('queried','var')
     queried = 0;
 end
 
 % clear;
-
-nargin = 0;
+% nargin = 0;
 
 if (nargin < 3)
     t1 = 'bar';
@@ -62,7 +61,7 @@ bwidth = haversine([(min2) (min2)] , [(max1) (min1)]);
 width = (twidth + bwidth) / 2;
 
 % specify gridsize in metres
-gridsize = 100;
+gridsize = 250;
 
 % number of cells in longitudinal and latitudinal direction
 x1 = round (width  / gridsize);
@@ -143,29 +142,43 @@ stdev = 1;
 
 
 f1 = figure;
-fname = [place ' x ' t1 ' o ' t2];
+fname = [place '-x-' t1 '-o-' t2];
 set(f1,'name',fname,'numbertitle','off')
+
+
 
 colormap(gray);
 
+% ---- 2 x 1 figures
+
 % Point of interest 1
-subplot(2,2,1); imagesc(a1s); xlabel(t1);
+subplot(1,2,1); imagesc(a1s); xlabel(t1,'FontSize',14);
 
 % Point of interest 2
-subplot(2,2,2); imagesc(a2s); xlabel(t2);
+subplot(1,2,2); imagesc(a2s); xlabel(t2,'FontSize',14);
 
-% Population
-subplot(2,2,3); imagesc(pops); xlabel('population');
+% ----- 2 x 2 figures
 
-% Map
-subplot(2,2,4);
-hold on;
-plot(p1(:,1),p1(:,2),'x','Color','blue');
-plot(p2(:,1),p2(:,2),'o','Color','red');
-plot(p3(:,1),p3(:,2),'.','Color','green');
-xlabel('longitude'); ylabel('latitude'); axis([min1 max1 min2 max2]);
+% % Point of interest 1
+% subplot(2,2,1); imagesc(a1s); xlabel(t1,'FontSize',14);
+% 
+% % Point of interest 2
+% subplot(2,2,2); imagesc(a2s); xlabel(t2,'FontSize',14);
+% 
+% % Population
+% subplot(2,2,3); imagesc(pops); xlabel('population','FontSize',14);
+% 
+% % Map
+% subplot(2,2,4);
+% hold on;
+% plot(p1(:,1),p1(:,2),'x','Color','blue');
+% plot(p2(:,1),p2(:,2),'o','Color','red');
+% plot(p3(:,1),p3(:,2),'.','Color','green');
+% xlabel('longitude','FontSize',14); ylabel('latitude','FontSize',14); axis([min1 max1 min2 max2]);
+
+% ----
 
 % Save the figure as pdf
-saveas(f1,[fname '.pdf'],'pdf');
+savefig([fname '.pdf'],f1,'pdf');
 
 [r,s] = corrcoef([a1s(:),a2s(:),pops(:)]);
