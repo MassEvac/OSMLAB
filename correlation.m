@@ -1,4 +1,4 @@
-city = {'Cardiff','Manchester','London'};
+city = {'Bristol','Manchester','London'};
 amenity = {'bar','atm','hospital'};
 
 [~,nc] = size(city);
