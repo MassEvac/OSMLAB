@@ -1,11 +1,7 @@
 function [r,s,x1,x2] = query(t1,t2,place)
 
-if ~exist('queried','var')
-    queried = 0;
-end
-
-% clear;
-% nargin = 0;
+%clear;
+%nargin = 0;
 
 if (nargin < 3)
     t1 = 'bar';
@@ -37,14 +33,17 @@ q4 = ['SELECT (ST_Raster2WorldCoordX(p.rast, x) + ST_ScaleX(rast) / 2) AS wx, (S
   
 % (g.p).path[1],(g.p).path[2], ;
 
-if (~queried)
-    p1 = cell2mat(importDB(q1));    
-    p2 = cell2mat(importDB(q2));        
-    p3 = cell2mat(importDB(q3));
-    p4 = cell2mat(importDB(q4));
-    queried = 1;
-end    
+f = ['./cache/' t1 '-' place];
+p1 = fileorquery(f,q1);
 
+f = ['./cache/' t2 '-' place];
+p2 = fileorquery(f,q2);
+
+f = ['./cache/boundary-' place];
+p3 = fileorquery(f,q3);
+
+f = ['./cache/population-' place];
+p4 = fileorquery(f,q4);
 
 % longitude is (:,1)
 % latitude  is (:,2)
@@ -117,9 +116,16 @@ end
 
 for i = 1:n1,
     g1 = ceil((p1(i,1) - min1)/u1);
-    g2 = ceil((max2 - p1(i,2))/u2);   
-    a1(g2,g1) = a1(g2,g1) + 1 / pop(g2,g1);
+    g2 = ceil((max2 - p1(i,2))/u2);
+    
+    sum = 1 / pop(g2,g1);
+    if (pop(g2,g1) == 0) 
+        sum = 1;
+    end
+
+    a1(g2,g1) = a1(g2,g1) + sum;
 end
+    
 
 for i = 1:n2,
     g1 = ceil((p2(i,1) - min1)/u1);
@@ -128,7 +134,13 @@ for i = 1:n2,
     g2 = ceil((max2 - p2(i,2))/u2);
     % j=(maximumlatitude - latitude)/unitlatitude
     % maximumlatitude - j*unitlatitude = latitude
-    a2(g2,g1) = a2(g2,g1) + 1 / pop(g2,g1);
+    
+    sum = 1 / pop(g2,g1);
+    if (pop(g2,g1) == 0)
+        sum = 1;
+    end
+    
+    a2(g2,g1) = a2(g2,g1) + sum;
 end
 
 % standard deviation to use
@@ -145,36 +157,38 @@ f1 = figure;
 fname = [place '-x-' t1 '-o-' t2];
 set(f1,'name',fname,'numbertitle','off')
 
-
-
-colormap(gray);
+%colormap(gray);
 
 % ---- 2 x 1 figures
 
-% Point of interest 1
-subplot(1,2,1); imagesc(a1s); xlabel(t1,'FontSize',14);
-
-% Point of interest 2
-subplot(1,2,2); imagesc(a2s); xlabel(t2,'FontSize',14);
+% set(f1,'Position', [0, 0, 800, 300]);
+%
+% % Point of interest 1
+% subplot(1,2,1); imagesc(log(a1s)); xlabel(upper(t1),'FontSize',14); set(gca,'FontSize',14);
+% 
+% % Point of interest 2
+% subplot(1,2,2); imagesc(log(a2s)); xlabel(upper(t2),'FontSize',14); set(gca,'FontSize',14);
 
 % ----- 2 x 2 figures
 
-% % Point of interest 1
-% subplot(2,2,1); imagesc(a1s); xlabel(t1,'FontSize',14);
-% 
-% % Point of interest 2
-% subplot(2,2,2); imagesc(a2s); xlabel(t2,'FontSize',14);
-% 
-% % Population
-% subplot(2,2,3); imagesc(pops); xlabel('population','FontSize',14);
-% 
-% % Map
-% subplot(2,2,4);
-% hold on;
-% plot(p1(:,1),p1(:,2),'x','Color','blue');
-% plot(p2(:,1),p2(:,2),'o','Color','red');
-% plot(p3(:,1),p3(:,2),'.','Color','green');
-% xlabel('longitude','FontSize',14); ylabel('latitude','FontSize',14); axis([min1 max1 min2 max2]);
+set(f1,'Position', [0, 0, 800, 600]);
+
+% Point of interest 1
+subplot(2,2,1); imagesc(log(a1s)); xlabel(t1,'FontSize',14); set(gca,'FontSize',14);
+
+% Point of interest 2
+subplot(2,2,2); imagesc(log(a2s)); xlabel(t2,'FontSize',14); set(gca,'FontSize',14);
+
+% Population
+subplot(2,2,3); imagesc(pops); xlabel('population','FontSize',14); set(gca,'FontSize',14);
+
+% Map
+subplot(2,2,4);
+hold on;
+plot(p1(:,1),p1(:,2),'x','Color','blue');
+plot(p2(:,1),p2(:,2),'o','Color','red');
+plot(p3(:,1),p3(:,2),'.','Color','green');
+xlabel('longitude','FontSize',14); ylabel('latitude','FontSize',14); axis([min1 max1 min2 max2]); set(gca,'FontSize',14); 
 
 % ----
 

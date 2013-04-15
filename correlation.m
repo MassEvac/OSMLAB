@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 city = {'Bristol','Manchester','London'};
+=======
+close all;
+
+city = {'Manchester','Birmingham','London'};
+>>>>>>> origin/master
 amenity = {'bar','atm','hospital'};
 
 [~,nc] = size(city);
@@ -16,18 +22,20 @@ for i = 1:nc,
 end
 
 f1 = figure;
-colormap(gray);
+%colormap(gray);
 bar(a);
 legend (city);
-set(gca,'XTickLabel',{'bar vs atm','bar vs hospital'})
-savefig('cities-gray.pdf',f1,'pdf');
+set(f1,'Position', [0, 0, 800, 300]);
+set(gca,'XTickLabel',upper({'bar vs atm','bar vs hospital'}),'FontSize',14);
+savefig(['cities-comparing-' amenity{:} '.pdf'],f1,'pdf');
 
 f2 = figure;
-colormap(gray);
+%colormap(gray);
 bar(d);
-legend (city);
-set(gca,'XTickLabel',amenity)
-savefig('amenity-gray.pdf',f2,'pdf');
+legend (city,'Location','NorthWest');
+set(f2,'Position', [0, 0, 800, 300]);
+set(gca,'XTickLabel',upper(amenity),'FontSize',14)
+savefig(['population-vs-' amenity{:} '.pdf'],f2,'pdf');
 
 disp (b1);
 disp (b2);
