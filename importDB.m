@@ -21,18 +21,20 @@ javaclasspath('postgresql-9.2-1002.jdbc4.jar');
 if (strcmp(name(1:13),'bharat-ubuntu'))
     DBase = 'osm';
     username = 'postgres'; %username = '';
-    password = 'postgres'; %password = '';             
+    password = 'postgres'; %password = '';  
+    databaseURL = 'jdbc:postgresql://localhost:5432/';
 elseif (nargin == 1)
     DBase = 'osm';
-    username = 'bharatkunwar'; %username = '';
-    password = ''; %password = '';  
+    username = 'postgres'; %username = '';
+    password = 'postgres'; %password = '';
+    databaseURL = 'jdbc:postgresql://localhost:5555/';    
 end
 
 % Set maximum time allowed for establishing a connection.
 setdbprefs('DataReturnFormat','cellarray');
 % Connect to the RSC database via JDBC
 connA=database(DBase, username, password,...
-               'org.postgresql.Driver', 'jdbc:postgresql://localhost/')
+               'org.postgresql.Driver', databaseURL)
 
 % Check the database status.
 ping(connA)

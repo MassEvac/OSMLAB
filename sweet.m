@@ -66,7 +66,7 @@ while 1
     legend(d,'Location','NorthWest');
     subplot(2,1,2);    
     bar(output(end,:))
-    set(gca,'XTickLabel',d)    
+    set(gca,'XTickLabel',d,'FontSize',14)    
     pause(interval);
 end
 

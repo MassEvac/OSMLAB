@@ -203,7 +203,7 @@ function savefig(fname, varargin)
 	
 	% Generate the gs command.
 	switch(computer)													% Get gs command.
-		case {'MAC','MACI'},			gs= '/usr/local/bin/gs';
+		case {'MAC','MACI','MACI64'},	gs= '/usr/local/bin/gs';
 		case {'PCWIN','PCWIN64'},		gs= 'gswin32c.exe';
 		otherwise,						gs= 'gs';
 	end
