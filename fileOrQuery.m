@@ -1,4 +1,4 @@
-function [p]=fileorquery(f,q)
+function [p]=fileOrQuery(f,q)
 if exist(f,'file')
     p = csvread(f);
 else    

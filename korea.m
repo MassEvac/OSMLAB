@@ -13,16 +13,15 @@ Z(Z==0) = -1;
 latlim = [min(lat(:)) max(lat(:))];
 lonlim = [min(lon(:)) max(lon(:))];
 
-% Display the DEM values as a texture map. 
-figure
-usamap(latlim, lonlim)
-geoshow(lat, lon, Z, 'DisplayType','texturemap')
-demcmap(Z)
-daspectm('m',1)
-
-% Overlay black contour lines onto the texturemap.
-geoshow(lat, lon, Z, 'DisplayType', 'contour', ...
-  'LineColor', 'black');
+% % Display the DEM values as a texture map. 
+% figure
+% usamap(latlim, lonlim)
+% geoshow(lat, lon, Z, 'DisplayType','texturemap')
+% demcmap(Z)
+% daspectm('m',1)
+% 
+% % Overlay black contour lines onto the texturemap.
+% geoshow(lat, lon, Z, 'DisplayType', 'contour', 'LineColor', 'black');
 
 figure
 usamap(latlim, lonlim)

@@ -1,156 +1,109 @@
-function [r,s,x1,x2] = query(t1,t2,place)
+%function [r,s,x1,x2] = query(t1,t2,place)
 
 %clear;
-%nargin = 0;
+nargin = 0;
 
 if (nargin < 3)
     t1 = 'bar';
     t2 = 'atm';
-    place = 'Cardiff';
+    place = 'Bristol';
 end
 
-q1 = ['SELECT DISTINCT ST_X(p.way), ST_Y(p.way) '...
-    'FROM planet_osm_point AS p, '...
-    '(SELECT way FROM planet_osm_polygon WHERE name = ''' place ''' ORDER BY ST_NPoints(way) DESC LIMIT 1) AS q '...
-    'WHERE (p.amenity=''' t1 ''' OR p.tags ? ''' t1 ''') AND ST_Intersects(p.way, q.way)'];
+a1 = getAmenity(t1, place);
+a2 = getAmenity(t2, place);
 
-q2 = ['SELECT DISTINCT ST_X(p.way), ST_Y(p.way) '...
-    'FROM planet_osm_point AS p, '...
-    '(SELECT way FROM planet_osm_polygon WHERE name = ''' place ''' ORDER BY ST_NPoints(way) DESC LIMIT 1) AS q '...
-    'WHERE (p.amenity=''' t2 ''' OR p.tags ? ''' t2 ''') AND ST_Intersects(p.way, q.way)'];
+boundary = getBoundary(place);
+population = getPopulation(place);
 
-q3 = ['SELECT ST_X((g.p).geom), ST_Y((g.p).geom) '...
-    'FROM '...
-    '(SELECT ST_DumpPoints(f.way) AS p FROM '...
-    ' (SELECT way FROM planet_osm_polygon WHERE name = ''' place ''' ORDER BY ST_NPoints(way) DESC LIMIT 1) AS f) AS g'];
-
-q4 = ['SELECT (ST_Raster2WorldCoordX(p.rast, x) + ST_ScaleX(rast) / 2) AS wx, (ST_Raster2WorldCoordY(p.rast,y) + ST_ScaleY(rast) / 2) AS wy, ST_Value(p.rast, x, y) as v '...
-      'FROM population AS p, '...
-      '(SELECT way FROM planet_osm_polygon WHERE name = ''' place ''' ORDER BY ST_NPoints(way) DESC LIMIT 1) AS f '...
-      'CROSS JOIN generate_series(1, 50) As x '...
-      'CROSS JOIN generate_series(1, 50) As y '...
-      'WHERE ST_Intersects(p.rast,f.way)'];  
-  
-% (g.p).path[1],(g.p).path[2], ;
-
-f = ['./cache/' t1 '-' place];
-p1 = fileorquery(f,q1);
-
-f = ['./cache/' t2 '-' place];
-p2 = fileorquery(f,q2);
-
-f = ['./cache/boundary-' place];
-p3 = fileorquery(f,q3);
-
-f = ['./cache/population-' place];
-p4 = fileorquery(f,q4);
-
-% longitude is (:,1)
-% latitude  is (:,2)
-
-max1 = max(p3(:,1));
-max2 = max(p3(:,2));
-min1 = min(p3(:,1));
-min2 = min(p3(:,2));
-
-% calculate the height and width of the bounding box
-height = haversine([(max2) (min2)] , [(max1) (max1)]);
-twidth = haversine([(max2) (max2)] , [(max1) (min1)]);
-bwidth = haversine([(min2) (min2)] , [(max1) (min1)]);
-width = (twidth + bwidth) / 2;
+% Now determine the dimension of the grid based on the gridsize specified
 
 % specify gridsize in metres
 gridsize = 250;
 
-% number of cells in longitudinal and latitudinal direction
-x1 = round (width  / gridsize);
-x2 = round (height / gridsize);
+max_lon = max(boundary(:,1));
+max_lat = max(boundary(:,2));
+min_lon = min(boundary(:,1));
+min_lat = min(boundary(:,2));
 
-% disp('The grid size is:');
-% disp([x1 x2]);
+% calculate the height and width of the bounding box
+height = haversine([(max_lat) (min_lat)] , [(max_lon) (max_lon)]);
+twidth = haversine([(max_lat) (max_lat)] , [(max_lon) (min_lon)]);
+bwidth = haversine([(min_lat) (min_lat)] , [(max_lon) (min_lon)]);
+width = (twidth + bwidth) / 2;
+
+% number of cells in longitudinal and latitudinal direction
+x_lon = round (width  / gridsize);
+x_lat = round (height / gridsize);
 
 % delta of min and max longitudes
-d1 = max1 - min1;
-% delta of min and max latitudes of the map
-d2 = max2 - min2;
+d_lon = max_lon - min_lon;
+d_lat = max_lat - min_lat;
 
 % size of each unit cell in degrees
-u1 = d1 / x1;
-u2 = d2 / x2;
+u_lon = d_lon / x_lon;
+u_lat = d_lat / x_lat;
 
-% % give the approximate grid cell size of the top left corner 
-% % and the bottom right corner
-% tdist1 = haversine([(max2) (max2 + u2)] , [(max1) (max1)]);
-% tdist2 = haversine([(max2) (max2)] , [(max1) (max1 + u1)]);
-% bdist1 = haversine([(min2) (min2 - u2)] , [(min1) (min1)]);
-% bdist2 = haversine([(min2) (min2)] , [(min1) (min1 + u1)]);
-% 
-% disp('The dimension of the top left cell and the bottom right cell is:');
-% disp ([ tdist1 tdist2 ; bdist1 bdist2 ]);
+% testGridSize(max_lon,max_lat,min_lon,min_lat,u_lon,u_lat);
+
+% Now place the population and amenities in the appropriate grid
 
 % create empty matrices with zeroes to count the number of amenities that
 % fall within the each of the grid
-a1 = zeros(x2,x1);
-a2 = zeros(x2,x1);
-pop = zeros(x2,x1);
-
-% number of each of the amenities
-[n1,~]=size(p1);
-[n2,~]=size(p2);
+grid_a1 = zeros(x_lat,x_lon);
+grid_a2 = zeros(x_lat,x_lon);
+grid_pop = zeros(x_lat,x_lon);
 
 % get the population for each of the gridcell and normalise the population
-for i = 1:x1,
-    for j = 1:x2,
-        l1 = (min1 + i * u1); % Longitude
-        l2 = (max2 - j * u2); % Latitude
-        ldiff = abs(p4(:,2) - l2) .* abs(p4(:,1) - l1);
+for i = 1:x_lon,
+    for j = 1:x_lat,
+        l1 = (min_lon + i * u_lon); % Longitude
+        l2 = (max_lat - j * u_lat); % Latitude
+        ldiff = abs(population(:,2) - l2) .* abs(population(:,1) - l1);
         [min_difference, array_position] = min(ldiff);
 %         disp(haversine([l2 p4(array_position,2)],[l1 p4(array_position,1)]));
 %         disp([l1 l2]);
 %         disp('corresponds to:');
 %         disp([p4(array_position,1) p4(array_position,2)]);
 %        a4 = [a4; l1 l2 p4(array_position,3)];
-        pop(j,i) = round(haversine_area(l1,l2,u1,u2)/10^6 * p4(array_position,3));
+        grid_pop(j,i) = round(haversine_area(l1,l2,u_lon,u_lat)/10^6 * population(array_position,3));
     end
 end    
 
+% number of each of the amenities
+[n1,~]=size(a1);
+[n2,~]=size(a2);
+
 for i = 1:n1,
-    g1 = ceil((p1(i,1) - min1)/u1);
-    g2 = ceil((max2 - p1(i,2))/u2);
+    g1 = ceil((a1(i,1) - min_lon)/u_lon);
+    g2 = ceil((max_lat - a1(i,2))/u_lat);
     
-    sum = 1 / pop(g2,g1);
-    if (pop(g2,g1) == 0) 
-        sum = 1;
+    this = 1 / grid_pop(g2,g1);
+    if (grid_pop(g2,g1) == 0) 
+        this = 1;
     end
 
-    a1(g2,g1) = a1(g2,g1) + sum;
+    grid_a1(g2,g1) = grid_a1(g2,g1) + this;
 end
-    
 
 for i = 1:n2,
-    g1 = ceil((p2(i,1) - min1)/u1);
-    % i=(longitude - minumumlongitude)/unitlongitude
-    % minumumlongitude + i*unitlongitude = longitude
-    g2 = ceil((max2 - p2(i,2))/u2);
-    % j=(maximumlatitude - latitude)/unitlatitude
-    % maximumlatitude - j*unitlatitude = latitude
+    g1 = ceil((a2(i,1) - min_lon)/u_lon);
+    g2 = ceil((max_lat - a2(i,2))/u_lat);
     
-    sum = 1 / pop(g2,g1);
-    if (pop(g2,g1) == 0)
-        sum = 1;
+    this = 1 / grid_pop(g2,g1);
+    if (grid_pop(g2,g1) == 0)
+        this = 1;
     end
     
-    a2(g2,g1) = a2(g2,g1) + sum;
+    grid_a2(g2,g1) = grid_a2(g2,g1) + this;
 end
 
 % standard deviation to use
-stdev = 1;
+stdev = 2;
 
 %divide by population
-
-[a1s, reg] = gsmooth2(a1, stdev);
-[a2s, reg] = gsmooth2(a2, stdev);
-[pops, reg] = gsmooth2(pop, stdev);
+[smooth_a1, reg] = gsmooth2(grid_a1, stdev, 'same');
+[smooth_a2, reg] = gsmooth2(grid_a2, stdev, 'same');
+[pops, reg] = gsmooth2(grid_pop, stdev, 'same');
 
 
 f1 = figure;
@@ -174,10 +127,10 @@ set(f1,'name',fname,'numbertitle','off')
 set(f1,'Position', [0, 0, 800, 600]);
 
 % Point of interest 1
-subplot(2,2,1); imagesc(log(a1s)); xlabel(t1,'FontSize',14); set(gca,'FontSize',14);
+subplot(2,2,1); imagesc(log(smooth_a1)); xlabel(t1,'FontSize',14); set(gca,'FontSize',14);
 
 % Point of interest 2
-subplot(2,2,2); imagesc(log(a2s)); xlabel(t2,'FontSize',14); set(gca,'FontSize',14);
+subplot(2,2,2); imagesc(log(smooth_a2)); xlabel(t2,'FontSize',14); set(gca,'FontSize',14);
 
 % Population
 subplot(2,2,3); imagesc(pops); xlabel('population','FontSize',14); set(gca,'FontSize',14);
@@ -185,14 +138,14 @@ subplot(2,2,3); imagesc(pops); xlabel('population','FontSize',14); set(gca,'Font
 % Map
 subplot(2,2,4);
 hold on;
-plot(p1(:,1),p1(:,2),'x','Color','blue');
-plot(p2(:,1),p2(:,2),'o','Color','red');
-plot(p3(:,1),p3(:,2),'.','Color','green');
-xlabel('longitude','FontSize',14); ylabel('latitude','FontSize',14); axis([min1 max1 min2 max2]); set(gca,'FontSize',14); 
+plot(a1(:,1),a1(:,2),'x','Color','blue');
+plot(a2(:,1),a2(:,2),'o','Color','red');
+plot(boundary(:,1),boundary(:,2),'.','Color','green');
+xlabel('longitude','FontSize',14); ylabel('latitude','FontSize',14); axis([min_lon max_lon min_lat max_lat]); set(gca,'FontSize',14); 
 
 % ----
 
 % Save the figure as pdf
 savefig([fname '.pdf'],f1,'pdf');
 
-[r,s] = corrcoef([a1s(:),a2s(:),pops(:)]);
+[r,s] = corrcoef([smooth_a1(:),smooth_a2(:),pops(:)]);
