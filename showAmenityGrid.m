@@ -1,7 +1,7 @@
-function showAmenityGrid(place, smoothAmenityGrid, amenityTags)
+function showAmenityGrid(name, smoothAmenityGrid, amenityTags)
 f1 = figure('units','normalized','outerposition',[0 0 1 1]);
 % set(f1, 'Position', [0 0 800 600]);
-fname = [place ' amenity'];
+fname = [name ' amenity'];
 set(f1,'name',fname,'numbertitle','off');
 
 [~, n] = size(amenityTags);
@@ -12,7 +12,7 @@ for i=1:n
     subplot(g,g,i);
     imagesc(smoothAmenityGrid{i});
     colorbar;
-    gname = [ place ' ' amenityTags{i} 's' ];
+    gname = [ name ' ' amenityTags{i} 's' ];
     xlabel(gname,'FontSize',14);
     set(gca,'FontSize',14);
 end
