@@ -4,7 +4,7 @@ f1 = figure('units','normalized','outerposition',[0 0 1 1]);
 fname = [name ' amenity'];
 set(f1,'name',fname,'numbertitle','off');
 
-[~, n] = size(amenityTags);
+n = length(amenityTags);
 g = ceil(sqrt(n));
 
 for i=1:n

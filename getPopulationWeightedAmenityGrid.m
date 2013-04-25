@@ -1,7 +1,7 @@
 function [result] = getPopulationWeightedAmenityGrid(amenityGrids,populationGrid)
 % number of each of the amenities
-[p,q]=size(populationGrid);
-[~,n] = size(amenityGrids);
+[p, q]=size(populationGrid);
+n = length(amenityGrids);
 result = [];
 
 for a = 1:n,
