@@ -1,5 +1,3 @@
-%function [r,s,x1,x2] = query(t1,t2,place)
-
 amenityTags = {'fuel' 'police' 'fire_station' 'hospital'};
 % 'bar' 'atm' 'pub' 'library' 'school' 'post_box' 
 places = { 'London' 'Manchester' 'Birmingham' 'Liverpool' 'Bristol' 'Oxford' 'Cardiff' 'Newcastle-upon-Tyne' 'Leeds' 'York' 'Nottingham' 'Chester'};
