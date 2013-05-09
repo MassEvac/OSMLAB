@@ -1,5 +1,5 @@
-amenityTags = {'fuel' 'police' 'fire_station' 'hospital'};
-% 'bar' 'atm' 'pub' 'library' 'school' 'post_box' 
+amenityTags = {'fuel' 'police' 'fire_station' 'hospital' 'pub' 'school'};
+% 'bar' 'atm'  'library'  'post_box' 
 places = { 'London' 'Manchester' 'Birmingham' 'Liverpool' 'Bristol' 'Oxford' 'Cardiff' 'Newcastle-upon-Tyne' 'Leeds' 'York' 'Nottingham' 'Chester'};
 
 populationAmenityCorrelation = [];
@@ -22,8 +22,10 @@ for p = places,
     populationAmenityCorrelation = [populationAmenityCorrelation; getPopulationAmenityCorrelation(smoothPopulationGrid, populationWeightedAmenityGrid)];
     
     close all;
-
-    % showAmenityGrid([place], smoothAmenityGrid, amenityTags);
+    
+    if (strmatch(place,'Bristol'))
+        showAmenityGrid([place], smoothAmenityGrid, amenityTags);
+    end
     % showAmenityGrid([place ' PW'], populationWeightedAmenityGrid, amenityTags);
     % showPopulationGrid(place, smoothPopulationGrid);
     % compare2Amenities(t1, t2, place);
@@ -40,4 +42,4 @@ for p = places,
     % savefig(['population-vs-' amenity{:} '.pdf'],f2,'pdf');
 end
 
-showPopulationAmenityCorrelation(populationAmenityCorrelation, amenityTags, places);
+%showPopulationAmenityCorrelation(populationAmenityCorrelation, amenityTags, places);
