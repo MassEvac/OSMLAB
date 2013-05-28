@@ -1,39 +1,42 @@
 %function getHighwayArray
 
-% motorway, motorway_link
-% trunk, trunk_link
-% primary, primary_link
-% secondary, secondary_link
-% tertiary, tertiary_link
-% residential, unclassified, road
-% pedestrian, service, footway, path
-% living_street
-% raceway
-% track
-% platform
-% proposed, construction
-
-% also option for tunnel = 'yes'
-% http://wiki.openstreetmap.org/wiki/Key:highway
+clear;
+close all;
 
 place = 'Bristol';
-highway = 'motorway';
 
-r = getHighway(highway,place);
+visibleHighways = 1:2;
+
+loadHighwayDefinition;
+
+r = getHighway(highways,highwayType,place);
 
 f1 = figure('units','normalized','outerposition',[0 0 1 1]);
-fname = ['Highway:' highway ' in ' place];
+fname = ['Highways in ' place];
 set(f1,'name',fname,'numbertitle','off');
+set(gca,'FontSize',14);
+legend(highways);
 
-n = length(r);
-
+readyToPlot = false;
 first = 1;
-for i = 2:n+1
-    if (r(i,3) == 1 || i>n)
+for i = 2:length(r) + 1
+    try
+        if (r(i,3) == 1)
+            last = i - 1;
+            readyToPlot = true;
+        end
+    catch err
         last = i - 1;
-        hold on;
-        plot(r(first:last,1),r(first:last,2),'Color','blue');
+        readyToPlot = true;
+    end  
+
+    if (readyToPlot)
+        if (find(visibleHighways == r(last,4)))
+            hold on;
+            plot(r(first:last,1),r(first:last,2),'Color',highwayColours{r(last,4)});
+        end
         first = i;
+        readyToPlot = false;
     end
-    set(gca,'FontSize',14);
+    
 end
