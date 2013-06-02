@@ -18,6 +18,8 @@ javaclasspath('postgresql-9.2-1002.jdbc4.jar');
 
 [~, name] = system('hostname');
 
+%nargin = 1;
+
 if (strcmp(name(1:13),'bharat-ubuntu'))
     DBase = 'osm';
     username = 'postgres'; %username = '';
@@ -25,36 +27,34 @@ if (strcmp(name(1:13),'bharat-ubuntu'))
     databaseURL = 'jdbc:postgresql://localhost:5432/';
 elseif (nargin == 1)
     DBase = 'osm';
-    username = 'postgres'; %username = '';
-    password = 'postgres'; %password = '';
-    databaseURL = 'jdbc:postgresql://localhost:5555/';    
+    username = 'bharatkunwar'; %username = '';
+    password = ''; %password = '';
+    databaseURL = 'jdbc:postgresql://localhost:5432/';    
 end
 
 % Set maximum time allowed for establishing a connection.
 setdbprefs('DataReturnFormat','cellarray');
 % Connect to the RSC database via JDBC
-connA=database(DBase, username, password,...
-               'org.postgresql.Driver', databaseURL)
-
+reference=database(DBase, username, password,...
+               'org.postgresql.Driver', databaseURL);          
+           
 % Check the database status.
-ping(connA)
+%ping(reference);
 
 % Open cursor and execute SQL statement.
 % for some reason, 'select time from table' doesn't seem to work
-        
-disp(sqlquery);
 
-cursorA=exec(connA, [sqlquery]);
+connection=exec(reference, [sqlquery]);
 
-disp(cursorA);
+disp(connection);
 
 %% Fetch the first 10 rows of data.
 %cursorA=fetch(cursorA, 10)
-cursorA=fetch(cursorA)
+cursor=fetch(connection);
  
 % Display the data.
-DataMat = cursorA.Data;
+DataMat = cursor.Data;
 
 % Close the cursor and the connection.
-close(cursorA);
-close(connA);
+close(cursor);
+close(reference);

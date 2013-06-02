@@ -3,9 +3,9 @@
 clear;
 close all;
 
-place = 'Bristol';
+place = 'Cardiff';
 
-visibleHighways = 1:2;
+visibleHighways = 1:7;
 
 loadHighwayDefinition;
 
@@ -15,7 +15,8 @@ f1 = figure('units','normalized','outerposition',[0 0 1 1]);
 fname = ['Highways in ' place];
 set(f1,'name',fname,'numbertitle','off');
 set(gca,'FontSize',14);
-legend(highways);
+
+%nodeArray = 
 
 readyToPlot = false;
 first = 1;

@@ -22,13 +22,13 @@ highwayClass{5} = {'tertiary' 'tertiary_link'};
 highwayClass{6} = {'residential' 'unclassified' 'road' 'bus_guideway' 'living_street'};
 highwayClass{7} = {'pedestrian' 'service' 'footway' 'path' 'cycleway' 'steps' 'track'  'raceway' 'platform' 'proposed' 'construction' 'bridleway'};
 
-highwayColours = {'yellow' 'magenta' 'cyan' 'red' 'green' 'blue' 'black'};
+highwayColours = {'black' 'blue' 'magenta' 'green' 'red' 'cyan' 'yellow'};
 
 highways = [];
 highwayType = [];
 
 % limitation of 7 types of roads
-for i = visibleHighways
+for i = 1:7
     try
         highways = [highways highwayClass{i}];
         highwayType = [highwayType repmat(i,1,length(highwayClass{i}))];

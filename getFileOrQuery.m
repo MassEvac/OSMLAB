@@ -14,13 +14,15 @@ else
             [i,j] = find(pp);
             if(i)
                 disp('Omitting the following tags:');
-                disp(v(i));
+                disp(unique(v(i)));
                 p(i,:)=[];
             end
         end
     end
+
+    %cell2num = @(x) reshape(cat(1,x{:}), size(x));
     
     p = cell2mat(p);
-    csvwrite(f,p);
+    dlmwrite(f, p, 'delimiter', ',', 'precision', 10); 
     
 end
