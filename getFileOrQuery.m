@@ -11,7 +11,7 @@ else
             v=p(:,4);
             p(:,4)=cellfun(@(x) highwayType(strmatch(x,highways,'exact')),p(:,4),'UniformOutput',false);
             pp=cellfun(@isempty,p(:,4));
-            [i,j] = find(pp);
+            [i,~] = find(pp);
             if(i)
                 disp('Omitting the following tags:');
                 disp(unique(v(i)));
