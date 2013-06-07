@@ -1,42 +1,34 @@
-%function getHighwayArray
+function getHighwayArray(place)
 
-clear;
-close all;
+r = getHighway(place,1:2);
 
-place = 'Bristol';
+% removes all duplicate coordinates and makes them individual nodes
+nodes = unique(r(:,1:2),'rows');
 
-visibleHighways = 1:2;
+m = length(nodes);
+n = 2;
 
-loadHighwayDefinition;
+thisNode = 0;
+thatNode = 0;
 
-r = getHighway(highways,highwayType,place);
+A = sparse(m,m);
 
-f1 = figure('units','normalized','outerposition',[0 0 1 1]);
-fname = ['Highways in ' place];
-set(f1,'name',fname,'numbertitle','off');
-set(gca,'FontSize',14);
-legend(highways);
-
-readyToPlot = false;
-first = 1;
-for i = 2:length(r) + 1
-    try
-        if (r(i,3) == 1)
-            last = i - 1;
-            readyToPlot = true;
-        end
-    catch err
-        last = i - 1;
-        readyToPlot = true;
-    end  
-
-    if (readyToPlot)
-        if (find(visibleHighways == r(last,4)))
-            hold on;
-            plot(r(first:last,1),r(first:last,2),'Color',highwayColours{r(last,4)});
-        end
-        first = i;
-        readyToPlot = false;
+tic;
+for i = 1:length(r)
+    
+    if (r(i,3) == 1)
+        thisNode = 0;
+    else
+        thisNode = thatNode;
     end
     
+    thatNode = find(any(all(bsxfun(@eq,reshape(r(i,1:2).',1,n,[]),nodes),2),3)); % 41.381587 seconds
+    
+    if (thisNode && thatNode)
+        A(thisNode,thatNode)=r(i,4);
+    end
 end
+t = toc;
+toc;
+
+gplot(A,nodes,'k');
