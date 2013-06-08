@@ -7,7 +7,7 @@ fAM = ['./cache/highwayAM-' place];
 
 if (and(exist(fNode,'file'),exist(fAM,'file')))
     nodes = csvread(fNode);
-    AM = spconvert(csvread(fAM));
+    AM = spconvert(c1svread(fAM));
 else
     r = getHighway(place,1:2);
 
