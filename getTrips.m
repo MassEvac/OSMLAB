@@ -1,4 +1,4 @@
-function [Sp,Tr,Mf] = trips(place,gridSize,sigma)
+function [TR,MF,SP,ODnodes] = trips(place,gridSize,sigma)
 
 configuration = [ num2str(gridSize) '-' num2str(sigma) '-' place];
 
@@ -69,6 +69,7 @@ OD(a) = [];
 l1(a) = [];
 l2(a) = [];
 pop(a) = [];
+ODnodes = [l1 l2];
 toc;
 
 % recalculate OD since the matrix dimension has now changed
@@ -78,14 +79,14 @@ tic;
 step = 'Processing graph shortest path...';
 disp(step);
 if exist(fSP,'file')
-    SP = spconvert(csvread(fSP));
+    SP = resizeAM(spconvert(csvread(fSP)),nOD);
 else  
     h = waitbar(0,step);
     SP = sparse(nOD,nOD);
     for i = 1:nOD
         for j = 1:nOD
             if (i ~= j)
-                [SP(i,j),path]=graphshortestpath(DAM,OD(i),OD(j));
+                [SP(i,j)]=graphshortestpath(DAM,OD(i),OD(j));
                 completed = (i-1+j/nOD)/nOD;
                 waitbar(completed,h,[step num2str(completed*100) '%']);
             end
@@ -103,7 +104,7 @@ tic;
 step = 'Processing max flow...';
 disp(step);
 if exist(fMF,'file')
-    MF = spconvert(csvread(fMF));
+    MF = resizeAM(spconvert(csvread(fMF)),nOD);
 else    
     h = waitbar(0,step);
     MF = sparse(nOD,nOD);
@@ -128,7 +129,7 @@ tic;
 step = 'Processing trips...';
 disp(step);
 if exist(fTR,'file')
-    TR = spconvert(csvread(fTR));
+    TR = resizeAM(spconvert(csvread(fTR)),nOD);
 else    
     h = waitbar(0,step);
     TR = sparse(nOD,nOD);
@@ -149,14 +150,8 @@ else
 end
 toc;
 
-Sp=full(SP(:));
-Tr=full(TR(:));
-Mf=full(MF(:));
-
-a=find(Tr==0);
-Sp(a) = [];
-Tr(a) = [];
-Mf(a) = [];
+% [length(SP) length(TR) length(MF)]
+% [length(Sp) length(Tr) length(Mf)]
 
 %Tij = (pop(i) x pop(j))/(dist(i,j))^2
 
