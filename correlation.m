@@ -1,10 +1,7 @@
-<<<<<<< HEAD
-city = {'Bristol','Manchester','London'};
-=======
 close all;
 
 city = {'Manchester','Birmingham','London'};
->>>>>>> origin/master
+
 amenity = {'bar','atm','hospital'};
 
 [~,nc] = size(city);

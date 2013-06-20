@@ -1,4 +1,4 @@
-function [TR,MF,SP,ODnodes] = trips(place,gridSize,sigma)
+function [TR,MF,SP,ODnodes,AM,nodes] = trips(place,gridSize,sigma)
 
 configuration = [ num2str(gridSize) '-' num2str(sigma) '-' place];
 
