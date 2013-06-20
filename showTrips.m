@@ -1,6 +1,6 @@
 close all;
 clear;
-[TR,MF,SP,ODnodes] = getTrips('Cardiff',1000,1);
+[TR,MF,SP,ODnodes] = getTrips('Manchester',1000,1);
 
 % a=find(SP==Inf);
 % SP(SP==Inf)=0;
