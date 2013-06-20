@@ -1,3 +1,4 @@
+%% Analyses Trips and outputs visualisations of the results
 close all;
 clear;
 thisPlace = 'Manchester';
@@ -28,6 +29,7 @@ if ~saveFigures
     plot3k([Sp,Tr,Mf]);
 end;
 
+%%
 if ~saveFigures
     subplot(Pi,Pj,2);
 else
@@ -42,20 +44,21 @@ if saveFigures
     savefig(['graph-shortestPathVsTrips-' thisPlace '.pdf'],gcf,'pdf');
 end
 
+%%
 if ~saveFigures
     subplot(Pi,Pj,3);
 else
     figure;
 end
 hold on;
-p = polyfit(Mf,Sp,2);   % p returns 2 coefficients fitting r = a_1 * x + a_2
-r = p(1) * Mf.^2 + p(2) * Mf + p(3); % compute a new vector r that has matching datapoints in x
+p = polyfit(Mf,Sp,3);   % p returns 2 coefficients fitting r = a_1 * x + a_2
+r = p(1) * Mf.^3 + p(2) * Mf.^2 + p(3) * Mf.^1 + p(4); % compute a new vector r that has matching datapoints in x
 [~,i]=sort(Mf);
-plot(Mf(i), r(i), '-','Color','r');
-%plot(Mf,Sp,'.')
-%boxplot(Sp,Mf);
-xlabel('Maximum flow','FontSize',14);
-ylabel('Shortest path','FontSize',14);
+plot(Mf(i),log(r(i)),'LineWidth',5);
+plot(Mf,log(Tr),'.','Color','r');
+legend('Average','Raw Data')
+xlabel('Maximum Flow (cars/min)','FontSize',14);
+ylabel('log(Shortest Path (m))','FontSize',14);
 if saveFigures
     set(gcf,'Position', [0, 0, 800, 300]);
     set(gca,'FontSize',14);
@@ -69,16 +72,14 @@ else
     figure;
 end
 hold on;
-p = polyfit(Mf,Tr,2);   % p returns 2 coefficients fitting r = a_1 * x + a_2
-r = p(1) * Mf.^2 + p(2) * Mf + p(3); % compute a new vector r that has matching datapoints in x
+p = polyfit(Mf,Tr,3);   % p returns 2 coefficients fitting r = a_1 * x + a_2
+r = p(1) * Mf.^3 + p(2) * Mf.^2 + p(3) * Mf.^1 + p(4); % compute a new vector r that has matching datapoints in x
 [~,i]=sort(Mf);
-[AX,H1,H2]=plotyy(Mf(i), r(i), Mf(i), Tr(i));
-set(H1,'LineStyle','-');
-set(H2,'LineStyle','.');
-%plot(Mf,Tr,'.')
-%boxplot(Tr,Mf);
-xlabel('Maximum flow','FontSize',14);
-ylabel('Trips','FontSize',14);
+plot(Mf(i),log(r(i)),'LineWidth',5);
+plot(Mf,log(Tr),'.','Color','r');
+legend('Average','Raw Data')
+xlabel('Maximum Flow (cars/min)','FontSize',14);
+ylabel('log(Trips (Pi*Pj/Dij))','FontSize',14);
 if saveFigures
     set(gcf,'Position', [0, 0, 800, 300]);
     set(gca,'FontSize',14);
