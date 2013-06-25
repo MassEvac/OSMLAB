@@ -1,8 +1,9 @@
 close all;
 
-amenityTags = {'fuel' 'police' 'fire_station' 'hospital' 'pub' 'school'};
+amenityTags = {'fuel' 'police' 'fire_station' 'hospital' 'bar' 'school'};
 % 'bar' 'atm'  'library'  'post_box' 
-places = { 'London' 'Manchester' 'Birmingham' 'Liverpool' 'Bristol' 'Oxford' 'Cardiff' 'Newcastle-upon-Tyne' 'Leeds' 'York' 'Nottingham' 'Chester'};
+places = { 'London' 'Manchester' 'Birmingham' 'Liverpool' 'Bristol' 'Oxford' 'Cardiff' 'Leeds' 'York' 'Nottingham' 'Chester'};
+% Newcastle-upon-Tyne
 placeToShow = '';%places{5};
 
 populationAmenityCorrelation = [];

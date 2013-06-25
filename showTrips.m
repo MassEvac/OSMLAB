@@ -1,7 +1,7 @@
 %% Analyses Trips and outputs visualisations of the results
 close all;
 clear;
-thisPlace = 'Manchester';
+thisPlace = 'Bristol';
 saveFigures = true;
 
 [TR,MF,SP,ODnodes,AM,nodes] = getTrips(thisPlace,1000,1);
@@ -35,83 +35,100 @@ if ~saveFigures
 else
     figure;
 end
-plot(Sp,Tr,'.')
-xlabel('Shortest path','FontSize',14)
-ylabel('Trips','FontSize',14)
+
+scatter(log(Sp),log(Tr));
+
+set(gca,'FontSize',14);
+xlabel('log(Shortest path (m))','FontSize',14);
+ylabel('log(Trips (Pi*Pj/Dij))','FontSize',14);
+
 if saveFigures
     set(gcf,'Position', [0, 0, 800, 300]);
-    set(gca,'FontSize',14);
-    savefig(['graph-shortestPathVsTrips-' thisPlace '.pdf'],gcf,'pdf');
+    savefig(['graph-shortestPathVsTrips-' thisPlace '.pdf'],'pdf');
 end
 
 %%
-if ~saveFigures
+p = polyfit(Mf,Sp,3);   % p returns 2 coefficients fitting r = a_1 * x + a_2
+r = p(1) * Mf.^3 + p(2) * Mf.^2 + p(3) * Mf.^1 + p(4); % compute a new vector r that has matching datapoints in x
+[~,i]=sort(Mf);
+
+if ~saveFigures 
     subplot(Pi,Pj,3);
 else
     figure;
 end
+
 hold on;
-p = polyfit(Mf,Sp,3);   % p returns 2 coefficients fitting r = a_1 * x + a_2
-r = p(1) * Mf.^3 + p(2) * Mf.^2 + p(3) * Mf.^1 + p(4); % compute a new vector r that has matching datapoints in x
-[~,i]=sort(Mf);
-plot(Mf(i),log(r(i)),'LineWidth',5);
-plot(Mf,log(Tr),'.','Color','r');
-legend('Average','Raw Data')
-xlabel('Maximum Flow (cars/min)','FontSize',14);
-ylabel('log(Shortest Path (m))','FontSize',14);
+plot(Mf(i),log(r(i)),'LineWidth',2);
+scatter(Mf, log(Sp));
+hold off;
+
+set(gca,'FontSize',14);
+legend('Average','Raw Data','Location','SouthEast');
+xlabel('Maximum Flow (persons/min)');
+ylabel('log(Shortest Path (m))');
+
 if saveFigures
     set(gcf,'Position', [0, 0, 800, 300]);
-    set(gca,'FontSize',14);
-    savefig(['graph-maxFlowVsShortestPath-' thisPlace '.pdf'],gcf,'pdf');
+    savefig(['graph-maxFlowVsShortestPath-' thisPlace '.pdf'],'pdf');
 end
 
 %%
+p = polyfit(Mf,Tr,3);   % p returns 2 coefficients fitting r = a_1 * x + a_2
+r = p(1) * Mf.^3 + p(2) * Mf.^2 + p(3) * Mf.^1 + p(4); % compute a new vector r that has matching datapoints in x
+[~,i]=sort(Mf);
+
 if ~saveFigures
     subplot(Pi,Pj,4);
 else
     figure;
 end
+
 hold on;
-p = polyfit(Mf,Tr,3);   % p returns 2 coefficients fitting r = a_1 * x + a_2
-r = p(1) * Mf.^3 + p(2) * Mf.^2 + p(3) * Mf.^1 + p(4); % compute a new vector r that has matching datapoints in x
-[~,i]=sort(Mf);
-plot(Mf(i),log(r(i)),'LineWidth',5);
-plot(Mf,log(Tr),'.','Color','r');
+plot(Mf(i),log(r(i)),'LineWidth',2);
+scatter(Mf,log(Tr));
+hold off;
+
+set(gca,'FontSize',14);
 legend('Average','Raw Data')
-xlabel('Maximum Flow (cars/min)','FontSize',14);
+xlabel('Maximum Flow (persons/min)','FontSize',14);
 ylabel('log(Trips (Pi*Pj/Dij))','FontSize',14);
 if saveFigures
     set(gcf,'Position', [0, 0, 800, 300]);
-    set(gca,'FontSize',14);
     savefig(['graph-maxFlowVsTrips-' thisPlace '.pdf'],gcf,'pdf');
 end
-
 %% Graph drawings
 
 figure;
+hold on;
+gplot(AM,nodes,'k');
 wgPlot(MF,ODnodes);
 legend('Max Flow');
 if saveFigures
-    set(gcf,'Position', [0, 0, 800, 300]);
+    set(gcf,'Position', [0, 0, 800, 500]);
     set(gca,'FontSize',14);
-    savefig(['graph-maxFlow-' thisPlace '.pdf'],gcf,'pdf');
+    saveas(gcf,['graph-maxFlow-' thisPlace '.pdf'],'pdf');
 end
 
 figure;
+hold on;
+gplot(AM,nodes,'k');
 wgPlot(TR,ODnodes);
 legend('Trips');
-set(gcf,'Position', [0, 0, 800, 300]);
+set(gcf,'Position', [0, 0, 800, 500]);
 if saveFigures
-    set(gcf,'Position', [0, 0, 800, 300]);
+    set(gcf,'Position', [0, 0, 800, 500]);
     set(gca,'FontSize',14);
-    savefig(['graph-trips-' thisPlace '.pdf'],gcf,'pdf');
+    saveas(gcf,['graph-trips-' thisPlace '.pdf'],'pdf');
 end
 
 figure;
+hold on;
+gplot(AM,nodes,'k');
 wgPlot(SP,ODnodes);
 legend('Shortest Path');
 if saveFigures
-    set(gcf,'Position', [0, 0, 800, 300]);
+    set(gcf,'Position', [0, 0, 800, 500]);
     set(gca,'FontSize',14);
-    savefig(['graph-shortestPath-' thisPlace '.pdf'],gcf,'pdf');
+    saveas(gcf,['graph-shortestPath-' thisPlace '.pdf'],'pdf');
 end
