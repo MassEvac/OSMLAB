@@ -1,0 +1,11 @@
+wardCommuting
+origin	destination	trips
+
+wardCentroids
+ward	longitude	latitude
+
+wardArea
+ward	area(m^2)
+
+wardPopulation
+ward	number_of_people
