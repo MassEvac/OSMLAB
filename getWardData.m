@@ -63,13 +63,17 @@ end
 % required: trips, lon, lat
 % and perhaps wardList for reference purposes? currently not required
 
-wardData = ['../Dropbox/'];
+wardData = ['../wardData/output'];
 
-fTrips = [wardData 'trips'];
+fTrips = [wardData 'Trips'];
 [m,n,o] = find(trips);
 trips_dump = [m,n,o];
 dlmwrite(fTrips, trips_dump, 'delimiter', ',', 'precision', 10);
 
-fCentroids = [wardData 'centroids'];
+fCentroids = [wardData 'Centroids'];
 csvwrite(fCentroids,[lon' lat']);
+
+f=fopen([wardData 'Wards'],'wt');
+fprintf(f,'%s\n',wardList{:});
+fclose(f);
 
