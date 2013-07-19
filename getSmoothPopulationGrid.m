@@ -1,4 +1,17 @@
 function [smoothPopulationGrid,longitude,latitude] = getSmoothPopulationGrid(place,gridSize,sigma)
+% Retrieves, transforms into a population count bitmap matrix of a given place
+% and smoothens the matrix by sigma
+% INPUT:
+%           place (String) - name of an area polygon in OpenSteetMap
+%           gridSize (Integer) - approximate grid size we want in metres
+%           sigma (Integer) - standard deviation to blur the population
+%               data by using Gaussian distribution
+% OUTPUT:
+%           smoothPopulationGrid(i,j) (Double) - smoothened population bitmap matrix
+%           longitude(i,j) (Double) - longitude value matrix of the bitmap
+%               value in smoothPopulationGrid(i,j) in degrees
+%           latitude(i,j) (Double) - latitude value matrix of the bitmap
+%               value in smoothPopulationGrid(i,j) in degrees
 
 boundary = getBoundary(place);
 [height,width,x_lon,x_lat,u_lon,u_lat]=getGridParameters(boundary,gridSize);

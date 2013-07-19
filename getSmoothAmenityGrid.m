@@ -1,4 +1,17 @@
-function [result] = getSmoothAmenityGrid(amenityTags, place, gridSize, sigma)
+function [smoothAmenityGrid] = getSmoothAmenityGrid(amenityTags, place, gridSize, sigma)
+% Retrieves, transforms into an amenity count bitmap matrix of a given place
+% and smoothens the matrix by sigma
+% INPUT:
+%           place (String) - name of an area polygon in OpenSteetMap
+%           gridSize (Integer) - approximate grid size we want in metres
+%           sigma (Integer) - standard deviation to blur the population
+%               data by using Gaussian distribution
+% OUTPUT:
+%           smoothAmenityGrid(i,j) (Double) - smoothened amenity count bitmap matrix
+%           longitude(i,j) (Double) - longitude value matrix of the bitmap
+%               value in smoothPopulationGrid(i,j) in degrees
+%           latitude(i,j) (Double) - latitude value matrix of the bitmap
+%               value in smoothPopulationGrid(i,j) in degrees
 
 boundary = getBoundary(place);
 [height,width,x_lon,x_lat,u_lon,u_lat]=getGridParameters(boundary,gridSize);
@@ -6,7 +19,7 @@ boundary = getBoundary(place);
 % testGridSize(max_lon,max_lat,min_lon,min_lat,u_lon,u_lat);
 
 n = length(amenityTags);
-result = [];
+smoothAmenityGrid = [];
 
 for i=1:n
     amenity = getAmenity(amenityTags{i}, place);
@@ -23,5 +36,5 @@ for i=1:n
 
     % smoothen the grid
     [smoothAmenityGrid, ~] = gsmooth2(amenityGrid, sigma, 'same');
-    result = [result {smoothAmenityGrid}];
+    smoothAmenityGrid = [smoothAmenityGrid {smoothAmenityGrid}];
 end

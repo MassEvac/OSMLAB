@@ -2,7 +2,7 @@
 close all;
 clear;
 thisPlace = 'Bristol';
-saveFigures = false;
+saveFigures = true;
 
 [TR,MF,SP,ODnodes,AM,nodes] = getTrips(thisPlace,1000,1);
 

@@ -1,4 +1,23 @@
-function [TR,MF,SP,ODnodes,AM,nodes] = trips(place,gridSize,sigma)
+function [TR,MF,SP,ODnodes,AM,nodes] = getTrips(place,gridSize,sigma)
+% Calculates the trips and maximum flow based on Gravity model and arbitary
+% road capacity assigned to roads on OpenStreetMap for the input place.
+% INPUT:
+%           place (String) - name of an area polygon in OpenSteetMap
+%           gridSize (Integer) - approximate grid size we want in metres
+%           sigma (Integer) - standard deviation to blur the population
+%               data by using Gaussian distribution
+% OUTPUT:
+%           TR(i,j) (Sparse) - number of Trips between nodes i and j
+%           MF(i,j) (Sparse) - Maximum flow between nodes i and j calculated
+%               using Boost's implementation of Goldberg's push relabel algorithm
+%           SP(i,j) (Sparse) - shortest path between nodes i and j calculated
+%               using Dijkstra algorithm
+%           ODnodes (Double x 2) - origin and destination node longitude and
+%               latitude of the array index for reference by TR, MF and SP
+%           AM(i,j) (Sparse) - adjacency matrix containing the road type
+%               between nodes i and j
+%           nodes (Double x 2) - node longitude and latitude of the array
+%               index for reference by AM
 
 configuration = [ num2str(gridSize) '-' num2str(sigma) '-' place];
 
