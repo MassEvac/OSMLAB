@@ -1,4 +1,4 @@
-function d=haversine(lat,long)
+function d=haversine(longitude,latitude)
 
 % HAVERSINE     Computes the  haversine (great circle) distance in metres
 % between successive points on the surface of the Earth. These points are
@@ -18,13 +18,13 @@ function d=haversine(lat,long)
 %       This function was written to process data imported from a GPS
 %       logger used to record mountain bike journeys around a course.
 
-long=deg2rad(long);
-lat=deg2rad(lat);
+longitude=deg2rad(longitude);
+latitude=deg2rad(latitude);
 
-dlat=diff(lat);
-dlong=diff(long);
+dLatitude=diff(latitude);
+dLongitude=diff(longitude);
 
-a=sin(dlat/2).^2+cos(lat(1:end-1)).*cos(lat(2:end)).*sin(dlong/2).^2;
+a=sin(dLatitude/2).^2+cos(latitude(1:end-1)).*cos(latitude(2:end)).*sin(dLongitude/2).^2;
 c=2*atan2(sqrt(a),sqrt(1-a));
 
 R=6371000; %in metres

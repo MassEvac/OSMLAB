@@ -1,28 +1,25 @@
-function [p]=getFileOrQuery(f,q,varargin)
-if exist(f,'file')
-    p = csvread(f);
+function [result]=getFileOrQuery(filename,query,varargin)
+% Either returns the cache or runs the query and saves it to cache
+%
+% INPUT:
+%           filename (String) - Name of the cache file to read
+%           query (String) - Query to execute if the cache doesn't exist
+%           varargin (Cell) - Describes special conditions for certain
+%               types of queries such as 'highway'
+% OUTPUT:
+%           result (Cell) - The result from the cache or database
+%
+if exist(filename,'file')
+    result = csvread(filename);
 else
-    p = importDB(q);
-    
+    result = importDB(query);
+    % Check if there are special conditions with which to process the result
     if (nargin > 2)
         if (strmatch(varargin{1},'highway'))
-            highways = varargin{2};
-            highwayType = varargin{3};
-            v=p(:,4);
-            p(:,4)=cellfun(@(x) highwayType(strmatch(x,highways,'exact')),p(:,4),'UniformOutput',false);
-            pp=cellfun(@isempty,p(:,4));
-            [i,~] = find(pp);
-            if(i)
-                disp('Omitting the following tags:');
-                disp(unique(v(i)));
-                p(i,:)=[];
-            end
+            result = getHighwayTagsAsNumbers(result);
         end
     end
-
-    %cell2num = @(x) reshape(cat(1,x{:}), size(x));
-    
-    p = cell2mat(p);
-    dlmwrite(f, p, 'delimiter', ',', 'precision', 10); 
-    
+   
+    result = cell2mat(result);
+    dlmwrite(filename, result, 'delimiter', ',', 'precision', 10); 
 end

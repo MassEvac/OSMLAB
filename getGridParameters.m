@@ -3,9 +3,9 @@ function [height,width,x_lon,x_lat,u_lon,u_lat]=getGridParameters(boundary,gridS
 [max_lon,max_lat,min_lon,min_lat] = getBoundaryLimits(boundary);
 
 % calculate the height and width of the bounding box
-height = haversine([(max_lat) (min_lat)] , [(max_lon) (max_lon)]);
-twidth = haversine([(max_lat) (max_lat)] , [(max_lon) (min_lon)]);
-bwidth = haversine([(min_lat) (min_lat)] , [(max_lon) (min_lon)]);
+height = haversine([(max_lon) (max_lon)] , [(max_lat) (min_lat)]);
+twidth = haversine([(max_lon) (min_lon)] , [(max_lat) (max_lat)]);
+bwidth = haversine([(max_lon) (min_lon)] , [(min_lat) (min_lat)]);
 width = (twidth + bwidth) / 2;
 
 % number of cells in longitudinal and latitudinal direction
