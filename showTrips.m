@@ -1,4 +1,4 @@
-function showTrips(place,gridSize,sigma,varargin)
+function showTrips(place,gridSize,sigma,saveFigures)
 % Analyses Trips, Max Flow and Shortest Path and outputs visualisations of the results
 %
 % INPUT:
@@ -16,9 +16,7 @@ function showTrips(place,gridSize,sigma,varargin)
 %           are not always cropped.
 %
 
-if (nargin > 3)
-    saveFigures = varargin{4};
-else
+if (nargin < 4)
     saveFigures = false;
 end
 
@@ -48,16 +46,17 @@ Tr(a) = [];
 
 %% Subplots if not saving figures
 % Dimension of the Sub-plots
-Pi=2; Pj=2;
+Pi=2; Pj=3;
 
 if ~saveFigures
-    subplot(Pi,Pj,1);
+    figure;
     plot3k([Sp,Tr,Mf]);
 end;
 
 %% Correlation - Shortest Path vs Trips
 if ~saveFigures
-    subplot(Pi,Pj,2);
+    figure;
+    subplot(Pi,Pj,1);
 else
     figure;
 end
@@ -65,6 +64,7 @@ end
 scatter(log(Sp),log(Tr)); % Draw data points
 
 set(gca,'FontSize',14);
+legend('Raw Data');
 xlabel('log(Shortest path (m))','FontSize',14);
 ylabel('log(Trips (Pi*Pj/Dij))','FontSize',14);
 
@@ -81,7 +81,7 @@ r = p(1) * Mf.^3 + p(2) * Mf.^2 + p(3) * Mf.^1 + p(4); % compute a new vector r 
 
 % Start drawing
 if ~saveFigures 
-    subplot(Pi,Pj,3);
+    subplot(Pi,Pj,2);
 else
     figure;
 end
@@ -109,7 +109,7 @@ r = p(1) * Mf.^3 + p(2) * Mf.^2 + p(3) * Mf.^1 + p(4); % compute a new vector r 
 
 % Start Drawing
 if ~saveFigures
-    subplot(Pi,Pj,4);
+    subplot(Pi,Pj,3);
 else
     figure;
 end
@@ -126,6 +126,51 @@ ylabel('log(Trips (Pi*Pj/Dij))','FontSize',14);
 if saveFigures
     set(gcf,'Position', [0, 0, 800, 300]);
     savefig(['corr-maxFlowVsTrips-' place '.pdf'],gcf,'pdf');
+end
+
+%% Histogram - Shortest Path
+if ~saveFigures
+    subplot(Pi,Pj,4);
+else
+    figure;
+end
+
+hist(Sp, 15);
+xlabel('Shortest Path (m)','FontSize',20);
+ylabel('Count','FontSize',20);
+set(gca,'FontSize',18);
+if saveFigures
+    savefig(['hist-shortestPath-' place '.pdf'],gcf,'pdf');
+end
+
+%% Histogram - Max Flow
+if ~saveFigures
+    subplot(Pi,Pj,5);
+else
+    figure;
+end
+
+hist(Mf, 15);
+xlabel('Max Flow (cars/min)','FontSize',20);
+ylabel('Count','FontSize',20);
+set(gca,'FontSize',18);
+if saveFigures
+    savefig(['hist-maxFlow-' place '.pdf'],gcf,'pdf');
+end
+
+%% Histogram - Trips
+if ~saveFigures
+    subplot(Pi,Pj,6);
+else
+    figure;
+end
+
+hist(Tr, 15);
+xlabel('Trips (Pi*Pj/Dij)','FontSize',20);
+ylabel('Count','FontSize',20);
+set(gca,'FontSize',18);
+if saveFigures
+    savefig(['hist-trips-' place '.pdf'],gcf,'pdf');
 end
 
 %% Graph - Max Flow
@@ -162,34 +207,4 @@ if saveFigures
     set(gcf,'Position', [0, 0, 800, 500]);
     set(gca,'FontSize',14);
     saveas(gcf,['graph-shortestPath-' place '.pdf'],'pdf');
-end
-
-%% Histogram - Shortest Path
-figure;
-hist(Sp, 15);
-xlabel('Shortest Path (m)','FontSize',20);
-ylabel('Count','FontSize',20);
-set(gca,'FontSize',18);
-if saveFigures
-    savefig(['hist-shortestPath-' place '.pdf'],gcf,'pdf');
-end
-
-%% Histogram - Max Flow
-figure;
-hist(Mf, 15);
-xlabel('Max Flow (cars/min)','FontSize',20);
-ylabel('Count','FontSize',20);
-set(gca,'FontSize',18);
-if saveFigures
-    savefig(['hist-maxFlow-' place '.pdf'],gcf,'pdf');
-end
-
-%% Histogram - Trips
-figure;
-hist(Tr, 15);
-xlabel('Trips (Pi*Pj/Dij)','FontSize',20);
-ylabel('Count','FontSize',20);
-set(gca,'FontSize',18);
-if saveFigures
-    savefig(['hist-trips-' place '.pdf'],gcf,'pdf');
 end

@@ -1,4 +1,4 @@
-function [TR,MF,SP,ODnodes,AM,nodes] = getTrips(place,gridSize,sigma)
+function [TR,MF,SP,ODnodes,HAM,nodes] = getTrips(place,gridSize,sigma)
 % Calculates the trips and maximum flow based on Gravity model and arbitary
 % road capacity assigned to roads on OpenStreetMap for the input place.
 % INPUT:
@@ -29,28 +29,28 @@ disp(['Processing trips for ' place '...']);
 
 tic;
 disp(['Processing adjacency matrix...']);
-[AM,DAM,nodes]=getAM(place);
-nAM = length(AM);
+[HAM,DAM,nodes]=getAM(place);
+nAM = length(HAM);
 
 % Cars per lane per minute
 C = 25;
 
 % Undirected network
-AM(AM==1)=C*3;
-AM(AM==2)=C*2;
-AM(AM==3)=C*1;
-AM(AM==4)=C*0.8;
-AM(AM==5)=C*0.6;
-AM(AM==6)=C*0.4;
-AM(AM==7)=C*0.2;
+HAM(HAM==1)=C*3;
+HAM(HAM==2)=C*2;
+HAM(HAM==3)=C*1;
+HAM(HAM==4)=C*0.8;
+HAM(HAM==5)=C*0.6;
+HAM(HAM==6)=C*0.4;
+HAM(HAM==7)=C*0.2;
 
-AM = AM + AM';
+HAM = HAM + HAM';
 DAM = DAM + DAM';
 toc;
 
 tic;
 disp(['Processing population grid...']);
-[pop,l1,l2]=getSmoothPopulationGrid(place,gridSize,sigma);
+[pop,l1,l2]=getPopulationGrid(place,gridSize,sigma);
 l1=l1(:);   % longitude
 l2=l2(:);   % latitude
 pop=pop(:); % population
@@ -98,7 +98,7 @@ tic;
 step = 'Processing graph shortest path...';
 disp(step);
 if exist(fSP,'file')
-    SP = resizeAM(spconvert(csvread(fSP)),nOD);
+    SP = getResizedAM(spconvert(csvread(fSP)),nOD);
 else  
     h = waitbar(0,step);
     SP = sparse(nOD,nOD);
@@ -123,14 +123,14 @@ tic;
 step = 'Processing max flow...';
 disp(step);
 if exist(fMF,'file')
-    MF = resizeAM(spconvert(csvread(fMF)),nOD);
+    MF = getResizedAM(spconvert(csvread(fMF)),nOD);
 else    
     h = waitbar(0,step);
     MF = sparse(nOD,nOD);
     for i = 1:nOD
         for j = 1:nOD
             if (i ~= j)
-                MF(i,j)=max_flow(AM,OD(i),OD(j));
+                MF(i,j)=max_flow(HAM,OD(i),OD(j));
                 completed = (i-1+j/nOD)/nOD;
                 waitbar(completed,h,[step num2str(completed*100) '%']);
             end
@@ -148,7 +148,7 @@ tic;
 step = 'Processing trips...';
 disp(step);
 if exist(fTR,'file')
-    TR = resizeAM(spconvert(csvread(fTR)),nOD);
+    TR = getResizedAM(spconvert(csvread(fTR)),nOD);
 else    
     h = waitbar(0,step);
     TR = sparse(nOD,nOD);

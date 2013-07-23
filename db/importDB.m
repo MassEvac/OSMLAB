@@ -14,7 +14,7 @@ function [DataMat] = importDB(sqlquery)
 % POSTCONDITION:
 %   prints out the column headings that were selected
 
-javaclasspath('postgresql-9.2-1002.jdbc4.jar');
+javaclasspath('./db/postgresql-9.2-1002.jdbc4.jar');
 
 [~, name] = system('hostname');
 

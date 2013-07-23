@@ -16,7 +16,7 @@ if exist(fTrips,'file') && exist(fCentroids,'file') && exist(fWards,'file')
     nOD = length(wardList);
     % Read the centroids
     centroids = csvread(fCentroids);
-    trips = resizeAM(spconvert(csvread(fTrips)),nOD);
+    trips = getResizedAM(spconvert(csvread(fTrips)),nOD);
 else
     %% If either of the files do not exist, process output
     wardData = './wardData/';

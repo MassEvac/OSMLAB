@@ -1,4 +1,4 @@
-function [smoothPopulationGrid,longitude,latitude] = getSmoothPopulationGrid(place,gridSize,sigma)
+function [populationGrid,longitude,latitude] = getPopulationGrid(place,gridSize,sigma)
 % Retrieves, transforms into a population count bitmap matrix of a given place
 % and smoothens the matrix by sigma
 %
@@ -31,7 +31,7 @@ for i = 1:x_lon,
         latitude(j,i) = thisLatitude;
         ldiff = abs(population(:,2) - thisLatitude) .* abs(population(:,1) - thisLongitude);
         [~, array_position] = min(ldiff);
-        % testPopulation(l1, l2, population, array_position);
+        % testPopulation([thisLongitude thisLatitude], population(array_position,1:2));
         % a = [a; l1 l2 p4(array_position,3)];
         populationGrid(j,i) = round(haversineArea(thisLongitude,thisLatitude,u_lon,u_lat)/10^6 * population(array_position,3));
         % Population in the database is in terms of person/km^2. times by
@@ -39,4 +39,4 @@ for i = 1:x_lon,
     end
 end
 
-[smoothPopulationGrid, ~] = gsmooth2(populationGrid, sigma, 'same');
+[populationGrid, ~] = gsmooth2(populationGrid, sigma, 'same');
