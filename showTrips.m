@@ -1,8 +1,11 @@
 function showTrips(place,gridSize,sigma,saveFigures)
-% Analyses Trips, Max Flow and Shortest Path and outputs visualisations of the results
+% Shows graph and histogram of Trips, Max Flow and Shortest Path and their intercorrelation
 %
 % INPUT:
-%           place (String) - name of an area polygon in OpenSteetMap
+%           place (String) - Name of polygon area in OpenSteetMap
+%           gridSize (Integer) - Grid granularity in metres
+%           sigma (Integer) - Standard deviation to use for gaussian blurring
+%           saveFigures (boolean) - Optional boolean switch for saving figures
 % OUTPUT:
 %           Graph view of trips, max-flow and shortest path
 %           Histogram of trips, max-flow and shortest path

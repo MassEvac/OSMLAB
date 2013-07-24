@@ -1,5 +1,15 @@
 function [HAM, DAM, nodes] = getAM(place)
-% Results the 
+% Outputs HighwayClass & Distance adjacency sparse matrix and Nodes list
+%
+% DETAILS:
+% Converts the results from the database and converts it into appropriate
+% adjacency matrix containing highway class information, another adjacency
+% matrix with distance between the nodes and a separate list of reference
+% nodes.
+%
+% INPUT:
+%
+
 
 fNode = ['./cache/highwayNode-' place];
 fAM = ['./cache/highwayHAM-' place];

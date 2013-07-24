@@ -1,16 +1,14 @@
 function showPopulationAmenityCorrelation(amenityTags, places, gridSize, sigma, populationWeighted)
-% Shows the correlation between population and amenity
+% Plot the correlation between population and amenity in grid format
 %
 % INPUT:
 %           amenityTags{i} (String Cell) - Name of the amenities to consider
-%           places{i} (String Cell) - Name of the places to consider
-%           gridSize (Integer) - approximate grid size we want in metres
-%           sigma (Integer) - standard deviation to blur the population
-%               data by using Gaussian distribution
-%           populationWeighted (Boolean) - Whether to normalise the
-%               amenities by population or not
+%           places{i} (String Cell) - Names of polygon areas in OpenSteetMap
+%           gridSize (Integer) - Grid granularity in metres
+%           sigma (Integer) - Standard deviation to use for gaussian blurring
+%           populationWeighted (Boolean) - Normalise the amenities by population?
 % OUTPUT:
-%           Graph of population and amenity correlation
+%           Image of population and amenity correlation in grid format
 %
 populationAmenityCorrelation = getPopulationAmenityCorrelation(amenityTags, places, gridSize, sigma, populationWeighted);
 figure;

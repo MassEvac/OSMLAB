@@ -1,9 +1,10 @@
 function showWardCommuteData(place)
-% Gets the list of ward data and shows a graphical plot of the trips
+% Show graph of ward commute data
+%
 % Eventually need to get it to filter a place
 %
 % INPUT: (Eventually)
-%           place (String) - name of an area polygon in OpenSteetMap
+%           place (String) - Name of polygon area in OpenSteetMap
 % OUTPUT:
 %           Graph view of the census data on commuting
 %
