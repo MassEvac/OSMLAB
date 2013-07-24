@@ -4,8 +4,8 @@ function showHighway(place)
 % INPUT:
 %           place (String) - Name of polygon area in OpenSteetMap
 % OUTPUT:
-%           Graph of the highway with different colours for different
-%               classes as defined by highwayColours.
+%           Graph of the highway with different colours for different classes
+%               as defined by highwayColours legend described by highwayLegend.
 %
 visibleHighways = 1:7;
 
