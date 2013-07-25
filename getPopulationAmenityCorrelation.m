@@ -10,6 +10,8 @@ function [populationAmenityCorrelation] = getPopulationAmenityCorrelation(amenit
 % OUTPUT:
 %           populationAmenityCorrelation(i,j) (Double) - Correlation of amenity
 %               map of amenityTags{i} and population of places{j} in grid format
+% EXAMPLE:
+%           [populationAmenityCorrelation] = getPopulationAmenityCorrelation({'bar','atm','hospital'},{'Bristol','London'},250,1,true)
 
 p = length(places);
 a = length(amenityTags);

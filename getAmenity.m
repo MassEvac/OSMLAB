@@ -6,6 +6,8 @@ function [result] = getAmenity(amenityTag, place)
 %           place (String) - Name of an area polygon in OpenSteetMap
 % OUTPUT:
 %           result(:,1:2) (Double) - Longitude and Latitude of the amenity
+% EXAMPLE:
+%           [result] = getAmenity('bar', 'Bristol')
 
 query = ['SELECT DISTINCT ST_X(p.way), ST_Y(p.way) '...
         'FROM planet_osm_point AS p, '...

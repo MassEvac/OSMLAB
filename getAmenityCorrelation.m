@@ -10,6 +10,8 @@ function [amenityCorrelation] = getAmenityCorrelation(amenityTags, place, gridSi
 % OUTPUT:
 %           amenityCorrelation(i,i) (Double) - Correlation between
 %               amenities defined by amenityTags{i}
+% EXAMPLE:
+%           [amenityCorrelation] = getAmenityCorrelation({'bar','atm','hospital'},'Bristol',250,1,true)
 
 amenityGrids = getAmenityGrids(amenityTags, place, gridSize, sigma, populationWeighted);
 amenityCorrelation = getCorrelation(amenityGrids);

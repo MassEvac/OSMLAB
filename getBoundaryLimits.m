@@ -8,6 +8,8 @@ function [max_lon,max_lat,min_lon,min_lat] = getBoundaryLimits(place)
 %           max_lat (Double) - Maximum latitude
 %           min_lon (Double) - Minimum longitude
 %           min_lat (Double) - Minimum latitude
+% EXAMPLE:
+%           [max_lon,max_lat,min_lon,min_lat] = getBoundaryLimits('Bristol')
 
 coordinates = getBoundary(place);
 

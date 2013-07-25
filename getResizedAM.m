@@ -6,6 +6,8 @@ function [AM] = getResizedAM(AM,AMLength)
 %           AMLength (Integer) - Size of the adjacency matrix (Optional)
 % OUTPUT:
 %           AM(i,j) (Double) - Resized square adjacency matrix
+% EXAMPLE:
+%           [AM] = getResizedAM(sparse(4,6),7)
 % NOTE:
 %           Not very sophisticated but currently does the job.
 %           Define AMLength only if the matrix is supposed to be bigger

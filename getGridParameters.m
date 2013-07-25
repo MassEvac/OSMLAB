@@ -1,4 +1,4 @@
-function [x_lon,x_lat,u_lon,u_lat,max_lon,max_lat,min_lon,min_lat]=getGridParameters(place,gridSize)
+function [x_lon,x_lat,u_lon,u_lat,max_lon,max_lat,min_lon,min_lat] = getGridParameters(place,gridSize)
 % Returns the parameters of a grid of the given place for a given grid size
 %
 % INPUT:
@@ -13,6 +13,8 @@ function [x_lon,x_lat,u_lon,u_lat,max_lon,max_lat,min_lon,min_lat]=getGridParame
 %           max_lat (Double) - Most northern latitude in degrees
 %           min_lon (Double) - Most western longitude in degrees
 %           min_lat (Double) - Most southern latitude in degrees
+% EXAMPLE:
+%           [x_lon,x_lat,u_lon,u_lat,max_lon,max_lat,min_lon,min_lat] = getGridParameters('Bristol', 250)
 
 [max_lon,max_lat,min_lon,min_lat] = getBoundaryLimits(place);
 

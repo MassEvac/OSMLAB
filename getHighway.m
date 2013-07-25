@@ -7,6 +7,8 @@ function [result] = getHighway(place)
 %           result(:,1:2) (Doubles) - Longitude and Latitude
 %           result(:,3) (Integer) - Index of a given path
 %           result(:,4) (Integer) - Highway class
+% EXAMPLE:
+%           [result] = getHighway('Bristol')
 % NOTE:
 %           Highway classes are defined in getHighwayTagsAsNumbers
 % ISSUES:

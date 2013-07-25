@@ -7,11 +7,14 @@ function showPopulationOnHighway( place, gridSize, sigma )
 %           sigma (Integer) - Standard deviation to use for gaussian blurring
 % OUTPUT:
 %           Graph of population data overlaid on top of the highway graph
+% EXAMPLE:
+%           showPopulationOnHighway('Bristol',250,1)
 
-[population,longitude,latitude]=getSmoothPopulationGrid(place, gridSize, sigma);
+population = getPopulationGrid(place, gridSize, sigma);
+[longitude,latitude] = getGridCoordinates(place, gridSize);
 [HAM,~,nodes]=getAM(place);
 
-figure
+figure;
 hold on;
 gplot(HAM,nodes);
 plot3k([longitude(:) latitude(:) log(population(:))]);

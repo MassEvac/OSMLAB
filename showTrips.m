@@ -10,6 +10,8 @@ function showTrips(place,gridSize,sigma,saveFigures)
 %           Graph view of trips, max-flow and shortest path
 %           Histogram of trips, max-flow and shortest path
 %           Correlation between trips, max-flow and shortest path
+% EXAMPLE:
+%           showTrips('Bristol',1000,1,false)
 % NOTE:
 %           The fourth option is to save the diagrams into cropped PDF files
 % ISSUES:
@@ -52,7 +54,7 @@ end;
 
 %% Correlation - Shortest Path vs Trips
 if ~saveFigures
-    figure;
+    figure('units','normalized','outerposition',[0 0 1 1]);
     subplot(Pi,Pj,1);
 else
     figure;

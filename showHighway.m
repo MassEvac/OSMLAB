@@ -6,6 +6,8 @@ function showHighway(place)
 % OUTPUT:
 %           Graph of the highway with different colours for different classes
 %               as defined by highwayColours legend described by highwayLegend.
+% EXAMPLE:
+%           showHighway('Bristol')
 
 visibleHighways = 1:7;
 

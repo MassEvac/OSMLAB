@@ -9,6 +9,8 @@ function showAmenityGrids(amenityTags, place, gridSize, sigma, populationWeighte
 %           populationWeighted (Boolean) - Normalise the amenities by population?
 % OUTPUT:
 %           Image of amenities of a given place with the input attributes
+% EXAMPLE:
+%           showAmenityGrids({'bar','atm','hospital'},'Bristol',250,1,true)
 
 amenityGrids = getAmenityGrids(amenityTags, place, gridSize, sigma, populationWeighted);
 

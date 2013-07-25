@@ -6,6 +6,8 @@ function [r, p] = getCorrelation(grids)
 % OUTPUT:
 %           r(i,i) (Double) - Correlation coefficients between grids{i}
 %           p(i,i) (Double) - P-values between grids{i}
+% EXAMPLE:
+%           [r, p] = getCorrelation(getAmenityGrids({'bar','atm','hospital'},'Bristol',250,1,true))
 
 % Establish the number of grids inputted
 n = length(grids);

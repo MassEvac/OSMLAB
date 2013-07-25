@@ -5,6 +5,8 @@ function [result] = getBoundary(place)
 %           place (String) - Name of an area polygon in OpenSteetMap
 % OUTPUT:
 %           result(:,1:2) (Double) - Longitude and Latitude of the boundary
+% EXAMPLE:
+%           [result] = getBoundary('Bristol')
 % NOTE:
 %           May be useful to query the following in the future:
 %           (g.p).path[1] is the index of polygon when there are multiple

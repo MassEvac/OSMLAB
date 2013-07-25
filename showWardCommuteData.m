@@ -5,6 +5,8 @@ function showWardCommuteData(place)
 %           place (String) - Name of polygon area in OpenSteetMap
 % OUTPUT:
 %           Graph view of the census data on commuting
+% EXAMPLE:
+%           showWardCommuteData('Bristol')
 % NOTE:
 %           Eventually need to get it to filter a place
 

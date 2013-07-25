@@ -9,6 +9,8 @@ function [highwayQueryResult] = getHighwayTagsAsNumbers(highwayQueryResult)
 %           highwayQueryResult(:,1:2) (Doubles) - Longitude and Latitude
 %           highwayQueryResult(:,3) (Integer) - Index of a given path
 %           highwayQueryResult(:,4) (Integer) - Highway class
+% EXAMPLE:
+%           [highwayQueryResult] = getHighwayTagsAsNumbers({1.0 1.1 1 'motorway'})
 % NOTE:
 %           Limitation of 7 highway classes due to 7 available colours but
 %           not a good enough reason, need to see if there is a more 

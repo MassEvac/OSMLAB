@@ -10,6 +10,8 @@ function [result] = getPopulation(place)
 % OUTPUT:
 %           result(:,1:2) (Double) - Longitude and Latitude of the data centroid
 %           result(:,3) (Double) - Population Density (persons/km^2)
+% EXAMPLE:
+%           [result] = getPopulation('Bristol')
 
 query = ['SELECT (ST_Raster2WorldCoordX(p.rast, x) + ST_ScaleX(rast) / 2) AS wx, (ST_Raster2WorldCoordY(p.rast,y) + ST_ScaleY(rast) / 2) AS wy, ST_Value(p.rast, x, y) as v '...
         'FROM population AS p, '...

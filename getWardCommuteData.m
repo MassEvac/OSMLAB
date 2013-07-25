@@ -10,6 +10,8 @@ function [trips, centroids, wardList] = getWardCommuteData
 %           trips(i,j) (Integer) - Number of trips from ward centroids i to j
 %           centroids(i) (2xDouble) - Longitude and latitude of ward centroids
 %           wardList (String) - Names of the wards in the commute raw data
+% EXAMPLE:
+%           [trips, centroids, wardList] = getWardCommuteData
 % NOTE:
 %           At the moment, the ward areas are not being used in any way!
 %           There was a purpose for it and currently I do not remember

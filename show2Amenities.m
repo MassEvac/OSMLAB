@@ -7,6 +7,8 @@ function show2Amenities(amenityTag1, amenityTag2, place)
 %           place (String) - Name of an area polygon in OpenSteetMap
 % OUTPUT:
 %           Plot of the 2 amenities overlaid on the plot of the boundary 
+% EXAMPLE:
+%           show2Amenities('bar','hospital','Bristol')
 % NOTE:
 %           The boundary is more obvious when there are more points to
 %           indicate it. Eg. The boundary for London is a lot more obvious

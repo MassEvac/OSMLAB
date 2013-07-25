@@ -7,6 +7,8 @@ function [longitudeGrid, latitudeGrid] = getGridCoordinates (place, gridSize)
 % OUTPUT:
 %           longitude(i,j) (Double) - Longitude of index (i,j) in the grid
 %           latitude(i,j) (Double) - Latitude of index (i,j) in the grid
+% EXAMPLE:
+%           [longitudeGrid, latitudeGrid] = getGridCoordinates ('Bristol', 250)
 
 [x_lon,x_lat,u_lon,u_lat,max_lon,max_lat,min_lon,min_lat] = getGridParameters(place,gridSize);
 

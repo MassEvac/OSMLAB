@@ -4,11 +4,19 @@ function [HAM, DAM, nodes] = getAM(place)
 % DETAIL:
 %           Converts the results from the database and converts it into 
 %           appropriate adjacency matrix containing highway class information,
-%           another adjacencymatrix with distance between the nodes and a 
+%           another adjacency matrix with distance between the nodes and a 
 %           separate list of reference nodes.
 % INPUT:
 %           place (String) 
-
+% OUTPUT:
+%           HAM(i,j) (Sparse) - Adjacency matrix containing the highway
+%               class between nodes i and j
+%           DAM(i,j) (Sparse) - Adjacency matrix containing the distance
+%               information between nodes i and j
+%           nodes (Double x 2) - Node longitude and latitude of the array
+%               index for reference by HAM & DAM
+% EXAMPLE:
+%           [HAM, DAM, nodes] = getAM('Bristol')
 
 fNode = ['./cache/highwayNode-' place];
 fAM = ['./cache/highwayHAM-' place];

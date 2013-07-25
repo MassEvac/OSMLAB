@@ -10,6 +10,8 @@ function [populationGrid] = getPopulationGrid(place,gridSize,sigma)
 %           sigma (Integer) - Standard deviation to use for gaussian blurring
 % OUTPUT:
 %           populationGrid(i,j) (Double) - population bitmap matrix
+% EXAMPLE:
+%           [populationGrid] = getPopulationGrid('Bristol',250,1)
 
 [x_lon,x_lat,u_lon,u_lat,max_lon,max_lat,min_lon,min_lat] = getGridParameters(place,gridSize);
 [longitude, latitude] = getGridCoordinates(place, gridSize);

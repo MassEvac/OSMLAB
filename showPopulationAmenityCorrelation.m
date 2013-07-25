@@ -9,6 +9,8 @@ function showPopulationAmenityCorrelation(amenityTags, places, gridSize, sigma, 
 %           populationWeighted (Boolean) - Normalise the amenities by population?
 % OUTPUT:
 %           Image of population and amenity correlation in grid format
+% EXAMPLE:
+%           showPopulationAmenityCorrelation({'bar','atm','hospital'},{'Bristol','London'},250,1,true)
 
 populationAmenityCorrelation = getPopulationAmenityCorrelation(amenityTags, places, gridSize, sigma, populationWeighted);
 figure;

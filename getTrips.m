@@ -20,8 +20,12 @@ function [TR,MF,SP,ODnodes,HAM,DAM,nodes] = getTrips(place,gridSize,sigma)
 %               latitude of the array index for reference by TR, MF and SP
 %           HAM(i,j) (Sparse) - Adjacency matrix containing the highway
 %               class between nodes i and j
+%           DAM(i,j) (Sparse) - Adjacency matrix containing the distance
+%               information between nodes i and j
 %           nodes (Double x 2) - Node longitude and latitude of the array
-%               index for reference by HAM
+%               index for reference by HAM & DAM
+% EXAMPLE:
+%           [TR,MF,SP,ODnodes,HAM,DAM,nodes] = getTrips('Bristol',1000,1)
 % NOTE:
 %           The arbitrary road capacity applied to roads based on the
 %           assumption that 25 cars/minutes can travel on a lane needs to
