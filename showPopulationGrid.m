@@ -7,7 +7,7 @@ function showPopulationGrid(place,gridSize,sigma)
 %           sigma (Integer) - Standard deviation to use for gaussian blurring
 % OUTPUT:
 %           Graph of population data overlaid on top of the highway graph
-%
+
 populationGrid = getPopulationGrid(place, gridSize, sigma);
 
 f1 = figure('units','normalized','outerposition',[0 0 1 1]);

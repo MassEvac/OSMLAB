@@ -1,23 +1,31 @@
-function [TR,MF,SP,ODnodes,HAM,nodes] = getTrips(place,gridSize,sigma)
-% Calculates the trips and maximum flow based on Gravity model and arbitary
-% road capacity assigned to roads on OpenStreetMap for the input place.
+function [TR,MF,SP,ODnodes,HAM,DAM,nodes] = getTrips(place,gridSize,sigma)
+% Returns Trips, Max-flow, Shortest path and Node-list of a given place
+%
+% DETAIL:
+%           The script calculates Trips, Max-flow & Shortest path of a given
+%           place based on Gravity model and arbitary road capacity assigned
+%           to roads on OpenStreetMap for the input place.
 % INPUT:
-%           place (String) - name of an area polygon in OpenSteetMap
+%           place (String) - Name of an area polygon in OpenSteetMap
 %           gridSize (Integer) - approximate grid size we want in metres
 %           sigma (Integer) - standard deviation to blur the population
 %               data by using Gaussian distribution
 % OUTPUT:
-%           TR(i,j) (Sparse) - number of Trips between nodes i and j
+%           TR(i,j) (Sparse) - Number of Trips between nodes i and j
 %           MF(i,j) (Sparse) - Maximum flow between nodes i and j calculated
 %               using Boost's implementation of Goldberg's push relabel algorithm
-%           SP(i,j) (Sparse) - shortest path between nodes i and j calculated
+%           SP(i,j) (Sparse) - Shortest path between nodes i and j calculated
 %               using Dijkstra algorithm
-%           ODnodes (Double x 2) - origin and destination node longitude and
+%           ODnodes (Double x 2) - Origin and destination node longitude and
 %               latitude of the array index for reference by TR, MF and SP
-%           AM(i,j) (Sparse) - adjacency matrix containing the road type
-%               between nodes i and j
-%           nodes (Double x 2) - node longitude and latitude of the array
-%               index for reference by AM
+%           HAM(i,j) (Sparse) - Adjacency matrix containing the highway
+%               class between nodes i and j
+%           nodes (Double x 2) - Node longitude and latitude of the array
+%               index for reference by HAM
+% NOTE:
+%           The arbitrary road capacity applied to roads based on the
+%           assumption that 25 cars/minutes can travel on a lane needs to
+%           be examined and verified as they were purely assumed.
 
 configuration = [ num2str(gridSize) '-' num2str(sigma) '-' place];
 
@@ -50,16 +58,17 @@ toc;
 
 tic;
 disp(['Processing population grid...']);
-[pop,l1,l2]=getPopulationGrid(place,gridSize,sigma);
-l1=l1(:);   % longitude
-l2=l2(:);   % latitude
-pop=pop(:); % population
+populationGrid=getPopulationGrid(place,gridSize,sigma);
+[longitudeGrid, latitudeGrid] = getGridCoordinates(place, gridSize);
+longitude=longitudeGrid(:);   % longitude
+latitude=latitudeGrid(:);   % latitude
+population=populationGrid(:); % population
 toc;
 
 tic;
 disp('Processing origin/destination vector..');
 
-nOD=length(pop);
+nOD=length(population);
 
 % origin/destination matrix
 OD=zeros(nOD,1);
@@ -68,12 +77,12 @@ halfGridSize = gridSize/2;
 
 for i=1:nOD
     % find the nodes nearest to the centroid
-    ldiff = abs(nodes(:,1) - l1(i)) .* abs(nodes(:,2) - l2(i));
+    ldiff = abs(nodes(:,1) - longitude(i)) .* abs(nodes(:,2) - latitude(i));
     [~, pos] = min(ldiff);
 
     % calculated the distances of the nodes from the centroid in x and y direction
-    dist1=haversine([l1(i) nodes(pos,1)], [l2(i) l2(i)]);
-    dist2=haversine([l1(i) l1(i)], [l2(i) nodes(pos,2)]);
+    dist1=haversine([longitude(i) nodes(pos,1)], [latitude(i) latitude(i)]);
+    dist2=haversine([longitude(i) longitude(i)], [latitude(i) nodes(pos,2)]);
 
     % assign the node nearest to the centroid of the grid to the OD matrix
     % if it is within a given gridbox, which omits the nodes outside the gridbox
@@ -85,10 +94,10 @@ end
 % remove all the nodes that are not within the gridSize
 a=find(OD==0);
 OD(a) = [];
-l1(a) = [];
-l2(a) = [];
-pop(a) = [];
-ODnodes = [l1 l2];
+longitude(a) = [];
+latitude(a) = [];
+population(a) = [];
+ODnodes = [longitude latitude];
 toc;
 
 % recalculate OD since the matrix dimension has now changed
@@ -155,7 +164,7 @@ else
     for i = 1:nOD
         for j = 1:nOD
             if i~=j
-                TR(i,j)=(pop(i)*pop(j))/SP(i,j);
+                TR(i,j)=(population(i)*population(j))/SP(i,j);
                 completed = (i-1+j/nOD)/nOD;
                 waitbar(completed,h,[step num2str(completed*100) '%']);
             end

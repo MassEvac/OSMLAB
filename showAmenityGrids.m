@@ -1,15 +1,16 @@
 function showAmenityGrids(amenityTags, place, gridSize, sigma, populationWeighted)
-% Graphs the highway overlaid with population data of input place
+% Shows image of amenities of a given place with the required attributes
 %
 % INPUT:
+%           amenityTags{i} (String Cell) - Name of the amenities to consider
 %           place (String) - Name of polygon area in OpenSteetMap
 %           gridSize (Integer) - Grid granularity in metres
 %           sigma (Integer) - Standard deviation to use for gaussian blurring
 %           populationWeighted (Boolean) - Normalise the amenities by population?
 % OUTPUT:
-%           Graph of population data overlaid on top of the highway graph
-%
-amenityGrid = getAmenityGrids(amenityTags, place, gridSize, sigma, populationWeighted);
+%           Image of amenities of a given place with the input attributes
+
+amenityGrids = getAmenityGrids(amenityTags, place, gridSize, sigma, populationWeighted);
 
 f1 = figure('units','normalized','outerposition',[0 0 1 1]);
 fname = ['Amenity distribution for ' place];
@@ -20,7 +21,7 @@ g = ceil(sqrt(n));
 
 for i=1:n
     subplot(g,g,i);
-    imagesc(amenityGrid{i});
+    imagesc(amenityGrids{i});
     colorbar;
     gname = [ place ' ' upper(amenityTags{i}) ];
     xlabel(gname,'FontSize',14);

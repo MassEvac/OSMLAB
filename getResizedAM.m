@@ -1,10 +1,21 @@
-function [AM] = getResizedAM(AM,varargin)
-if nargin>1
-    pSize = varargin{1};
-else
-    pSize = length(AM);
+function [AM] = getResizedAM(AM,AMLength)
+% Makes the spare matrix square so that both i and j dimensions are equal
+%
+% INPUT:
+%           AM(i,j) (Double) - Value of adjacency matrix at index i, j
+%           AMLength (Integer) - Size of the adjacency matrix (Optional)
+% OUTPUT:
+%           AM(i,j) (Double) - Resized square adjacency matrix
+% NOTE:
+%           Not very sophisticated but currently does the job.
+%           Define AMLength only if the matrix is supposed to be bigger
+%           than the length of the inputted adjacency matrix
+
+% If AMLength is not defined, assign the length of the matrix to it
+if (nargin < 2)
+    AMLength = length(AM);
 end    
-    
-if size(AM,1) ~= pSize || size(AM,2) ~= pSize
-    AM(pSize,pSize) = 0;
+
+if size(AM,1) ~= AMLength || size(AM,2) ~= AMLength
+    AM(AMLength,AMLength) = 0;
 end

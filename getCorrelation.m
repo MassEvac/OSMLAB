@@ -1,12 +1,24 @@
-function [r, s] = getCorrelation(grid)
-n = length(grid);
+function [r, p] = getCorrelation(grids)
+% Returns the correlation coefficient and P-value of the input multiple grids
+%
+% INPUT:
+%           grids{i}(j,k) (Double) - i number of Grids with values in (j,k) indices
+% OUTPUT:
+%           r(i,i) (Double) - Correlation coefficients between grids{i}
+%           p(i,i) (Double) - P-values between grids{i}
 
-[o, p] = size(grid{1});
+% Establish the number of grids inputted
+n = length(grids);
 
-a = zeros(o*p,n);
+% All grids should be the same size so just measure the size of the first grid
+[x, y] = size(grids{1});
+
+% Convert the grids into a series of 1 dimensional arrays
+a = zeros(x*y,n);
 
 for i=1:n
-    a(:,i) = grid{i}(:);
+    a(:,i) = grids{i}(:);
 end
 
-[r, s] = corrcoef(a);
+% Find the correlation coefficient and p-value of the matrix
+[r, p] = corrcoef(a);

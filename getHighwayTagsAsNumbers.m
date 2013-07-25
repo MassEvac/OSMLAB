@@ -1,5 +1,5 @@
 function [highwayQueryResult] = getHighwayTagsAsNumbers(highwayQueryResult)
-%
+% Converts highway tags to their highway class equivalent defined by highwayClass
 %
 % INPUT:
 %           highwayQueryResult(:,1:2) (Doubles) - Longitude and Latitude
@@ -9,7 +9,11 @@ function [highwayQueryResult] = getHighwayTagsAsNumbers(highwayQueryResult)
 %           highwayQueryResult(:,1:2) (Doubles) - Longitude and Latitude
 %           highwayQueryResult(:,3) (Integer) - Index of a given path
 %           highwayQueryResult(:,4) (Integer) - Highway class
-%
+% NOTE:
+%           Limitation of 7 highway classes due to 7 available colours but
+%           not a good enough reason, need to see if there is a more 
+%           suitable alternative. Talk to Anders about this.
+
 % The following tags are all the known highway tags:
 % motorway, motorway_link
 % trunk, trunk_link
@@ -26,6 +30,7 @@ function [highwayQueryResult] = getHighwayTagsAsNumbers(highwayQueryResult)
 % also option for tunnel = 'yes'
 % http://wiki.openstreetmap.org/wiki/Key:highway
 
+% They will be arbitrarily classed as follows due to common characteristics
 highwayClass{1} = {'motorway' 'motorway_link'};
 highwayClass{2} = {'trunk' 'trunk_link'};
 highwayClass{3} = {'primary' 'primary_link'};
@@ -37,13 +42,12 @@ highwayClass{7} = {'pedestrian' 'service' 'footway' 'path' 'cycleway' 'steps' };
 highways = [];
 highwayType = [];
 
-% limitation of 7 types of roads
 for i = 1:7
     try
         highways = [highways highwayClass{i}];
         highwayType = [highwayType repmat(i,1,length(highwayClass{i}))];
     catch err
-        %
+        % Can't really do anything if there is an error
     end
 end
 

@@ -1,12 +1,12 @@
 function showHighway(place)
-% Plots the graph of the highway with colours to distinguish highway classes
+% Plots the graph of highway of input place with colours to distinguish highway classes
 %
 % INPUT:
 %           place (String) - Name of polygon area in OpenSteetMap
 % OUTPUT:
 %           Graph of the highway with different colours for different classes
 %               as defined by highwayColours legend described by highwayLegend.
-%
+
 visibleHighways = 1:7;
 
 highwayColours = {'black' 'blue' 'magenta' 'green' 'red' 'cyan' 'yellow'};

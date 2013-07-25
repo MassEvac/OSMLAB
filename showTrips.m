@@ -12,24 +12,18 @@ function showTrips(place,gridSize,sigma,saveFigures)
 %           Correlation between trips, max-flow and shortest path
 % NOTE:
 %           The fourth option is to save the diagrams into cropped PDF files
-% KNOWN ISSUES:
+% ISSUES:
 %           At the moment, saving the files into cropped PDF doesn't work
 %           properly on Ubuntu machine but works perfectly well on the OSX.
 %           The fonts do the appear in the required size and the diagrams
 %           are not always cropped.
-%
 
 if (nargin < 4)
     saveFigures = false;
 end
 
-% close all;
-% clear;
-% place = 'Bristol';
-% saveFigures = true;
-
 % Read the data to be outputted
-[TR,MF,SP,ODnodes,AM,nodes] = getTrips(place,gridSize,sigma);
+[TR,MF,SP,ODnodes,HAM,DAM,nodes] = getTrips(place,gridSize,sigma);
 
 % Expand the sparse matrices to full matrices for use in
 % correlations and histograms
@@ -179,7 +173,7 @@ end
 %% Graph - Max Flow
 figure;
 hold on;
-gplot(AM,nodes,'k');
+gplot(HAM,nodes,'k');
 wgPlot(MF,ODnodes);
 legend('Max Flow');
 if saveFigures
@@ -191,7 +185,7 @@ end
 %% Graph - Trips
 figure;
 hold on;
-gplot(AM,nodes,'k');
+gplot(HAM,nodes,'k');
 wgPlot(TR,ODnodes);
 legend('Trips');
 if saveFigures
@@ -203,7 +197,7 @@ end
 %% Graph - Shortest Path
 figure;
 hold on;
-gplot(AM,nodes,'k');
+gplot(HAM,nodes,'k');
 wgPlot(SP,ODnodes);
 legend('Shortest Path');
 if saveFigures
