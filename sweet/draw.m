@@ -1,14 +1,15 @@
+function drawSavedSweet(f)
 % Reads the twitter monitoring statistics from a text file and displays it
 %
 % INPUT:
-%           text file with disaster statistics
+%           f (String) - Text file with disaster statistics
 % OUTPUT:
-%           plot of the statistic
-%
-d = {'earthquake' 'tsunami' 'terror attack' 'volcano' 'avalanche' 'flood' 'cyclone' 'tornado' 'hurricane'};
-p = csvread('disaster30.txt');
+%           Plot of the statistic
+% EXAMPLE:
+%           drawSavedSweet('disaster30.txt');
 
-%set(0,'DefaultAxesColorOrder',[0 0 0],'DefaultAxesLineStyleOrder','-|-.|--|:');
+d = {'earthquake' 'tsunami' 'terror attack' 'volcano' 'avalanche' 'flood' 'cyclone' 'tornado' 'hurricane'};
+p = csvread(f);
 
 figure;
 plot(p(:,1:7),'.');

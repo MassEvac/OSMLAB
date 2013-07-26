@@ -1,8 +1,5 @@
 function [DataMat] = importDB(sqlquery)
-% IMPORTDB(DBase, username, password)
-% Imports data into MATLAB from a database.  Assumes database is called
-% 'rsc'.
-% 
+% Imports data into MATLAB from a database.  Assumes database is called 'osm'.
 % 
 % INPUT: (optional)
 %   DBase     string containing the name of the database you're connecting to
@@ -11,6 +8,8 @@ function [DataMat] = importDB(sqlquery)
 % OUTPUT:
 %   DataMat   a matrix of the data in the table, in cell array format
 %   selCols   a string containing all the column names in order
+% EXAMPLE:
+%   [DataMat] = importDB('SELECT 1');
 % POSTCONDITION:
 %   prints out the column headings that were selected
 

@@ -1,17 +1,21 @@
 % Twitter feed monitoring script
-% Monitors twitter feed with the tags described by d in realtime
 %
-% INPUT
-%           d{i} (String) - disaster related tag to monitor
-% OUTPUT
+% DETAIL:
+%           Monitors live twitter feed with the tags described by disasterTags
+% INPUT:
+%           disasterTags{i} (String) - Disaster related tag to monitor
+%               
+% OUTPUT:
 %           dc(i) (Integer Matrix) - count of tweets corresponding to d{i}
 %           Live graph plot of the tweet counts
 %           Bar chart of the cumulative number of tweets
-% KNOWN ISSUES
+% EXAMPLE:
+%           sweet
+% ISSUES:
 %           At the moment, the API stops working due to query rate limits.
 %           Perhaps need to increase interval before it works reliably.
 %           ERROR 429
-%
+
 credentials.ConsumerKey = '2Ilp7VJlOJU17GtvL2S5Tg';
 credentials.ConsumerSecret = 'j77edX0NxgLczr7iWBYYtOMbpXMF6yCqnxQsGzEBo';
 credentials.AccessToken = '23425855-5nje1f6D0LFeQLk6WobpcWFPOJB9uADhLCHRIZiJc';
@@ -26,26 +30,29 @@ Bristol = '51.4600,-2.6000,10mi';
 interval = 60;
 
 % Disasters
-d = {'earthquake' 'tsunami' 'terror attack' 'volcano' 'avalanche' 'flood' 'cyclone' 'tornado' 'hurricane'};
-[~,ds] = size(d);
+if (nargin < 1)
+    disasterTags = {'earthquake' 'tsunami' 'terror attack' 'volcano' 'avalanche' 'flood' 'cyclone' 'tornado' 'hurricane'};
+end    
+
+dLen = length(disasterTags);
 
 if ~exist('since')
-    since(1:ds) = {'0'};
+    since(1:dLen) = {'0'};
 end
 
 if ~exist('dc')
-    dc = zeros(1,ds);
+    dc = zeros(1,dLen);
 end
 
 if ~exist('output')
-    output = zeros(1,ds);
+    output = zeros(1,dLen);
 end
 
 hold on;
 
 % Get the first result to search from
-for disaster = 1:ds
-    s = cell2mat(t.search(d(disaster),'rpp','1','since_id',since(disaster)));
+for disaster = 1:dLen
+    s = cell2mat(t.search(disasterTags(disaster),'rpp','1','since_id',since(disaster)));
     p = s.statuses;
     if ~isempty(p)
         results = cell2mat(p(1));
@@ -55,8 +62,8 @@ end
 
 % Loop forever to find tweets related to the search tags
 while 1
-    for disaster = 1:ds
-        s = cell2mat(t.search(d(disaster),'rpp','10','since_id',since(disaster)));
+    for disaster = 1:dLen
+        s = cell2mat(t.search(disasterTags(disaster),'rpp','10','since_id',since(disaster)));
         p = s.statuses;
 
         if ~isempty(p)
@@ -68,7 +75,7 @@ while 1
             end    
             if ~strcmp(since(disaster),results.id_str)
 %                 disp(['Displaying results since ' since(disaster)]); 
-                disp(['News for ' d(disaster)]);
+                disp(['News for ' disasterTags(disaster)]);
                 since(disaster) = {results.id_str};
             end
         end
@@ -77,10 +84,10 @@ while 1
 %     dc = zeros(1,ds);
     subplot(2,1,1);
     plot(output);
-    legend(d,'Location','NorthWest');
+    legend(disasterTags,'Location','NorthWest');
     subplot(2,1,2);    
     bar(output(end,:))
-    set(gca,'XTickLabel',d,'FontSize',14)    
+    set(gca,'XTickLabel',disasterTags,'FontSize',14)    
     pause(interval);
 end
 
