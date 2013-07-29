@@ -1,4 +1,4 @@
-function showAmenityCorrelation(amenityTags, place, gridSize, sigma, populationWeighted)
+function showAmenityCorrelation(amenityTags, place, gridSize, sigma, populationWeighted, saveFigures)
 % Shows image of the correlation between amenities of a given place with input attributes
 %
 % INPUT:
@@ -6,16 +6,34 @@ function showAmenityCorrelation(amenityTags, place, gridSize, sigma, populationW
 %           gridSize (Integer) - Grid granularity in metres
 %           sigma (Integer) - Standard deviation to use for gaussian blurring
 %           populationWeighted (Boolean) - Normalise the amenities by population?
+%           saveFigures (boolean) - Optional boolean switch for saving figures
 % OUTPUT:
 %           Image of the correlation between amenities of a given place with input attributes
 % EXAMPLE:
-%           showAmenityCorrelation({'atm','police'},'Bristol',250,1,1)
+%           showAmenityCorrelation({'atm','police'},'Bristol',250,1,true,true)
+
+if (nargin < 6)
+    saveFigures = false;
+end
 
 amenityCorrelation = getAmenityCorrelation(amenityTags, place, gridSize, sigma, populationWeighted);
-figure('units','normalized','outerposition',[0 0 1 1]);
-fname = ['Correlation between Amenities for ' place];
-set(gcf,'name',fname,'numbertitle','off')
+
+% Make the diagonal zero so that the other correlations appear clearly
+amenityCorrelation(eye(size(amenityCorrelation))~=0) = 0;
+
+if saveFigures
+    figure;
+else
+    figure('units','normalized','outerposition',[0 0 1 1]);
+end
+
 imagesc(amenityCorrelation);
-set(gca,'XTick',1:length(amenityTags),'XTickLabel',upper(amenityTags),'FontSize',14)
-set(gca,'YTick',1:length(amenityTags),'YTickLabel',upper(amenityTags),'FontSize',14)
+set(gca,'XTick',1:length(amenityTags),'XTickLabel',upper(amenityTags))
+set(gca,'YTick',1:length(amenityTags),'YTickLabel',upper(amenityTags))
 colorbar;
+
+if saveFigures
+    set(gcf,'Position', [0, 0, 800, 300]);
+    set(gcf, 'Color', 'w');
+    export_fig(['./figures/image-amenityCorrelation-' place '.pdf']);
+end

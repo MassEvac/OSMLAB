@@ -1,4 +1,4 @@
-function showAmenityGrids(amenityTags, place, gridSize, sigma, populationWeighted)
+function showAmenityGrids(amenityTags, place, gridSize, sigma, populationWeighted, saveFigures)
 % Shows image of amenities of a given place with the required attributes
 %
 % INPUT:
@@ -7,25 +7,36 @@ function showAmenityGrids(amenityTags, place, gridSize, sigma, populationWeighte
 %           gridSize (Integer) - Grid granularity in metres
 %           sigma (Integer) - Standard deviation to use for gaussian blurring
 %           populationWeighted (Boolean) - Normalise the amenities by population?
+%           saveFigures (boolean) - Optional boolean switch for saving figures
 % OUTPUT:
 %           Image of amenities of a given place with the input attributes
 % EXAMPLE:
-%           showAmenityGrids({'bar','atm','hospital'},'Bristol',250,1,true)
+%           showAmenityGrids({'bar','atm','hospital'},'Bristol',250,1,true,true)
+
+if (nargin < 6)
+    saveFigures = false;
+end
 
 amenityGrids = getAmenityGrids(amenityTags, place, gridSize, sigma, populationWeighted);
 
-f1 = figure('units','normalized','outerposition',[0 0 1 1]);
-fname = ['Amenity distribution for ' place];
-set(f1,'name',fname,'numbertitle','off');
+if saveFigures
+    figure;
+else
+    figure('units','normalized','outerposition',[0 0 1 1]);
+end
 
 n = length(amenityTags);
 g = ceil(sqrt(n));
 
 for i=1:n
-    subplot(g,g,i);
+    subtightplot(g,g,i);
     imagesc(amenityGrids{i});
     colorbar;
-    gname = [ place ' ' upper(amenityTags{i}) ];
-    xlabel(gname,'FontSize',14);
-    set(gca,'FontSize',14);
+    ylabel([ place ' ' upper(amenityTags{i}) ]);
+end
+
+if saveFigures
+    set(gcf,'Position', [0, 0, g*800, g*300]);
+    set(gcf, 'Color', 'w');
+    export_fig(['./figures/image-amenityGrid-' place '.pdf']);
 end

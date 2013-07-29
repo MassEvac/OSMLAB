@@ -11,7 +11,7 @@ function showTrips(place,gridSize,sigma,saveFigures)
 %           Histogram of trips, max-flow and shortest path
 %           Correlation between trips, max-flow and shortest path
 % EXAMPLE:
-%           showTrips('Bristol',1000,1,false)
+%           showTrips('Bristol',1000,1,true)
 % NOTE:
 %           The fourth option is to save the diagrams into cropped PDF files
 % ISSUES:
@@ -62,14 +62,14 @@ end
 
 scatter(log(Sp),log(Tr)); % Draw data points
 
-set(gca,'FontSize',14);
 legend('Raw Data');
-xlabel('log(Shortest path (m))','FontSize',14);
-ylabel('log(Trips (Pi*Pj/Dij))','FontSize',14);
+xlabel('log(Shortest path (m))');
+ylabel('log(Trips (Pi*Pj/Dij))');
 
 if saveFigures
     set(gcf,'Position', [0, 0, 800, 300]);
-    savefig(['corr-shortestPathVsTrips-' place '.pdf'],'pdf');
+    set(gcf, 'Color', 'w');
+    export_fig(['./figures/corr-shortestPathVsTrips-' place '.pdf']);
 end
 
 %% Correlation - Max Flow vs Shortest Path
@@ -90,14 +90,14 @@ plot(Mf(i),log(r(i)),'LineWidth',2); % Plot best fit line
 scatter(Mf, log(Sp)); % Draw data points
 hold off;
 
-set(gca,'FontSize',14);
 legend('Average','Raw Data','Location','SouthEast');
 xlabel('Maximum Flow (persons/min)');
 ylabel('log(Shortest Path (m))');
 
 if saveFigures
     set(gcf,'Position', [0, 0, 800, 300]);
-    savefig(['corr-maxFlowVsShortestPath-' place '.pdf'],'pdf');
+    set(gcf, 'Color', 'w');
+    export_fig(['./figures/corr-maxFlowVsShortestPath-' place '.pdf']);
 end
 
 %% Correlation - Max Flow vs Trips
@@ -118,13 +118,13 @@ plot(Mf(i),log(r(i)),'LineWidth',2); % Plot best fit line
 scatter(Mf,log(Tr)); % Draw data points
 hold off;
 
-set(gca,'FontSize',14);
 legend('Average','Raw Data')
-xlabel('Maximum Flow (persons/min)','FontSize',14);
-ylabel('log(Trips (Pi*Pj/Dij))','FontSize',14);
+xlabel('Maximum Flow (persons/min)');
+ylabel('log(Trips (Pi*Pj/Dij))');
 if saveFigures
     set(gcf,'Position', [0, 0, 800, 300]);
-    savefig(['corr-maxFlowVsTrips-' place '.pdf'],gcf,'pdf');
+    set(gcf, 'Color', 'w');
+    export_fig(['./figures/corr-maxFlowVsTrips-' place '.pdf']);
 end
 
 %% Histogram - Shortest Path
@@ -137,9 +137,9 @@ end
 hist(Sp, 15);
 xlabel('Shortest Path (m)','FontSize',20);
 ylabel('Count','FontSize',20);
-set(gca,'FontSize',18);
 if saveFigures
-    savefig(['hist-shortestPath-' place '.pdf'],gcf,'pdf');
+    set(gcf, 'Color', 'w');
+    export_fig(['./figures/hist-shortestPath-' place '.pdf']);
 end
 
 %% Histogram - Max Flow
@@ -152,9 +152,9 @@ end
 hist(Mf, 15);
 xlabel('Max Flow (cars/min)','FontSize',20);
 ylabel('Count','FontSize',20);
-set(gca,'FontSize',18);
 if saveFigures
-    savefig(['hist-maxFlow-' place '.pdf'],gcf,'pdf');
+    set(gcf, 'Color', 'w');
+    export_fig(['./figures/hist-maxFlow-' place '.pdf']);
 end
 
 %% Histogram - Trips
@@ -167,9 +167,9 @@ end
 hist(Tr, 15);
 xlabel('Trips (Pi*Pj/Dij)','FontSize',20);
 ylabel('Count','FontSize',20);
-set(gca,'FontSize',18);
 if saveFigures
-    savefig(['hist-trips-' place '.pdf'],gcf,'pdf');
+    set(gcf, 'Color', 'w');
+    export_fig(['./figures/hist-trips-' place '.pdf']);
 end
 
 %% Graph - Max Flow
@@ -180,8 +180,8 @@ wgPlot(MF,ODnodes);
 legend('Max Flow');
 if saveFigures
     set(gcf,'Position', [0, 0, 800, 500]);
-    set(gca,'FontSize',14);
-    saveas(gcf,['graph-maxFlow-' place '.pdf'],'pdf');
+    set(gcf, 'Color', 'w');
+    export_fig(['./figures/graph-maxFlow-' place '.pdf']);
 end
 
 %% Graph - Trips
@@ -192,8 +192,8 @@ wgPlot(TR,ODnodes);
 legend('Trips');
 if saveFigures
     set(gcf,'Position', [0, 0, 800, 500]);
-    set(gca,'FontSize',14);
-    saveas(gcf,['graph-trips-' place '.pdf'],'pdf');
+    set(gcf, 'Color', 'w');
+    export_fig(['./figures/graph-trips-' place '.pdf']);
 end
 
 %% Graph - Shortest Path
@@ -204,6 +204,6 @@ wgPlot(SP,ODnodes);
 legend('Shortest Path');
 if saveFigures
     set(gcf,'Position', [0, 0, 800, 500]);
-    set(gca,'FontSize',14);
-    saveas(gcf,['graph-shortestPath-' place '.pdf'],'pdf');
+    set(gcf, 'Color', 'w');
+    export_fig(['./figures/graph-shortestPath-' place '.pdf']);
 end

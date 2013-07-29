@@ -1,4 +1,4 @@
-function showHighway(place)
+function showHighway(place, saveFigures)
 % Plots the graph of highway of input place with colours to distinguish highway classes
 %
 % INPUT:
@@ -6,20 +6,30 @@ function showHighway(place)
 % OUTPUT:
 %           Graph of the highway with different colours for different classes
 %               as defined by highwayColours legend described by highwayLegend.
+%           saveFigures (boolean) - Optional boolean switch for saving figures
 % EXAMPLE:
-%           showHighway('Bristol')
+%           showHighway('Bristol',false)
+
+if (nargin < 2)
+    saveFigures = false;
+end
 
 visibleHighways = 1:7;
 
 highwayColours = {'black' 'blue' 'magenta' 'green' 'red' 'cyan' 'yellow'};
-highwayLegend = {'Motorway', 'Trunk', 'Primary', 'Secondary', 'Tertiary', 'Residential', 'Foot/Cycle Path'};
+highwayLegend = {'Motorway', 'Trunk', 'Primary', 'Secondary', 'Tertiary', 'Residential', 'Pedestrian'};
 
 highwayResult = getHighway(place);
 
-figure('units','normalized','outerposition',[0 0 1 1]);
+if saveFigures
+    figure;
+else
+    figure('units','normalized','outerposition',[0 0 1 1]);
+end
+
 fname = ['Highways in ' place];
 set(gcf,'name',fname,'numbertitle','off');
-set(gca,'FontSize',14);
+
 hold on;
 
 readyToPlot = false;
@@ -58,3 +68,16 @@ end
 legend(v,highwayLegend)
 
 toc;
+
+xlabel('Longitude (degrees)');
+ylabel('Latitude (degrees)');
+
+[max_lon,max_lat,min_lon,min_lat] = getBoundaryLimits(place);
+
+axis([min_lon max_lon min_lat max_lat])
+
+if saveFigures
+    set(gcf,'Position', [0, 0, 800, 300]);
+    set(gcf, 'Color', 'w');
+    export_fig(['./figures/graph-Highway-' place '.pdf']);
+end

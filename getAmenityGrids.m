@@ -31,8 +31,11 @@ for i=1:n
     % Fall within the each of the grid
     amenityGrid = zeros(x_lat,x_lon);
     % Number of each of the amenities
-    m=length(amenity);
-    for j = 1:m,
+    % We are using size here instead of length because sometimes the number
+    % of amenities may be less than 2 in which case we dont want to confuse
+    % the counter j
+    [p,q]=size(amenity);
+    for j = 1:p,
         gridX = ceil((max_lat - amenity(j,2))/u_lat);
         gridY = ceil((amenity(j,1) - min_lon)/u_lon);
         amenityGrid(gridX,gridY) = amenityGrid(gridX,gridY) + 1;
@@ -48,6 +51,7 @@ if (populationWeighted)
 
     % Number of each of the amenities
     [p, q]=size(populationGrid);
+
     n = length(amenityGrids);
     result = [];
 

@@ -20,9 +20,12 @@ place = places{1};
 gridSize = 250;
 sigma = 1;
 populationWeighted = true;
+saveFigures = true;
 
-% showAmenityGrids(amenityTags, place, gridSize, sigma, populationWeighted);
-% showPopulationGrid(place, gridSize, sigma);
-% showAmenityCorrelation(amenityTags, place, gridSize, sigma, populationWeighted);
-% show2Amenities(amenityTags{1},amenityTags{2},place);
-% showPopulationAmenityCorrelation(amenityTags, places, gridSize, sigma, populationWeighted);
+show2Amenities(amenityTags{1},amenityTags{2},place, saveFigures);
+
+showPopulationGrid(place, gridSize, sigma, saveFigures);
+
+showAmenityGrids(amenityTags, place, gridSize, sigma, populationWeighted, saveFigures);
+showAmenityCorrelation(amenityTags, place, gridSize, sigma, populationWeighted, saveFigures);
+showPopulationAmenityCorrelation(amenityTags, places, gridSize, sigma, populationWeighted, saveFigures);

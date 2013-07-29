@@ -17,11 +17,11 @@
 
 places = { 'London' 'Manchester' 'Birmingham' 'Liverpool' 'Bristol' 'Oxford' 'Cardiff' 'Leeds' 'York' 'Nottingham' 'Chester'}; % Newcastle-upon-Tyne
 place = places{1};
-gridSize = 250;
+gridSize = 1000;
 sigma = 1;
-saveFigures = false;
+saveFigures = true;
 
-showPopulationOnHighway(place,gridSize,sigma);
-showHighway(place);
+showPopulationOnHighway(place,gridSize,sigma,saveFigures);
+showHighway(place,saveFigures);
 showTrips(place,gridSize,sigma,saveFigures);
-showWardCommuteData(place);
+showWardCommuteData(place,saveFigures);

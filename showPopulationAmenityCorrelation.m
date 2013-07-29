@@ -1,4 +1,4 @@
-function showPopulationAmenityCorrelation(amenityTags, places, gridSize, sigma, populationWeighted)
+function showPopulationAmenityCorrelation(amenityTags, places, gridSize, sigma, populationWeighted, saveFigures)
 % Plot the correlation between population and amenity in grid format for various places and amenities
 %
 % INPUT:
@@ -7,18 +7,25 @@ function showPopulationAmenityCorrelation(amenityTags, places, gridSize, sigma, 
 %           gridSize (Integer) - Grid granularity in metres
 %           sigma (Integer) - Standard deviation to use for gaussian blurring
 %           populationWeighted (Boolean) - Normalise the amenities by population?
+%           saveFigures (boolean) - Optional boolean switch for saving figures
 % OUTPUT:
 %           Image of population and amenity correlation in grid format
 % EXAMPLE:
-%           showPopulationAmenityCorrelation({'bar','atm','hospital'},{'Bristol','London'},250,1,true)
+%           showPopulationAmenityCorrelation({'bar','atm','hospital'},{'Bristol','London'},250,1,true,true)
+
+if (nargin < 6)
+    saveFigures = false;
+end
 
 populationAmenityCorrelation = getPopulationAmenityCorrelation(amenityTags, places, gridSize, sigma, populationWeighted);
 figure;
-fname = ['Correlations between Population count and Amenity'];
-set(gcf,'name',fname,'numbertitle','off')
 imagesc(populationAmenityCorrelation);
-set(gca,'XTick',1:length(amenityTags),'XTickLabel',upper(amenityTags),'FontSize',14)
-set(gca,'YTick',1:length(places),'YTickLabel',places,'FontSize',14)
-colorbar('FontSize',14);
-set(gcf,'Position', [0, 0, 800, 300]);
-savefig('populationAmenityCorrelation.pdf','pdf');
+set(gca,'XTick',1:length(amenityTags),'XTickLabel',upper(amenityTags))
+set(gca,'YTick',1:length(places),'YTickLabel',places)
+colorbar;
+
+if saveFigures
+    set(gcf,'Position', [0, 0, 800, 300]);
+    set(gcf, 'Color', 'w');
+    export_fig(['./figures/image-populationAmenityCorrelation.pdf']);
+end

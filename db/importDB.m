@@ -19,7 +19,7 @@ javaclasspath('./db/postgresql-9.2-1002.jdbc4.jar');
 
 %nargin = 1;
 
-if (strcmp(name(1:13),'bharat-ubuntu'))
+if (strcmp(name(1:9),'IT050339'))
     DBase = 'osm';
     username = 'postgres'; %username = '';
     password = 'postgres'; %password = '';  
