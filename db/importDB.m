@@ -9,7 +9,8 @@ function [DataMat] = importDB(sqlquery)
 %   DataMat   a matrix of the data in the table, in cell array format
 %   selCols   a string containing all the column names in order
 % EXAMPLE:
-%   [DataMat] = importDB('SELECT 1');
+%   test = importDB('SELECT 1');
+%   Should return 'cursor object: 1-by-1'
 % POSTCONDITION:
 %   prints out the column headings that were selected
 
@@ -19,7 +20,7 @@ javaclasspath('./db/postgresql-9.2-1002.jdbc4.jar');
 
 %nargin = 1;
 
-if (strcmp(name(1:9),'IT050339'))
+if (strcmp(name(1:8),'IT050339'))
     DBase = 'osm';
     username = 'postgres'; %username = '';
     password = 'postgres'; %password = '';  
