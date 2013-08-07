@@ -18,14 +18,12 @@ javaclasspath('./db/postgresql-9.2-1002.jdbc4.jar');
 
 [~, name] = system('hostname');
 
-%nargin = 1;
-
 if (strcmp(name(1:8),'IT050339'))
     DBase = 'osm';
     username = 'postgres'; %username = '';
     password = 'postgres'; %password = '';  
     databaseURL = 'jdbc:postgresql://localhost:5432/';
-elseif (nargin == 1)
+else
     DBase = 'osm';
     username = 'bharatkunwar'; %username = '';
     password = ''; %password = '';
@@ -39,7 +37,7 @@ reference=database(DBase, username, password,...
                'org.postgresql.Driver', databaseURL);          
            
 % Check the database status.
-%ping(reference);
+% ping(reference);
 
 % Open cursor and execute SQL statement.
 % for some reason, 'select time from table' doesn't seem to work

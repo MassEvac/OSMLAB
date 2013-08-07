@@ -28,8 +28,7 @@ saveFigures = true;
 % 
 % showAmenityGrids(amenityTags, place, gridSize, sigma, populationWeighted, saveFigures);
 % showAmenityCorrelation(amenityTags, place, gridSize, sigma, populationWeighted, saveFigures);
-
-showManyPopulationAmenityCorrelation(amenityTags, places, gridSize, sigma, populationWeighted, saveFigures);
+% showPopulationAmenityCorrelation(amenityTags, places, gridSize, sigma, populationWeighted, saveFigures);
 
 % showPointSignificanceTest(amenityTags, place, minGridSize,
 % maxGridSize, intervals, 

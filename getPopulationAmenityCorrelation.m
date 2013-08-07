@@ -1,9 +1,9 @@
-function [populationAmenityCorrelation] = getPopulationAmenityCorrelation(amenityTags, places, gridSize, sigma, populationWeighted)
-% Returns the correlation between population and amenity in grid format for various places and amenities
+function [populationAmenityCorrelation] = getPopulationAmenityCorrelation(amenityTags, place, gridSize, sigma, populationWeighted)
+% Returns the correlation between population and amenity in grid format for a single place and various amenities
 %
 % INPUT:
 %           amenityTags{i} (String Cell) - Name of the amenities to consider
-%           places{j} (String Cell) - Names of polygon areas in OpenSteetMap
+%           place (String) - Names of a polygon area in OpenSteetMap
 %           gridSize (Integer) - Grid granularity in metres
 %           sigma (Integer) - Standard deviation to use for gaussian blurring
 %           populationWeighted (Boolean) - Normalise the amenities by population?
@@ -13,15 +13,7 @@ function [populationAmenityCorrelation] = getPopulationAmenityCorrelation(amenit
 % EXAMPLE:
 %           [populationAmenityCorrelation] = getPopulationAmenityCorrelation({'bar','atm','hospital'},{'Bristol','London'},250,1,true)
 
-p = length(places);
-a = length(amenityTags);
-populationAmenityCorrelation = zeros(p,a);
-
-for i=1:p
-    place = places{i};
-    amenityGrids = getAmenityGrids(amenityTags, place, gridSize, sigma, populationWeighted);
-    populationGrid = getPopulationGrid(place, gridSize, sigma);
-    correlation = getCorrelation([amenityGrids {populationGrid}]);
-    correlation = correlation(length(correlation),1:length(amenityGrids));    
-    populationAmenityCorrelation(i,:) = correlation;   
-end
+amenityGrids = getAmenityGrids(amenityTags, place, gridSize, sigma, populationWeighted);
+populationGrid = getPopulationGrid(place, gridSize, sigma);
+populationAmenityCorrelation = getCorrelation([amenityGrids {populationGrid}]);
+populationAmenityCorrelation = populationAmenityCorrelation(length(populationAmenityCorrelation),1:length(amenityGrids));

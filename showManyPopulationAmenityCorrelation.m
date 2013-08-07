@@ -1,4 +1,4 @@
-function showPopulationAmenityCorrelation(amenityTags, places, gridSize, sigma, populationWeighted, saveFigures)
+function showManyPopulationAmenityCorrelation(amenityTags, places, gridSize, sigma, populationWeighted, saveFigures)
 % Plot the correlation between population and amenity in grid format for various places and amenities
 %
 % INPUT:
@@ -17,9 +17,9 @@ if (nargin < 6)
     saveFigures = false;
 end
 
-populationAmenityCorrelation = getPopulationAmenityCorrelation(amenityTags, places, gridSize, sigma, populationWeighted);
+manyPopulationAmenityCorrelation = getManyPopulationAmenityCorrelation(amenityTags, places, gridSize, sigma, populationWeighted);
 figure;
-imagesc(populationAmenityCorrelation);
+imagesc(manyPopulationAmenityCorrelation);
 set(gca,'XTick',1:length(amenityTags),'XTickLabel',upper(amenityTags))
 set(gca,'YTick',1:length(places),'YTickLabel',places)
 colorbar;
