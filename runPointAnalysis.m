@@ -17,6 +17,7 @@
 amenityTags = {'fuel' 'police' 'fire_station' 'hospital' 'bar' 'school'}; % 'bar' 'atm'  'library'  'post_box' 
 places = { 'London' 'Manchester' 'Birmingham' 'Liverpool' 'Bristol' 'Oxford' 'Cardiff' 'Leeds' 'York' 'Nottingham' 'Chester'}; % Newcastle-upon-Tyne
 place = places{1};
+gridSizes = [250:250:2000]
 gridSize = 250;
 sigma = 1;
 populationWeighted = true;
@@ -29,7 +30,6 @@ saveFigures = true;
 % showAmenityGrids(amenityTags, place, gridSize, sigma, populationWeighted, saveFigures);
 % showAmenityCorrelation(amenityTags, place, gridSize, sigma, populationWeighted, saveFigures);
 
-showManyPopulationAmenityCorrelation(amenityTags, places, gridSize, sigma, populationWeighted, saveFigures);
+% showManyPlacesPopulationAmenityCorrelation(amenityTags, places, gridSize, sigma, populationWeighted, saveFigures);
 
-% showPointSignificanceTest(amenityTags, place, minGridSize,
-% maxGridSize, intervals, 
+showManyGridSizesPopulationAmenityCorrelation(amenityTags,place,gridSizes,1,populationWeighted,saveFigures)

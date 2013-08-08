@@ -1,4 +1,4 @@
-function showManyPopulationAmenityCorrelation(amenityTags, places, gridSize, sigma, populationWeighted, saveFigures)
+function showManyPlacesPopulationAmenityCorrelation(amenityTags, places, gridSize, sigma, populationWeighted, saveFigures)
 % Plot the correlation between population and amenity in grid format for various places and amenities
 %
 % INPUT:
@@ -11,15 +11,15 @@ function showManyPopulationAmenityCorrelation(amenityTags, places, gridSize, sig
 % OUTPUT:
 %           Image of population and amenity correlation in grid format
 % EXAMPLE:
-%           showPopulationAmenityCorrelation({'bar','atm','hospital'},{'Bristol','London'},250,1,true,true)
+%           showManyPlacesPopulationAmenityCorrelation({'bar','atm','hospital'},{'Bristol','London'},250,1,true,true)
 
 if (nargin < 6)
     saveFigures = false;
 end
 
-manyPopulationAmenityCorrelation = getManyPopulationAmenityCorrelation(amenityTags, places, gridSize, sigma, populationWeighted);
+manyPlacesPopulationAmenityCorrelation = getManyPlacesPopulationAmenityCorrelation(amenityTags, places, gridSize, sigma, populationWeighted);
 figure;
-imagesc(manyPopulationAmenityCorrelation);
+imagesc(manyPlacesPopulationAmenityCorrelation);
 set(gca,'XTick',1:length(amenityTags),'XTickLabel',upper(amenityTags))
 set(gca,'YTick',1:length(places),'YTickLabel',places)
 colorbar;
@@ -27,5 +27,5 @@ colorbar;
 if saveFigures
     set(gcf,'Position', [0, 0, 800, 300]);
     set(gcf, 'Color', 'w');
-    export_fig(['./figures/image-populationAmenityCorrelation.pdf']);
+    export_fig(['./figures/image-manyPlacesPopulationAmenityCorrelation.pdf']);
 end

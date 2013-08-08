@@ -1,4 +1,4 @@
-function [manyPopulationAmenityCorrelation] = getManyPopulationAmenityCorrelation(amenityTags, places, gridSize, sigma, populationWeighted)
+function [manyPlacesPopulationAmenityCorrelation] = getManyPlacesPopulationAmenityCorrelation(amenityTags, places, gridSize, sigma, populationWeighted)
 % Returns the correlation between population and amenity in grid format for various places and amenities
 %
 % INPUT:
@@ -8,16 +8,16 @@ function [manyPopulationAmenityCorrelation] = getManyPopulationAmenityCorrelatio
 %           sigma (Integer) - Standard deviation to use for gaussian blurring
 %           populationWeighted (Boolean) - Normalise the amenities by population?
 % OUTPUT:
-%           populationAmenityCorrelation(i,j) (Double) - Correlation of amenity
+%           manyPlacesPopulationAmenityCorrelation(i,j) (Double) - Correlation of amenity
 %               map of amenityTags{i} and population of places{j} in grid format
 % EXAMPLE:
-%           [populationAmenityCorrelation] = getPopulationAmenityCorrelation({'bar','atm','hospital'},{'Bristol','London'},250,1,true)
+%           [manyPlacesPopulationAmenityCorrelation] = getManyPlacesPopulationAmenityCorrelation({'bar','atm','hospital'},{'Bristol','London'},250,1,true)
 
 p = length(places);
 a = length(amenityTags);
-manyPopulationAmenityCorrelation = zeros(p,a);
+manyPlacesPopulationAmenityCorrelation = zeros(p,a);
 
 for i=1:p
     place = places{i};
-    manyPopulationAmenityCorrelation(i,:) = getPopulationAmenityCorrelation(amenityTags, place, gridSize, sigma, populationWeighted);
+    manyPlacesPopulationAmenityCorrelation(i,:) = getPopulationAmenityCorrelation(amenityTags, place, gridSize, sigma, populationWeighted);
 end
