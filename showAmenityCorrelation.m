@@ -28,8 +28,10 @@ else
 end
 
 imagesc(amenityCorrelation);
-set(gca,'XTick',1:length(amenityTags),'XTickLabel',upper(amenityTags))
-set(gca,'YTick',1:length(amenityTags),'YTickLabel',upper(amenityTags))
+set(gca,'XTick',1:length(amenityTags),'XTickLabel',upper(strrep(amenityTags, '_', ' ')))
+set(gca,'YTick',1:length(amenityTags),'YTickLabel',upper(strrep(amenityTags, '_', ' ')))
+xlabel('Amenity');
+ylabel('Amenity');
 colorbar;
 
 if saveFigures

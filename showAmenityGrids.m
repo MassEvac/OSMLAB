@@ -32,7 +32,7 @@ for i=1:n
     subtightplot(g,g,i);
     imagesc(amenityGrids{i});
     colorbar;
-    ylabel([ place ' ' upper(amenityTags{i}) ]);
+    ylabel([ place ' ' upper(strrep(amenityTags{i}, '_', ' ')) ]);
 end
 
 if saveFigures

@@ -35,7 +35,7 @@ hold on;
 plot(amenity1(:,1),amenity1(:,2),'x','Color','blue');
 plot(amenity2(:,1),amenity2(:,2),'o','Color','red');
 plot(boundary(:,1),boundary(:,2),'.','Color','green');
-legend(upper(amenityTag1),upper(amenityTag2),place);
+legend(upper(strrep(amenityTag1, '_', ' ')),upper(strrep(amenityTag2, '_', ' ')),place);
 axis([min_lon max_lon min_lat max_lat]);
 xlabel('Longitude (degrees)');
 ylabel('Latitude (degrees)');

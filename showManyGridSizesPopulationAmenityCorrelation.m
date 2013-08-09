@@ -9,7 +9,7 @@ function showManyGridSizesPopulationAmenityCorrelation(amenityTags, place, gridS
 %           populationWeighted (Boolean) - Normalise the amenities by population?% OUTPUT:
 %           Image of population and amenity correlation in grid format
 % EXAMPLE:
-%           showManyGridSizesPopulationAmenityCorrelation({'bar','atm','hospital'},'Bristol',[50:100:2000],1,true)
+%           showManyGridSizesPopulationAmenityCorrelation({'bar','atm','hospital'},'Bristol',[100:100:2000],1,true)
 
 if (nargin < 6)
     saveFigures = false;
@@ -19,8 +19,10 @@ manyPlacesPopulationAmenityCorrelation = getManyGridSizesPopulationAmenityCorrel
 
 figure;
 imagesc(manyPlacesPopulationAmenityCorrelation);
-set(gca,'XTick',1:length(amenityTags),'XTickLabel',upper(amenityTags))
+set(gca,'XTick',1:length(amenityTags),'XTickLabel',upper(strrep(amenityTags, '_', ' ')))
 set(gca,'YTick',1:length(gridSizes),'YTickLabel',gridSizes)
+xlabel('Amenity');
+ylabel('Cell Grid Size (metres)');
 colorbar;
 
 if saveFigures

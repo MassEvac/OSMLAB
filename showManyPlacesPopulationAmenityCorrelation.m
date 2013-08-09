@@ -20,8 +20,10 @@ end
 manyPlacesPopulationAmenityCorrelation = getManyPlacesPopulationAmenityCorrelation(amenityTags, places, gridSize, sigma, populationWeighted);
 figure;
 imagesc(manyPlacesPopulationAmenityCorrelation);
-set(gca,'XTick',1:length(amenityTags),'XTickLabel',upper(amenityTags))
+set(gca,'XTick',1:length(amenityTags),'XTickLabel',upper(strrep(amenityTags, '_', ' ')))
 set(gca,'YTick',1:length(places),'YTickLabel',places)
+xlabel('Amenity');
+ylabel('Place');
 colorbar;
 
 if saveFigures
