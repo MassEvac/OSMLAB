@@ -29,5 +29,6 @@ ylabel('Latitude (degrees)');
 if saveFigures
     set(gcf,'Position', [0, 0, 800, 300]);
     set(gcf, 'Color', 'w');
-    savefig(['graph-PopulationOnHighway-' place '.pdf'],'pdf');
+    view(2);
+    export_fig(['./figures/graph-PopulationOnHighway-' place '.pdf']);
 end
