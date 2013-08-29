@@ -21,8 +21,10 @@ end
 
 [p,a] = size(manyGridSizesSigmasPopulationAmenityCorrelations);
 
-%% Retrieve the cross sectional data
+%% Iterative Process
 for m = 1:p
+    place = places{m};
+    %% Retrieve the cross sectional data
     for j = 1:a
         correlation = manyGridSizesSigmasPopulationAmenityCorrelations{m,j};
         % If the following throws an error saying
@@ -42,12 +44,7 @@ for m = 1:p
     manyPopulationAmenityCorrelationT = manyPopulationAmenityCorrelation';
     unitManyPopulationAmenityCorrelationT = bsxfun(@rdivide, manyPopulationAmenityCorrelationT,manyPopulationAmenityCorrelationT(1,:));
     unitManyPopulationAmenityCorrelation = unitManyPopulationAmenityCorrelationT';
-end
-
-%% Iterate through places
-for m = 1:p
-    place = places{m};
-
+    
     %% Generate output
     % If it is a cross section of sigma...
     if strmatch(XSectionOf,'sigma')
@@ -134,6 +131,5 @@ for m = 1:p
             set(gcf, 'Color', 'w');
             export_fig(['./figures/corr-unitManySigmasPopulationAmenityCorrelation-' XSectionOf '-' num2str(XSectionAt) '-' place '.pdf']);
         end
-
-    end
+    end     
 end
