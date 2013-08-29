@@ -65,6 +65,7 @@ for m = 1:length(places)
             disp(['Saving times to file ' fTime '...']);
             csvwrite(fTime,time);
         end
+        
         manyGridSizesSigmasPopulationAmenityCorrelations{m,n} = correlation;
         manyTimes{m,n} = time;
     end
