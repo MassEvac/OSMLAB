@@ -36,7 +36,7 @@ for i=1:n
 end
 
 if saveFigures
-    set(gcf,'Position', [0, 0, g*800, g*300]);
+    set(gcf,'Position', [0, 0, g*400, g*300]);
     set(gcf, 'Color', 'w');
     export_fig(['./figures/image-amenityGrid-' place '.pdf']);
 end

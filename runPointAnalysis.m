@@ -31,7 +31,7 @@ sigmas = [0.1:0.1:10];
 
 % Singular Attributes
 amenityTag = amenityTags{1};    % = 'fuel'
-place = places{4};              % = 'Bristol'
+place = places{1};              % = 'Bristol'
 gridSize = gridSizes(4);         % = 300
 sigma = sigmas(30);             % = 3
 
@@ -47,4 +47,4 @@ sigma = sigmas(30);             % = 3
 
 % showManySigmasPopulationAmenityCorrelation(amenityTags,places(2),gridSize,sigmas,populationWeighted,saveFigures);    
 
-showManyGridSizesSigmasPopulationAmenityCorrelations(amenityTags,places(1),gridSizes,sigmas,populationWeighted);
+showManyGridSizesSigmasPopulationAmenityCorrelations(amenityTags(1:3),places(1:3),gridSizes,sigmas,populationWeighted,saveFigures);

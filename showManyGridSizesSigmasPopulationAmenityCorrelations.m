@@ -1,4 +1,4 @@
-function showManyGridSizesSigmasPopulationAmenityCorrelations(amenityTags,places,gridSizes,sigmas,populationWeighted)
+function showManyGridSizesSigmasPopulationAmenityCorrelations(amenityTags,places,gridSizes,sigmas,populationWeighted,saveFigures)
 % Shows the correlation of different granularities of gridSizes and sigmas for many places and amenities
 %
 % INPUT:
@@ -21,17 +21,31 @@ function showManyGridSizesSigmasPopulationAmenityCorrelations(amenityTags,places
 clims = [-1 1];
 
 %% Produce images of the correlations
-figure; figureCount = 1;
+
+if saveFigures
+    figure;
+else
+    figure('units','normalized','outerposition',[0 0 1 1]);
+end
+
+figureCount = 1;
 
 for m = 1:p
     for n = 1:a
-        subplot(p,a,figureCount);
+        subtightplot(p,a,figureCount);
         
         imagesc(gridSizes,sigmas,manyGridSizesSigmasPopulationAmenityCorrelations{m,n}, clims);
-        title([ places{m} ':' strrep(amenityTags{n}, '_', ' ')]);
+        colorbar;
+        ylabel([ places{m} ' ' upper(strrep(amenityTags{n}, '_', ' '))]);
         
         figureCount = figureCount + 1;
     end
+end
+
+if saveFigures
+    set(gcf,'Position', [0, 0, p*400, a*300]);
+    set(gcf, 'Color', 'w');
+    export_fig(['./figures/image-manyGridSizesSigmasPAC.pdf']);
 end
 
 %% Produce figures of the time taken
@@ -39,13 +53,12 @@ figure; figureCount = 1;
 
 for m = 1:p
     for n = 1:a
-        subplot(p,a,figureCount);
+        subtightplot(p,a,figureCount);
         
         imagesc(gridSizes,sigmas,log(manyTimes{m,n}));
         colorbar;
-        title([ places{m} ':' strrep(amenityTags{n}, '_', ' ')]);
+        ylabel([ places{m} ' ' upper(strrep(amenityTags{n}, '_', ' '))]);
         
         figureCount = figureCount + 1;
     end
 end
-
