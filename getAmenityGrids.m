@@ -47,6 +47,7 @@ for i=1:n
 end
 
 if (populationWeighted)
+    disp('Processing result in terms of amenity/person...');
     populationGrid = getPopulationGrid(place, gridSize, sigma);
 
     % Number of each of the amenities
@@ -70,5 +71,6 @@ if (populationWeighted)
             end
         end
         result = [result {populationWeightedAmenityGrid}];
-    end        
+    end
+    amenityGrids = result;
 end
