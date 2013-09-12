@@ -18,7 +18,7 @@ populationWeighted = true;
 saveFigures = true;
 
 %
-amenityTags = {'fuel' 'police' 'fire_station' 'hospital' 'bar' 'school'}; % 'atm'  'library'  'post_box' 
+amenityTags = {'fuel' 'police' 'fire_station' 'hospital' 'school' 'atm' 'post_box'}; % 'bar' 'atm'  'library'  'post_box' 
 places = { 'London' 'Manchester' 'Birmingham' 'Liverpool' 'Bristol' 'Oxford' 'Cardiff' 'Leeds' 'York' 'Nottingham' 'Chester'}; % Newcastle-upon-Tyne
 
 % DO NOT CHANGE
@@ -47,4 +47,6 @@ sigma = sigmas(30);             % = 3
 
 % showManySigmasPopulationAmenityCorrelation(amenityTags,places(2),gridSize,sigmas,populationWeighted,saveFigures);    
 
-showManyGridSizesSigmasPopulationAmenityCorrelations(amenityTags(1:3),places(1:3),gridSizes,sigmas,populationWeighted,saveFigures);
+% showManyGridSizesSigmasPopulationAmenityCorrelations(amenityTags(1:3),places(1:3),gridSizes,sigmas,populationWeighted,saveFigures);
+
+showPointAnalysisStatistics(amenityTags,places,gridSizes,sigmas,populationWeighted,saveFigures);

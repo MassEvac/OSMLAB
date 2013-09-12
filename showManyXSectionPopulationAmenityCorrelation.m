@@ -10,7 +10,7 @@ function showManyXSectionPopulationAmenityCorrelation(amenityTags, places, gridS
 % OUTPUT:
 %           Image of population and amenity correlation in grid format
 % EXAMPLE:
-%           showManyGridSizesPopulationAmenityCorrelation({'bar','atm','hospital'},'Bristol',[100:100:2000],1,true)
+%           showManyXSectionPopulationAmenityCorrelation({'fuel','fire_station','police},{'London'},[150:50:5100],[0.1:0.1:10],'sigma',2,true,true)
 
 if (nargin < 8)
     saveFigures = false;
