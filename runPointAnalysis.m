@@ -1,4 +1,4 @@
-% All the components of point analysis in one place
+%% All the components of point analysis in one place
 %
 % DETAIL:
 %           Point analysis encompasses anything to do with looking at static
@@ -35,6 +35,7 @@ place = places{1};              % = 'Bristol'
 gridSize = gridSizes(4);         % = 300
 sigma = sigmas(30);             % = 3
 
+%%
 % show2Amenities(amenityTags{1},amenityTags{2},place, saveFigures);
 % 
 % showPopulationGrid(place, gridSize, sigma, saveFigures);
@@ -49,4 +50,6 @@ sigma = sigmas(30);             % = 3
 
 % showManyGridSizesSigmasPopulationAmenityCorrelations(amenityTags(1:3),places(1:3),gridSizes,sigmas,populationWeighted,saveFigures);
 
-showPointAnalysisStatistics(amenityTags,places,gridSizes,sigmas,populationWeighted,saveFigures);
+getManyGridSizesSigmasAmenityAmenityCorrelations(amenityTags(1:3),places(1),gridSizes,sigmas,populationWeighted);
+
+% showPointAnalysisStatistics(amenityTags,places,gridSizes,sigmas,populationWeighted,saveFigures);
