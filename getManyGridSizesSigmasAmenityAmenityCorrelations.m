@@ -13,7 +13,7 @@ function [manyGridSizesSigmasAmenityAmenityCorrelations, manyTimes] = getManyGri
 %               places{n} in grid format for various gridSizes(i) and sigmas(j)
 %           manyTimes{m,n}(i,j) (Double) - Time taken to process manyGridSizesSigmasAmenityAmenityCorrelation{m,n}(i,j)
 % EXAMPLE:
-%           [manyGridSizesSigmasAmenityAmenityCorrelation, manyTimes] = getManyGridSizesSigmasAmenityAmenityCorrelations({'hospital','bar'},{'Bristol','Manchester'},[150:50:5100],[0.1:0.1:10],true)
+%           [manyGridSizesSigmasAmenityAmenityCorrelation, manyTimes] = getManyGridSizesSigmasAmenityAmenityCorrelations({'hospital','bar'},{'Bristol','Manchester'},[100:100:4000],[0.2:0.2:8],true)
 
 g = length(gridSizes);
 s = length(sigmas);

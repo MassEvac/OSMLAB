@@ -42,7 +42,7 @@ for m = 1:p
     end
     
     if saveFigures
-        set(gcf,'Position', [0, 0, (a-1)*400, (a-1)*200]);
+        set(gcf,'Position', [0, 0, (a-1)*400, (a-1)*300]);
         set(gcf, 'Color', 'w');
         export_fig(['./figures/AAC/image-manyGridSizesSigmasAAC-' places(m) '.pdf']);
     end
