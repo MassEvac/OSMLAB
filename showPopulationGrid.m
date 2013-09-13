@@ -9,7 +9,7 @@ function showPopulationGrid(place,gridSize,sigma, saveFigures)
 % OUTPUT:
 %           Graph of population data overlaid on top of the highway graph
 % EXAMPLE:
-%           showPopulationGrid('Bristol',250,1,true)
+%           showPopulationGrid('London',400,0,true)
 
 if (nargin < 4)
     saveFigures = false;
@@ -31,5 +31,5 @@ ylabel('North-South Cell Units');
 if saveFigures
     set(gcf,'Position', [0, 0, 800, 300]);
     set(gcf, 'Color', 'w');
-    export_fig(['./figures/image-Population-' place '.pdf']);
+    export_fig(['./figures/image-Population-gridSize-' num2str(gridSize) '-sigma-' num2str(sigma) '-' place '.pdf']);
 end

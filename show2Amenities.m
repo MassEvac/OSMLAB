@@ -9,7 +9,7 @@ function show2Amenities(amenityTag1, amenityTag2, place, saveFigures)
 % OUTPUT:
 %           Plot of the 2 amenities overlaid on the plot of the boundary 
 % EXAMPLE:
-%           show2Amenities('bar','hospital','Bristol',true)
+%           show2Amenities('fuel','hospital','London',true)
 % NOTE:
 %           The boundary is more obvious when there are more points to
 %           indicate it. Eg. The boundary for London is a lot more obvious
@@ -35,7 +35,7 @@ hold on;
 plot(amenity1(:,1),amenity1(:,2),'x','Color','blue');
 plot(amenity2(:,1),amenity2(:,2),'o','Color','red');
 plot(boundary(:,1),boundary(:,2),'.','Color','green');
-legend(upper(strrep(amenityTag1, '_', ' ')),upper(strrep(amenityTag2, '_', ' ')),place);
+legend(upper(strrep(amenityTag1, '_', ' ')),upper(strrep(amenityTag2, '_', ' ')),place,'location','southeast');
 axis([min_lon max_lon min_lat max_lat]);
 xlabel('Longitude (degrees)');
 ylabel('Latitude (degrees)');

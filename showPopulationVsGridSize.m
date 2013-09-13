@@ -1,7 +1,16 @@
 tic;
+close all;
+
+place = 'London';
+show2Amenities('fuel','hospital',place,true);hold on; plot3k(getPopulation(place));view(2);
+
+figure;
 
 for i = 1:20
-    pop = getPopulationGrid('London', i*250, 1);
+    pop = getPopulationGrid(place, i*250, 1,true);
+    imagesc(pop);
+    drawnow;
+    pause(0.05);
     p(i) = sum(pop(:));
 end
 

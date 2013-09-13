@@ -25,8 +25,8 @@ bwidth = haversine([(max_lon) (min_lon)] , [(min_lat) (min_lat)]);
 width = (twidth + bwidth) / 2;
 
 % number of cells in longitudinal and latitudinal direction
-x_lon = round (width  / gridSize);
-x_lat = round (height / gridSize);
+x_lon = ceil (width  / gridSize);
+x_lat = ceil (height / gridSize);
 
 % delta of min and max longitudes
 d_lon = max_lon - min_lon;
