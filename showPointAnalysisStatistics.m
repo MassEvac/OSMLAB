@@ -30,7 +30,7 @@ end
 
 deviation = zeros(p,a);
 average = zeros(p,a);
-crop = 1:40;
+crop = 1:30;
 
 for m = 1:p
     for n = 1:a
@@ -55,5 +55,5 @@ legend(upper(strrep(amenityTags, '_', ' ')),'location','southwest');
 if saveFigures
     set(gcf,'Position', [0, 0, 900, 300]);
     set(gcf, 'Color', 'w');
-    export_fig(['./figures/image-pointAnalysisStatistics.pdf']);
+    export_fig(['./figures/point_analysis/image-pointAnalysisStatistics.pdf']);
 end

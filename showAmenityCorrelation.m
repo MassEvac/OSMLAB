@@ -37,5 +37,5 @@ colorbar;
 if saveFigures
     set(gcf,'Position', [0, 0, 800, 300]);
     set(gcf, 'Color', 'w');
-    export_fig(['./figures/image-amenityCorrelation-' place '.pdf']);
+    export_fig(['./figures/point_analysis/image-amenityCorrelation-' place '.pdf']);
 end

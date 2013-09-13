@@ -11,7 +11,7 @@ function showAmenityGrids(amenityTags, place, gridSize, sigma, populationWeighte
 % OUTPUT:
 %           Image of amenities of a given place with the input attributes
 % EXAMPLE:
-%           showAmenityGrids({'fuel','hospital'},'London',250,1,true,true)
+%           showAmenityGrids({'fuel'},'London',400,0,true,true)
 
 if (nargin < 6)
     saveFigures = false;
@@ -38,5 +38,5 @@ end
 if saveFigures
     set(gcf,'Position', [0, 0, g*800, g*300]);
     set(gcf, 'Color', 'w');
-    export_fig(['./figures/image-amenityGrid-' place '-gridSize-' num2str(gridSize) '-sigma-' num2str(sigma) '.pdf']);
+    export_fig(['./figures/point_analysis/image-amenityGrid-' place '-gridSize-' num2str(gridSize) '-sigma-' num2str(sigma) '.pdf']);
 end

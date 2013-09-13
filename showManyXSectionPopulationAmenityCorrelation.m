@@ -59,7 +59,7 @@ for m = 1:p
         if saveFigures
             set(gcf,'Position', [0, 0, 800, 300]);
             set(gcf, 'Color', 'w');
-            export_fig(['./figures/image-manyGridSizesPopulationAmenityCorrelation-' XSectionOf '-' num2str(XSectionAt) '-' place '.pdf']);
+            export_fig(['./figures/point_analysis/image-manyGridSizesPopulationAmenityCorrelation-' XSectionOf '-' num2str(XSectionAt) '-' place '.pdf']);
         end
         
         %
@@ -73,7 +73,7 @@ for m = 1:p
         if saveFigures
             set(gcf,'Position', [0, 0, 800, 300]);
             set(gcf, 'Color', 'w');
-            export_fig(['./figures/corr-manyGridSizesPopulationAmenityCorrelation-' XSectionOf '-' num2str(XSectionAt) '-' place '.pdf']);
+            export_fig(['./figures/point_analysis/corr-manyGridSizesPopulationAmenityCorrelation-' XSectionOf '-' num2str(XSectionAt) '-' place '.pdf']);
         end
 
         %
@@ -86,7 +86,7 @@ for m = 1:p
         if saveFigures
             set(gcf,'Position', [0, 0, 800, 300]);
             set(gcf, 'Color', 'w');
-            export_fig(['./figures/corr-unitManyGridSizesPopulationAmenityCorrelation-' XSectionOf '-' num2str(XSectionAt) '-' place '.pdf']);
+            export_fig(['./figures/point_analysis/corr-unitManyGridSizesPopulationAmenityCorrelation-' XSectionOf '-' num2str(XSectionAt) '-' place '.pdf']);
         end
         
     % If it is a cross section of gridSize...
@@ -102,7 +102,7 @@ for m = 1:p
         if saveFigures
             set(gcf,'Position', [0, 0, 800, 300]);
             set(gcf, 'Color', 'w');
-            export_fig(['./figures/image-manySigmasPopulationAmenityCorrelation-' XSectionOf '-' num2str(XSectionAt) '-' place '.pdf']);
+            export_fig(['./figures/point_analysis/image-manySigmasPopulationAmenityCorrelation-' XSectionOf '-' num2str(XSectionAt) '-' place '.pdf']);
         end
 
         % 
@@ -116,7 +116,7 @@ for m = 1:p
         if saveFigures
             set(gcf,'Position', [0, 0, 800, 300]);
             set(gcf, 'Color', 'w');
-            export_fig(['./figures/corr-manySigmasPopulationAmenityCorrelation-' XSectionOf '-' num2str(XSectionAt) '-' place '.pdf']);
+            export_fig(['./figures/point_analysis/corr-manySigmasPopulationAmenityCorrelation-' XSectionOf '-' num2str(XSectionAt) '-' place '.pdf']);
         end
 
         %
@@ -129,7 +129,7 @@ for m = 1:p
         if saveFigures
             set(gcf,'Position', [0, 0, 800, 300]);
             set(gcf, 'Color', 'w');
-            export_fig(['./figures/corr-unitManySigmasPopulationAmenityCorrelation-' XSectionOf '-' num2str(XSectionAt) '-' place '.pdf']);
+            export_fig(['./figures/point_analysis/corr-unitManySigmasPopulationAmenityCorrelation-' XSectionOf '-' num2str(XSectionAt) '-' place '.pdf']);
         end
     end     
 end

@@ -45,20 +45,5 @@ end
 if saveFigures
     set(gcf,'Position', [0, 0, p*400, a*300]);
     set(gcf, 'Color', 'w');
-    export_fig(['./figures/image-manyGridSizesSigmasPAC.pdf']);
-end
-
-%% Produce figures of the time taken
-figure; figureCount = 1;
-
-for m = 1:p
-    for n = 1:a
-        subtightplot(p,a,figureCount);
-        
-        imagesc(gridSizes,sigmas,log(manyTimes{m,n}));
-        colorbar;
-        ylabel([ places{m} ' ' upper(strrep(amenityTags{n}, '_', ' '))]);
-        
-        figureCount = figureCount + 1;
-    end
+    export_fig(['./figures/PAC/image-manyGridSizesSigmasPAC.pdf']);
 end

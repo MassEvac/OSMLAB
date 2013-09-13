@@ -30,8 +30,8 @@ for m = 1:length(places)
     for n = 1:length(amenityTags)
         amenityTag = amenityTags{n};
 
-        fCorr = ['./results/manyGridSizesSigmasPopulationAmenityCorrelation-' place '-' amenityTag];
-        fTime = ['./results/time-manyGridSizesSigmasPopulationAmenityCorrelation-' place '-' amenityTag];
+        fCorr = ['./results/PAC/manyGridSizesSigmasPopulationAmenityCorrelation-' place '-' amenityTag];
+        fTime = ['./results/PAC/time-manyGridSizesSigmasPopulationAmenityCorrelation-' place '-' amenityTag];
 
         if exist(fCorr,'file') && exist(fTime,'file')
             correlation = csvread(fCorr);

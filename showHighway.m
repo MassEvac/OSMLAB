@@ -79,5 +79,5 @@ axis([min_lon max_lon min_lat max_lat])
 if saveFigures
     set(gcf,'Position', [0, 0, 800, 300]);
     set(gcf, 'Color', 'w');
-    export_fig(['./figures/graph-Highway-' place '.pdf']);
+    export_fig(['./figures/highway_analysis/graph-Highway-' place '.pdf']);
 end

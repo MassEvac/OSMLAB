@@ -43,5 +43,5 @@ ylabel('Latitude (degrees)');
 if saveFigures
     set(gcf,'Position', [0, 0, 800, 300]);
     set(gcf, 'Color', 'w');
-    export_fig(['./figures/plot-' amenityTag1 '-' amenityTag2 '-' place '.pdf']);
+    export_fig(['./figures/point_analysis/plot-' amenityTag1 '-' amenityTag2 '-' place '.pdf']);
 end

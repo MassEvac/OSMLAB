@@ -44,6 +44,6 @@ for m = 1:p
     if saveFigures
         set(gcf,'Position', [0, 0, (a-1)*400, (a-1)*200]);
         set(gcf, 'Color', 'w');
-        export_fig(['./figures/image-manyGridSizesSigmasAAC-' places(m) '.pdf']);
+        export_fig(['./figures/AAC/image-manyGridSizesSigmasAAC-' places(m) '.pdf']);
     end
 end

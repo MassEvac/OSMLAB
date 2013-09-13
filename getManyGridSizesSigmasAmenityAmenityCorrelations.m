@@ -32,10 +32,10 @@ for m = 1:length(places)
                 amenityTag1 = amenityTags{n};
                 amenityTag2 = amenityTags{o};
 
-                fCorr = ['./results/manyGridSizesSigmasAmenityAmenityCorrelation-' place '-' amenityTag1 '-' amenityTag2];
-                fCorrR = ['./results/manyGridSizesSigmasAmenityAmenityCorrelation-' place '-' amenityTag2 '-' amenityTag1];
-                fTime = ['./results/time-manyGridSizesSigmasAmenityAmenityCorrelation-' place '-' amenityTag1 '-' amenityTag2];
-                fTimeR = ['./results/time-manyGridSizesSigmasAmenityAmenityCorrelation-' place '-' amenityTag2 '-' amenityTag1];
+                fCorr = ['./results/AAC/manyGridSizesSigmasAmenityAmenityCorrelation-' place '-' amenityTag1 '-' amenityTag2];
+                fCorrR = ['./results/AAC/manyGridSizesSigmasAmenityAmenityCorrelation-' place '-' amenityTag2 '-' amenityTag1];
+                fTime = ['./results/AAC/time-manyGridSizesSigmasAmenityAmenityCorrelation-' place '-' amenityTag1 '-' amenityTag2];
+                fTimeR = ['./results/AAC/time-manyGridSizesSigmasAmenityAmenityCorrelation-' place '-' amenityTag2 '-' amenityTag1];
 
                 if exist(fCorr,'file') && exist(fTime,'file')
                     correlation = csvread(fCorr);

@@ -22,8 +22,8 @@ amenityTags = {'fuel' 'police' 'fire_station' 'hospital' 'school' 'atm' 'post_bo
 places = { 'London' 'Manchester' 'Birmingham' 'Liverpool' 'Bristol' 'Oxford' 'Cardiff' 'Leeds' 'York' 'Nottingham' 'Chester'}; % Newcastle-upon-Tyne
 
 % DO NOT CHANGE
-gridSizes = [150:50:5100];
-sigmas = [0.1:0.1:10];
+gridSizes = [100:100:4000];
+sigmas = [0.2:0.2:8];
 
 % Plural Attributes
 % amenityTags = {'fuel' 'police' 'fire_station' 'hospital' 'bar' 'school'};
@@ -48,8 +48,8 @@ sigma = sigmas(30);             % = 3
 
 % showManySigmasPopulationAmenityCorrelation(amenityTags,places(2),gridSize,sigmas,populationWeighted,saveFigures);    
 
-% showManyGridSizesSigmasPopulationAmenityCorrelations(amenityTags(1:3),places(1:3),gridSizes,sigmas,populationWeighted,saveFigures);
+showManyGridSizesSigmasPopulationAmenityCorrelations(amenityTags,places,gridSizes,sigmas,populationWeighted,saveFigures);
 
-getManyGridSizesSigmasAmenityAmenityCorrelations(amenityTags(1:3),places(1),gridSizes,sigmas,populationWeighted);
+getManyGridSizesSigmasAmenityAmenityCorrelations(amenityTags,places,gridSizes,sigmas,populationWeighted);
 
 % showPointAnalysisStatistics(amenityTags,places,gridSizes,sigmas,populationWeighted,saveFigures);

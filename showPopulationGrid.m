@@ -31,5 +31,5 @@ ylabel('North-South Cell Units');
 if saveFigures
     set(gcf,'Position', [0, 0, 800, 300]);
     set(gcf, 'Color', 'w');
-    export_fig(['./figures/image-Population-gridSize-' num2str(gridSize) '-sigma-' num2str(sigma) '-' place '.pdf']);
+    export_fig(['./figures/point_analysis/image-Population-gridSize-' num2str(gridSize) '-sigma-' num2str(sigma) '-' place '.pdf']);
 end
