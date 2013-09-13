@@ -11,7 +11,7 @@ function showPointAnalysisStatistics(amenityTags,places,gridSizes,sigmas,populat
 %           Image of population-amenity correlation in grid format for many
 %           places and amenities for different gridSizes and sigmas
 % EXAMPLE:
-%           showPointAnalysisStatistics({'hospital','bar'},{'Bristol','Manchester'},[150:50:5100],[0.1:0.1:10],true,true)
+%           showPointAnalysisStatistics({'fuel','police','fire_station'},{'London'},[100:100:4000],[0.2:0.2:8],true,true)
 
 %% Retrieve the data
 [manyGridSizesSigmasPopulationAmenityCorrelations, ~] = getManyGridSizesSigmasPopulationAmenityCorrelations(amenityTags,places,gridSizes,sigmas,populationWeighted);

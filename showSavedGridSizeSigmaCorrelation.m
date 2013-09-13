@@ -1,11 +1,11 @@
-place = 'Leeds';
-amenityTag = 'hospital';
-gridSizes = 150:50:5100;
-sigmas = 0.1:0.1:10;
-crop = 1:40;
+place = 'London';
+amenityTag = 'police';
+gridSizes = [100:100:4000];
+sigmas = [0.2:0.2:8];
+crop = 1:20;
 
 
-fCorr = ['./results/manyGridSizesSigmasPopulationAmenityCorrelation-' place '-' amenityTag];
+fCorr = ['./results/PAC/manyGridSizesSigmasPopulationAmenityCorrelation-' place '-' amenityTag];
 p = csvread(fCorr);
 figure;
 
