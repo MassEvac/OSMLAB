@@ -1,4 +1,4 @@
-function [amenityAmenityCorrelation] = getAmenityAmenityCorrelation(amenityTags, place, gridSize, sigma, populationWeighted)
+function [AAC] = getAmenityAmenityCorrelation(amenityTags, place, gridSize, sigma, populationWeighted)
 % Returns the correlation between 2 amenities as a single value for a single place
 %
 % INPUT:
@@ -12,8 +12,8 @@ function [amenityAmenityCorrelation] = getAmenityAmenityCorrelation(amenityTags,
 %           amenityAmenityCorrelation (Double) - A single value which
 %               represents the degree of correlation between 2 amenities
 % EXAMPLE:
-%           [populationAmenityCorrelation] = getPopulationAmenityCorrelation({'bar','atm','hospital'},'Bristol',250,1,true)
+%           [AAC] = getAmenityAmenityCorrelation({'bar','atm','hospital'},'Bristol',250,1,true)
 
 amenityGrids = getAmenityGrids(amenityTags, place, gridSize, sigma, populationWeighted);
-amenityAmenityCorrelation = getCorrelation(amenityGrids);
-amenityAmenityCorrelation = amenityAmenityCorrelation(1,2);
+AAC = getCorrelation(amenityGrids);
+AAC = AAC(1,2);

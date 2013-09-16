@@ -11,12 +11,12 @@ function showManyGridSizesSigmasAmenityAmenityCorrelations(amenityTags,places,gr
 %           Image of population-amenity correlation in grid format for many
 %           places and amenities for different gridSizes and sigmas
 % EXAMPLE:
-%           showManyGridSizesSigmasAmenityAmenityCorrelation({'hospital','bar'},{'Bristol','Manchester'},[100:100:5000],[1:10],true)
+%           showManyGridSizesSigmasAmenityAmenityCorrelations({'fuel','hospital','school'},{'Bristol','Manchester'},100:100:4000,0.2:0.2:8,true,true)
 
 %% Retrieve the data
-[manyGridSizesSigmasPopulationAmenityCorrelations, ~] = getManyGridSizesSigmasAmenityAmenityCorrelations(amenityTags,places,gridSizes,sigmas,populationWeighted);
+[manyGridSizesSigmasAAC, ~] = getManyGridSizesSigmasAmenityAmenityCorrelations(amenityTags,places,gridSizes,sigmas,populationWeighted);
 
-[p,a,~] = size(manyGridSizesSigmasPopulationAmenityCorrelations);
+[p,a,~] = size(manyGridSizesSigmasAAC);
 
 clims = [-1 1];
 
@@ -32,10 +32,10 @@ for m = 1:p
     for n = 1:a
         for o = (n+1):a
             
-            figureNumber = (n-1)*(a-1) + (o-1)
+            figureNumber = (n-1)*(a-1) + (o-1);
             subtightplot(a-1,a-1,figureNumber);
 
-            imagesc(gridSizes,sigmas,manyGridSizesSigmasPopulationAmenityCorrelations{m,n,o}, clims);
+            imagesc(gridSizes,sigmas,manyGridSizesSigmasAAC{m,n,o}, clims);
             colorbar;
             ylabel([ places{m} ' ' upper(strrep(amenityTags{n}, '_', ' ')) ' vs ' upper(strrep(amenityTags{o}, '_', ' '))]);
         end
