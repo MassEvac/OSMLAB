@@ -65,5 +65,6 @@ legend(upper(strrep(amenityTags, '_', ' ')),'location','southwest');
 if saveFigures
     set(gcf,'Position', [0, 0, 900, 300]);
     set(gcf, 'Color', 'w');
-    export_fig(['./figures/point_analysis/image-AACAnalysisStatistics.pdf']);
+    export_fig(['./figures/point_analysis/plot-AACAnalysisStatistics-vs-' amenityTags{vsAmenityTag} '.pdf']);
+    disp('figure saved');
 end

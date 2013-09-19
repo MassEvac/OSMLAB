@@ -12,7 +12,7 @@ function [amenityGrids] = getAmenityGrids(amenityTags, place, gridSize, sigma, p
 %           longitude(i,j) (Double) - Longitude of amenityGrid(i,j) in degrees
 %           latitude(i,j) (Double) - Latitude of amenityGrid(i,j) in degrees
 % EXAMPLE:
-%           [amenityGrids] = getAmenityGrids({'bar','atm','hospital'},'Bristol',250,1,true)
+%           [amenityGrids] = getAmenityGrids({'fuel'},'London',400,0,true)
 
 if (nargin < 5)
     populationWeighted = false;

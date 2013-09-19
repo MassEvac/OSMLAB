@@ -55,5 +55,5 @@ legend(upper(strrep(amenityTags, '_', ' ')),'location','southwest');
 if saveFigures
     set(gcf,'Position', [0, 0, 900, 300]);
     set(gcf, 'Color', 'w');
-    export_fig(['./figures/point_analysis/image-PACAnalysisStatistics.pdf']);
+    export_fig(['./figures/point_analysis/plot-PACAnalysisStatistics.pdf']);
 end

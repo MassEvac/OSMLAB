@@ -69,7 +69,7 @@ r_lat = ceil(l_lat/u_lat);
 
 % Resize the population grid so that it is the same resolution as the 
 % resolution required by the input gridsize
-resizedPopulationDensityGrid=imresize(populationDensityGrid,[r_lat r_lon]);
+resizedPopulationDensityGrid=imresize(populationDensityGrid,[r_lat r_lon],'bicubic');
 
 % Determine the start of crop point
 min_x = ceil((max_pop_lat - max_lat)/u_lat);

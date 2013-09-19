@@ -43,7 +43,7 @@ for m = 1:p
 end
 
 if saveFigures
-    set(gcf,'Position', [0, 0, p*400, a*300]);
+    set(gcf,'Position', [0, 0, a*300, p*250]);
     set(gcf, 'Color', 'w');
     export_fig(['./figures/PAC/image-manyGridSizesSigmasPAC.pdf']);
 end
