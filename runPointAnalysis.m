@@ -45,13 +45,10 @@ sigma = sigmas(30);             % = 3
 
 % showManyPlacesPopulationAmenityCorrelation(amenityTags, places, gridSize, sigma, populationWeighted, saveFigures);
 % showManyGridSizesPopulationAmenityCorrelation(amenityTags,places(1),gridSizes,sigma,populationWeighted,saveFigures);    
-
 % showManySigmasPopulationAmenityCorrelation(amenityTags,places(2),gridSize,sigmas,populationWeighted,saveFigures);    
 
-% showManyGridSizesSigmasPopulationAmenityCorrelations(amenityTags(1:3),places([5]),gridSizes,sigmas,populationWeighted,saveFigures);
+showManyGridSizesSigmasPopulationAmenityCorrelations(amenityTags,places,gridSizes,sigmas,0,saveFigures);
+showPACAnalysisStatistics(amenityTags,places,gridSizes,sigmas,0,saveFigures);
 
 % showManyGridSizesSigmasAmenityAmenityCorrelations(amenityTags,places,gridSizes,sigmas,populationWeighted,saveFigures);
-
-% showPACAnalysisStatistics(amenityTags,places,gridSizes,sigmas,populationWeighted,saveFigures);
-
-showAACAnalysisStatistics(amenityTags,1,places,gridSizes,sigmas,populationWeighted,saveFigures);
+% showAACAnalysisStatistics(amenityTags,places,gridSizes,sigmas,populationWeighted,saveFigures);
