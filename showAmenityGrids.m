@@ -19,24 +19,21 @@ end
 
 amenityGrids = getAmenityGrids(amenityTags, place, gridSize, sigma, populationWeighted);
 
-if saveFigures
-    figure;
-else
-    figure('units','normalized','outerposition',[0 0 1 1]);
-end
-
 n = length(amenityTags);
-g = ceil(sqrt(n));
 
 for i=1:n
-    subtightplot(g,g,i);
+    figure;
+
     imagesc(amenityGrids{i});
     colorbar;
-    ylabel([ place ' ' upper(strrep(amenityTags{i}, '_', ' ')) ]);
+    xlabel('West-East Cell Units');
+    ylabel('North-South Cell Units');
+    set(gcf,'name',[ place ' ' upper(strrep(amenityTags{i}, '_', ' ')) ],'numbertitle','off')
+
+    if saveFigures
+        set(gcf,'Position', [0, 0, 800, 300]);
+        set(gcf, 'Color', 'w');
+        export_fig(['./figures/point_analysis/image-amenityGrid-' place '-' amenityTags{i} '-gridSize-' num2str(gridSize) '-sigma-' num2str(sigma) '.pdf']);
+    end    
 end
 
-if saveFigures
-    set(gcf,'Position', [0, 0, g*800, g*300]);
-    set(gcf, 'Color', 'w');
-    export_fig(['./figures/point_analysis/image-amenityGrid-' place '-gridSize-' num2str(gridSize) '-sigma-' num2str(sigma) '.pdf']);
-end
