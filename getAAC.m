@@ -1,5 +1,5 @@
-function [AAC] = getAmenityAmenityCorrelation(amenityTags, place, gridSize, sigma, populationWeighted)
-% Returns the correlation between 2 amenities as a single value for a single place
+function [AAC] = getAAC(amenityTags, place, gridSize, sigma)
+% Returns the correlation between 2 Amenity/Person as a single value for a single place
 %
 % INPUT:
 %           amenityTags{i} (String Cell) - Name of the amenities to
@@ -7,12 +7,14 @@ function [AAC] = getAmenityAmenityCorrelation(amenityTags, place, gridSize, sigm
 %           place (String) - Names of a polygon area in OpenSteetMap
 %           gridSize (Integer) - Grid granularity in metres
 %           sigma (Integer) - Standard deviation to use for gaussian blurring
-%           populationWeighted (Boolean) - Normalise the amenities by population?
 % OUTPUT:
-%           amenityAmenityCorrelation (Double) - A single value which
+%           AAC (Double) - A single value which
 %               represents the degree of correlation between 2 amenities
 % EXAMPLE:
-%           [AAC] = getAmenityAmenityCorrelation({'bar','atm','hospital'},'Bristol',250,1,true)
+%           [AAC] = getAAC({'bar','atm','hospital'},'Bristol',250,1)
+
+% We want amenity to be weighted by population
+populationWeighted = true;
 
 amenityGrids = getAmenityGrids(amenityTags, place, gridSize, sigma, populationWeighted);
 AAC = getCorrelation(amenityGrids);

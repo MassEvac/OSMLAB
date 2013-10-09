@@ -18,7 +18,7 @@ populationWeighted = true;
 saveFigures = true;
 
 %
-amenityTags = {'fuel' 'police' 'fire_station' 'hospital' 'school' 'atm' 'post_box'}; % 'bar' 'atm'  'library'  'post_box' 
+amenityTags = {'fuel' 'police' 'fire_station' 'hospital' 'school' 'atm' 'post_box' }; % 'library' 'bar'
 places = { 'London' 'Manchester' 'Birmingham' 'Liverpool' 'Bristol' 'Oxford' 'Cardiff' 'Leeds' 'York' 'Nottingham' 'Chester'}; % Newcastle-upon-Tyne
 
 % DO NOT CHANGE
@@ -34,6 +34,8 @@ amenityTag = amenityTags{1};    % = 'fuel'
 place = places{1};              % = 'Bristol'
 gridSize = gridSizes(4);         % = 300
 sigma = sigmas(30);             % = 3
+XSectionOf = 'sigma';
+XSectionAt = 2;
 
 %%
 % show2Amenities(amenityTags{1},amenityTags{2},place, saveFigures);
@@ -43,12 +45,12 @@ sigma = sigmas(30);             % = 3
 % showAmenityGrids(amenityTags, place, gridSize, sigma, populationWeighted, saveFigures);
 % showAmenityCorrelation(amenityTags, place, gridSize, sigma, populationWeighted, saveFigures);
 
-% showManyPlacesPopulationAmenityCorrelation(amenityTags, places, gridSize, sigma, populationWeighted, saveFigures);
-% showManyGridSizesPopulationAmenityCorrelation(amenityTags,places(1),gridSizes,sigma,populationWeighted,saveFigures);    
-% showManySigmasPopulationAmenityCorrelation(amenityTags,places(2),gridSize,sigmas,populationWeighted,saveFigures);    
+%showManyPlacesPAC(amenityTags, places, gridSize, sigma, saveFigures);
+showManyXSectionPAC(amenityTags, places, gridSizes, sigmas, XSectionOf, XSectionAt, saveFigures);
 
-showManyGridSizesSigmasPopulationAmenityCorrelations(amenityTags,places,gridSizes,sigmas,0,saveFigures);
-showPACAnalysisStatistics(amenityTags,places,gridSizes,sigmas,0,saveFigures);
+% showManyPAC(amenityTags,places,gridSizes,sigmas,saveFigures);
+% showPACAnalysisStatistics(amenityTags,places,gridSizes,sigmas,saveFigures);
 
-% showManyGridSizesSigmasAmenityAmenityCorrelations(amenityTags,places,gridSizes,sigmas,populationWeighted,saveFigures);
-% showAACAnalysisStatistics(amenityTags,places,gridSizes,sigmas,populationWeighted,saveFigures);
+%showManyAAC(amenityTags,places,gridSizes,sigmas,saveFigures);
+
+% showAACAnalysisStatistics(amenityTags,places,gridSizes,sigmas,saveFigures);

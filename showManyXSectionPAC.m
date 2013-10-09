@@ -1,4 +1,4 @@
-function showManyXSectionPopulationAmenityCorrelation(amenityTags, places, gridSizes, sigmas, XSectionOf, XSectionAt, populationWeighted, saveFigures)
+function showManyXSectionPAC(amenityTags, places, gridSizes, sigmas, XSectionOf, XSectionAt, saveFigures)
 % Plot the correlation between population and amenity in grid format for various places and amenities
 %
 % INPUT:
@@ -6,27 +6,26 @@ function showManyXSectionPopulationAmenityCorrelation(amenityTags, places, gridS
 %           places{m} (String) - Names of polygon areas in OpenSteetMap
 %           gridSizes(i) (Integer) - Grid granularity in metres
 %           sigma(i) (Integer) - Standard deviation to use for gaussian blurring
-%           populationWeighted (Boolean) - Normalise the amenities by population?% OUTPUT:
 % OUTPUT:
 %           Image of population and amenity correlation in grid format
 % EXAMPLE:
-%           showManyXSectionPopulationAmenityCorrelation({'fuel','fire_station','police},{'London'},[150:50:5100],[0.1:0.1:10],'sigma',2,true,true)
+%           showManyXSectionPAC({'fuel' 'fire_station' 'police'},{'London'},[100:100:4000],[0.2:0.2:8],'sigma',2,true)
 
-if (nargin < 8)
+if (nargin < 7)
     saveFigures = false;
 end
 
 %% Retrieve the data
-[manyGridSizesSigmasPopulationAmenityCorrelations, ~] = getManyGridSizesSigmasPopulationAmenityCorrelations(amenityTags,places,gridSizes,sigmas,populationWeighted);
+[PAC, ~] = getManyPAC(amenityTags,places,gridSizes,sigmas);
 
-[p,a] = size(manyGridSizesSigmasPopulationAmenityCorrelations);
+[p,a] = size(PAC);
 
 %% Iterative Process
 for m = 1:p
     place = places{m};
     %% Retrieve the cross sectional data
     for j = 1:a
-        correlation = manyGridSizesSigmasPopulationAmenityCorrelations{m,j};
+        correlation = PAC{m,j};
         % If the following throws an error saying
         % 'Improper assignment with rectangular empty matrix.',
         % your XSectionOf probably does not respect XSectionAt.
@@ -38,33 +37,35 @@ for m = 1:p
             index = abs(gridSizes-XSectionAt)<10e-3;
             correlation = correlation(index, :).';
         end
-        manyPopulationAmenityCorrelation(:,j) = correlation;
+        manyPAC(:,j) = correlation;
     end
     
-    manyPopulationAmenityCorrelationT = manyPopulationAmenityCorrelation';
-    unitManyPopulationAmenityCorrelationT = bsxfun(@rdivide, manyPopulationAmenityCorrelationT,manyPopulationAmenityCorrelationT(1,:));
-    unitManyPopulationAmenityCorrelation = unitManyPopulationAmenityCorrelationT';
+    manyPACT = manyPAC';
+    unitManyPACT = bsxfun(@rdivide, manyPACT,manyPACT(1,:));
+    unitManyPAC = unitManyPACT';
     
     %% Generate output
     % If it is a cross section of sigma...
     if strmatch(XSectionOf,'sigma')
-        %
         figure;
-        imagesc(1,gridSizes,manyPopulationAmenityCorrelation,[-1 1]);
+        imagesc(1,gridSizes,manyPAC,[-1 1]);
         set(gca,'XTick',1:length(amenityTags),'XTickLabel',upper(strrep(amenityTags, '_', ' ')));
         xlabel('Amenity');
         ylabel('Cell Grid Size (metres)');
         colorbar;
-
+        
         if saveFigures
+            
             set(gcf,'Position', [0, 0, 800, 300]);
             set(gcf, 'Color', 'w');
-            export_fig(['./figures/point_analysis/image-manyGridSizesPopulationAmenityCorrelation-' XSectionOf '-' num2str(XSectionAt) '-' place '.pdf']);
+            disp('hello');
+            disp(['./figures/point_analysis/image-manyGridSizesPAC-' XSectionOf '-' num2str(XSectionAt) '-' place '.pdf']);
+            export_fig(['./figures/point_analysis/image-manyGridSizesPAC-' XSectionOf '-' num2str(XSectionAt) '-' place '.pdf']);
         end
         
         %
         figure;
-        plot(gridSizes, manyPopulationAmenityCorrelation);
+        plot(gridSizes, manyPAC);
         legend(upper(strrep(amenityTags, '_', ' ')));
 
         xlabel('Cell Grid Size (metres)');
@@ -73,12 +74,12 @@ for m = 1:p
         if saveFigures
             set(gcf,'Position', [0, 0, 800, 300]);
             set(gcf, 'Color', 'w');
-            export_fig(['./figures/point_analysis/corr-manyGridSizesPopulationAmenityCorrelation-' XSectionOf '-' num2str(XSectionAt) '-' place '.pdf']);
+            export_fig(['./figures/point_analysis/corr-manyGridSizesPAC-' XSectionOf '-' num2str(XSectionAt) '-' place '.pdf']);
         end
 
         %
         figure;
-        plot(gridSizes, unitManyPopulationAmenityCorrelation);
+        plot(gridSizes, unitManyPAC);
         legend(upper(strrep(amenityTags, '_', ' ')));
         xlabel('Cell Grid Size (metres)');
         ylabel(['Correlation Coefficient / ' upper(strrep(amenityTags{1}, '_', ' ')) ' CorrCoef']);
@@ -86,14 +87,14 @@ for m = 1:p
         if saveFigures
             set(gcf,'Position', [0, 0, 800, 300]);
             set(gcf, 'Color', 'w');
-            export_fig(['./figures/point_analysis/corr-unitManyGridSizesPopulationAmenityCorrelation-' XSectionOf '-' num2str(XSectionAt) '-' place '.pdf']);
+            export_fig(['./figures/point_analysis/corr-unitManyGridSizesPAC-' XSectionOf '-' num2str(XSectionAt) '-' place '.pdf']);
         end
         
     % If it is a cross section of gridSize...
     elseif strmatch(XSectionOf,'gridSize')
         %
         figure;
-        imagesc(1,sigmas,manyPopulationAmenityCorrelation,[-1 1]);
+        imagesc(1,sigmas,manyPAC,[-1 1]);
         set(gca,'XTick',1:length(amenityTags),'XTickLabel',upper(strrep(amenityTags, '_', ' ')));
         xlabel('Amenity');
         ylabel('Sigma');
@@ -102,12 +103,12 @@ for m = 1:p
         if saveFigures
             set(gcf,'Position', [0, 0, 800, 300]);
             set(gcf, 'Color', 'w');
-            export_fig(['./figures/point_analysis/image-manySigmasPopulationAmenityCorrelation-' XSectionOf '-' num2str(XSectionAt) '-' place '.pdf']);
+            export_fig(['./figures/point_analysis/image-manySigmasPAC-' XSectionOf '-' num2str(XSectionAt) '-' place '.pdf']);
         end
 
         % 
         figure;
-        plot(sigmas, manyPopulationAmenityCorrelation);
+        plot(sigmas, manyPAC);
         legend(upper(strrep(amenityTags, '_', ' ')));
 
         xlabel('Sigma');
@@ -116,12 +117,12 @@ for m = 1:p
         if saveFigures
             set(gcf,'Position', [0, 0, 800, 300]);
             set(gcf, 'Color', 'w');
-            export_fig(['./figures/point_analysis/corr-manySigmasPopulationAmenityCorrelation-' XSectionOf '-' num2str(XSectionAt) '-' place '.pdf']);
+            export_fig(['./figures/point_analysis/corr-manySigmasPAC-' XSectionOf '-' num2str(XSectionAt) '-' place '.pdf']);
         end
 
         %
         figure;
-        plot(sigmas, unitManyPopulationAmenityCorrelation);
+        plot(sigmas, unitManyPAC);
         legend(upper(strrep(amenityTags, '_', ' ')));
         xlabel('Sigma');
         ylabel(['Correlation Coefficient / ' upper(strrep(amenityTags{1}, '_', ' ')) ' CorrCoef']);
@@ -129,7 +130,7 @@ for m = 1:p
         if saveFigures
             set(gcf,'Position', [0, 0, 800, 300]);
             set(gcf, 'Color', 'w');
-            export_fig(['./figures/point_analysis/corr-unitManySigmasPopulationAmenityCorrelation-' XSectionOf '-' num2str(XSectionAt) '-' place '.pdf']);
+            export_fig(['./figures/point_analysis/corr-unitManySigmasPAC-' XSectionOf '-' num2str(XSectionAt) '-' place '.pdf']);
         end
     end     
 end

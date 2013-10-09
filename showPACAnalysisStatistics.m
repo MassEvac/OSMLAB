@@ -1,4 +1,4 @@
-function showPACAnalysisStatistics(amenityTags,places,gridSizes,sigmas,populationWeighted,saveFigures)
+function showPACAnalysisStatistics(amenityTags,places,gridSizes,sigmas,saveFigures)
 % Shows the correlation of different granularities of gridSizes and sigmas for many places and amenities
 %
 % INPUT:
@@ -11,12 +11,12 @@ function showPACAnalysisStatistics(amenityTags,places,gridSizes,sigmas,populatio
 %           Image of population-amenity correlation in grid format for many
 %           places and amenities for different gridSizes and sigmas
 % EXAMPLE:
-%           showPointAnalysisStatistics({'fuel','police','fire_station'},{'London'},[100:100:4000],[0.2:0.2:8],true,true)
+%           showPACAnalysisStatistics({'fuel','police','fire_station'},{'London'},[100:100:4000],[0.2:0.2:8],true)
 
 %% Retrieve the data
-[manyGridSizesSigmasPopulationAmenityCorrelations, ~] = getManyGridSizesSigmasPopulationAmenityCorrelations(amenityTags,places,gridSizes,sigmas,populationWeighted);
+[manyPAC, ~] = getManyPAC(amenityTags,places,gridSizes,sigmas);
 
-[p,a] = size(manyGridSizesSigmasPopulationAmenityCorrelations);
+[p,a] = size(manyPAC);
 
 clims = [-1 1];
 
@@ -35,7 +35,7 @@ crop = 1:20;
 for m = 1:p
     for n = 1:a
         
-        this = manyGridSizesSigmasPopulationAmenityCorrelations{m,n};
+        this = manyPAC{m,n};
         this = this(crop,crop);
         
         deviation(m,n) = std(this(:));

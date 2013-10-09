@@ -1,4 +1,4 @@
-function showManyGridSizesSigmasAmenityAmenityCorrelations(amenityTags,places,gridSizes,sigmas,populationWeighted,saveFigures)
+function showManyPAC(amenityTags,places,gridSizes,sigmas,saveFigures)
 % Shows the correlation of different granularities of gridSizes and sigmas for many places and amenities
 %
 % INPUT:
@@ -11,39 +11,40 @@ function showManyGridSizesSigmasAmenityAmenityCorrelations(amenityTags,places,gr
 %           Image of population-amenity correlation in grid format for many
 %           places and amenities for different gridSizes and sigmas
 % EXAMPLE:
-%           showManyGridSizesSigmasAmenityAmenityCorrelations({'fuel','hospital','school'},{'Bristol','Manchester'},100:100:4000,0.2:0.2:8,true,true)
+%           showManyPAC({'fuel','hospital','fire_station'},{'London','Bristol'},[100:100:4000],[0.2:0.2:8],false,true)
 
 %% Retrieve the data
-[manyGridSizesSigmasAAC, ~] = getManyGridSizesSigmasAmenityAmenityCorrelations(amenityTags,places,gridSizes,sigmas,populationWeighted);
+[manyPAC, manyTimes] = getManyPAC(amenityTags,places,gridSizes,sigmas);
 
-[p,a,~] = size(manyGridSizesSigmasAAC);
+[p,a] = size(manyPAC);
 
 clims = [-1 1];
 
 %% Produce images of the correlations
 
 for m = 1:p
+
     if saveFigures
         figure;
     else
         figure('units','normalized','outerposition',[0 0 1 1]);
     end
     
+    figureCount = 0;
+    
     for n = 1:a
-        for o = (n+1):a
-            
-            figureNumber = (n-1)*(a-1) + (o-1);
-            subtightplot(a-1,a-1,figureNumber);
-
-            imagesc(gridSizes,sigmas,manyGridSizesSigmasAAC{m,n,o}, clims);
-            colorbar;
-            ylabel([ places{m} ' ' upper(strrep(amenityTags{n}, '_', ' ')) ' vs ' upper(strrep(amenityTags{o}, '_', ' '))]);
-        end
+        figureCount = figureCount + 1;
+        
+        subtightplot(1,a,figureCount);
+        
+        imagesc(gridSizes,sigmas,manyPAC{m,n}, clims);
+        colorbar;
+        ylabel([ places{m} ' ' upper(strrep(amenityTags{n}, '_', ' '))]);
     end
     
     if saveFigures
-        set(gcf,'Position', [0, 0, (a-1)*400, (a-1)*300]);
+        set(gcf,'Position', [0, 0, a*300, 250]);
         set(gcf, 'Color', 'w');
-        export_fig(['./figures/AAC/image-manyGridSizesSigmasAAC-' places(m) '.pdf']);
+        export_fig(['./figures/point_analysis/PAC/image-manyGridSizesSigmasPAC-' places{m} '.pdf']);
     end
 end

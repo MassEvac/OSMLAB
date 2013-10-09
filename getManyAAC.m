@@ -1,19 +1,18 @@
-function [manyGridSizesSigmasAmenityAmenityCorrelations, manyTimes] = getManyGridSizesSigmasAmenityAmenityCorrelations(amenityTags, places, gridSizes, sigmas, populationWeighted)
-% Returns the correlation of different granularities of gridSizes and sigmas for many places and amenities
+function [manyAAC, manyTimes] = getManyAAC(amenityTags, places, gridSizes, sigmas)
+% Returns the correlation between Amenity/person of different granularities of gridSizes and sigmas for many places and amenities
 %
 % INPUT:
 %           amenityTags(m) (String) - Name of the amenities to consider
 %           places(n) (String) - Names of polygon areas in OpenSteetMap
 %           gridSizes(i) (Integer Array) - Array of Grid granularity in metres
 %           sigmas(j) (Integer Array) - Standard deviation to use for gaussian blurring
-%           populationWeighted (Boolean) - Normalise the amenities by population?
 % OUTPUT:
-%           manyGridSizesSigmasAmenityAmenityCorrelation{m,n}(i,j) (Double) 
+%           manyGridSizesSigmasAAC{m,n}(i,j) (Double) 
 %               Correlation between amenity map of amenityTags{m} of given 
 %               places{n} in grid format for various gridSizes(i) and sigmas(j)
-%           manyTimes{m,n}(i,j) (Double) - Time taken to process manyGridSizesSigmasAmenityAmenityCorrelation{m,n}(i,j)
+%           manyTimes{m,n}(i,j) (Double) - Time taken to process manyGridSizesSigmasAAC{m,n}(i,j)
 % EXAMPLE:
-%           [manyGridSizesSigmasAmenityAmenityCorrelation, manyTimes] = getManyGridSizesSigmasAmenityAmenityCorrelations({'hospital','bar'},{'Bristol','Manchester'},[100:100:4000],[0.2:0.2:8],true)
+%           [manyGridSizesSigmasAAC, manyTimes] = getManyGridSizesSigmasAACs({'hospital','bar'},{'Bristol','Manchester'},[100:100:4000],[0.2:0.2:8])
 
 g = length(gridSizes);
 s = length(sigmas);
@@ -21,9 +20,10 @@ s = length(sigmas);
 a = length(amenityTags);
 p = length(places);
 
-manyGridSizesSigmasAmenityAmenityCorrelations = cell(p,a,a);
+manyAAC = cell(p,a,a);
 manyTimes = cell(p,a,a);
 
+%%
 for m = 1:length(places)
     place = places{m};
     for n = 1:length(amenityTags)
@@ -61,7 +61,7 @@ for m = 1:length(places)
                             sigma = sigmas(j);
                             disp(['Processing gridSize:sigma (' num2str(gridSize) ':' num2str(sigma) ')...']);                            
                            
-                            correlation(i,j) = getAmenityAmenityCorrelation({amenityTag1 amenityTag2}, place, gridSize, sigma, populationWeighted);
+                            correlation(i,j) = getAAC({amenityTag1 amenityTag2}, place, gridSize, sigma);
                             time(i,j) = toc;
                         end
                     end
@@ -74,7 +74,7 @@ for m = 1:length(places)
                     csvwrite(fTime,time);
                 end
 
-                manyGridSizesSigmasAmenityAmenityCorrelations{m,n,o} = correlation;
+                manyAAC{m,n,o} = correlation;
                 manyTimes{m,n,o} = time;
 
         end
