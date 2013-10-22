@@ -55,11 +55,8 @@ for m = 1:p
         colorbar;
         
         if saveFigures
-            
             set(gcf,'Position', [0, 0, 800, 300]);
             set(gcf, 'Color', 'w');
-            disp('hello');
-            disp(['./figures/point_analysis/image-manyGridSizesPAC-' XSectionOf '-' num2str(XSectionAt) '-' place '.pdf']);
             export_fig(['./figures/point_analysis/image-manyGridSizesPAC-' XSectionOf '-' num2str(XSectionAt) '-' place '.pdf']);
         end
         

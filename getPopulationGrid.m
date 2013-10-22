@@ -1,4 +1,4 @@
-function [populationCountGrid] = getPopulationGrid(place,gridSize,sigma, averageArea)
+function [populationCountGrid] = getPopulationGrid(place,gridSize,sigma,averageArea)
 % Returns the population count bitmap matrix of a given place with input attributes
 %
 % DETAIL:
