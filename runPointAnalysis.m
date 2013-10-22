@@ -19,7 +19,7 @@ saveFigures = true;
 
 %
 amenityTags = {'fuel' 'police' 'fire_station' 'hospital' 'school' 'atm' 'post_box' }; % 'library' 'bar'
-places = { 'London' 'Manchester' 'Birmingham' 'Liverpool' 'Bristol' 'Oxford' 'Cardiff' 'Leeds' 'York' 'Nottingham' 'Chester'}; % Newcastle-upon-Tyne
+places = { 'London' 'Birmingham' 'Leeds' 'Manchester'  'Liverpool' 'York' 'Nottingham' 'Bristol' 'Cardiff' 'Oxford' 'Chester'}; % Newcastle-upon-Tyne
 
 % DO NOT CHANGE
 gridSizes = [100:100:4000];
@@ -32,25 +32,27 @@ sigmas = [0.2:0.2:8];
 % Singular Attributes
 amenityTag = amenityTags{1};    % = 'fuel'
 place = places{1};              % = 'Bristol'
-gridSize = gridSizes(4);         % = 300
-sigma = sigmas(30);             % = 3
-XSectionOf = 'sigma';
-XSectionAt = 2;
+gridSize = gridSizes(4);         % = 400
+sigma = sigmas(10);             % = 2
+XSectionOf = 'gridSize';
+XSectionAt = 400;
+texFile = 'table.tex';
 
-%%
+% getAmenityCountMatrix(places,amenityTags,texFile);
 % show2Amenities(amenityTags{1},amenityTags{2},place, saveFigures);
 % 
 % showPopulationGrid(place, gridSize, sigma, saveFigures);
+% showPopulationVsPlaces(places,gridSize,sigma,saveFigures);
 % 
 % showAmenityGrids(amenityTags, place, gridSize, sigma, populationWeighted, saveFigures);
 % showAmenityCorrelation(amenityTags, place, gridSize, sigma, populationWeighted, saveFigures);
 
-%showManyPlacesPAC(amenityTags, places, gridSize, sigma, saveFigures);
-showManyXSectionPAC(amenityTags, places, gridSizes, sigmas, XSectionOf, XSectionAt, saveFigures);
+% showManyPlacesPAC(amenityTags, places, gridSize, sigma, saveFigures);
+% showManyXSectionPAC(amenityTags, places, gridSizes, sigmas, XSectionOf, XSectionAt, saveFigures);
 
+% showGridSizeVsTime(amenityTags, places, gridSizes, sigmas, saveFigures)
 % showManyPAC(amenityTags,places,gridSizes,sigmas,saveFigures);
 % showPACAnalysisStatistics(amenityTags,places,gridSizes,sigmas,saveFigures);
 
-%showManyAAC(amenityTags,places,gridSizes,sigmas,saveFigures);
-
+% showManyAAC(amenityTags,places,gridSizes,sigmas,saveFigures);
 % showAACAnalysisStatistics(amenityTags,places,gridSizes,sigmas,saveFigures);
