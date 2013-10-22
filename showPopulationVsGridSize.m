@@ -1,5 +1,5 @@
 function showPopulationVsGridSize(place, gridSizes, sigma, saveFigures)
-% Shows a box plot which describes how gridSize affects population accuracy
+% Shows box plots which describes how gridSize affects population accuracy for different methods of interpolation
 %
 % INPUT:
 %           place (String) - Name of polygon areas in OpenSteetMap

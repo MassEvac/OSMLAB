@@ -37,22 +37,26 @@ sigma = sigmas(10);             % = 2
 XSectionOf = 'gridSize';
 XSectionAt = 400;
 texFile = 'table.tex';
+crop = 1:20;
 
 % getAmenityCountMatrix(places,amenityTags,texFile);
 % show2Amenities(amenityTags{1},amenityTags{2},place, saveFigures);
 % 
 % showPopulationGrid(place, gridSize, sigma, saveFigures);
 % showPopulationVsPlaces(places,gridSize,sigma,saveFigures);
+% showPopulationVsGridSize(place, gridSizes, sigma, saveFigures);
 % 
 % showAmenityGrids(amenityTags, place, gridSize, sigma, populationWeighted, saveFigures);
 % showAmenityCorrelation(amenityTags, place, gridSize, sigma, populationWeighted, saveFigures);
-
+% showAmenityPopulationScatter(amenityTag,place, gridSize, sigma, saveFigures);
+%
 % showManyPlacesPAC(amenityTags, places, gridSize, sigma, saveFigures);
 % showManyXSectionPAC(amenityTags, places, gridSizes, sigmas, XSectionOf, XSectionAt, saveFigures);
-
-% showGridSizeVsTime(amenityTags, places, gridSizes, sigmas, saveFigures)
+%
+% showGridSizeVsTime(amenityTags, places, gridSizes, sigmas, saveFigures);
+% showPACSurface(amenityTag, place, gridSizes, sigmas, crop, saveFigures);
 % showManyPAC(amenityTags,places,gridSizes,sigmas,saveFigures);
 % showPACAnalysisStatistics(amenityTags,places,gridSizes,sigmas,saveFigures);
-
+%
 % showManyAAC(amenityTags,places,gridSizes,sigmas,saveFigures);
 % showAACAnalysisStatistics(amenityTags,places,gridSizes,sigmas,saveFigures);
