@@ -1,4 +1,4 @@
-function [populationCountGrid] = getPopulationGrid(place,gridSize,sigma,averageArea)
+function [populationCountGrid] = getPopulationGrid(place,gridSize,sigma,averageArea,interpolationMethod)
 % Returns the population count bitmap matrix of a given place with input attributes
 %
 % DETAIL:
@@ -10,14 +10,19 @@ function [populationCountGrid] = getPopulationGrid(place,gridSize,sigma,averageA
 %           sigma (Integer) - Standard deviation to use for gaussian blurring
 %           averageArea (Boolean) - Use the average area of grid cell
 %              (Default: TRUE)
+%           interpolationMethod (String) - can be bicubic, bilinear, box, nearest
 % OUTPUT:
 %           populationGrid(i,j) (Double) - population bitmap matrix
 % EXAMPLE:
 %           [populationGrid] = getPopulationGrid('London',400,0)
 
-if nargin < 4
+if ~exist('averageArea','var')
     averageArea = true;
-end
+end     
+
+if ~exist('interpolationMethod','var')
+    interpolationMethod = 'bicubic';    
+end    
 
 %% Read Data
 [x_lon,x_lat,u_lon,u_lat,max_lon,max_lat,min_lon,min_lat] = getGridParameters(place,gridSize);
@@ -69,7 +74,7 @@ r_lat = ceil(l_lat/u_lat);
 
 % Resize the population grid so that it is the same resolution as the 
 % resolution required by the input gridsize
-resizedPopulationDensityGrid=imresize(populationDensityGrid,[r_lat r_lon],'bicubic');
+resizedPopulationDensityGrid=imresize(populationDensityGrid,[r_lat r_lon],interpolationMethod);
 
 % Determine the start of crop point
 min_x = ceil((max_pop_lat - max_lat)/u_lat);
