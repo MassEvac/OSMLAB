@@ -15,13 +15,13 @@
 % OUTPUT:
 %           Several depending on what is required
 
-places = { 'London' 'Manchester' 'Birmingham' 'Liverpool' 'Bristol' 'Oxford' 'Cardiff' 'Leeds' 'York' 'Nottingham' 'Chester'}; % Newcastle-upon-Tyne
+places = { 'London' 'Birmingham' 'Leeds' 'Manchester'  'Liverpool' 'York' 'Nottingham' 'Bristol' 'Cardiff' 'Oxford' 'Chester'}; % Newcastle-upon-Tyne
 place = places{1};
 gridSize = 1000;
-sigma = 1;
+sigma = 2;
 saveFigures = true;
 
-showPopulationOnHighway(place,gridSize,sigma,saveFigures);
-showHighway(place,saveFigures);
+% showPopulationOnHighway(place,gridSize,sigma,saveFigures);
+% showHighway(place,saveFigures);
 showTrips(place,gridSize,sigma,saveFigures);
-showWardCommuteData(place,saveFigures);
+% showWardCommuteData(place,saveFigures);
