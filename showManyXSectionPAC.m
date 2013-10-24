@@ -5,7 +5,11 @@ function showManyXSectionPAC(amenityTags, places, gridSizes, sigmas, XSectionOf,
 %           amenityTags{j} (String Cell) - Name of the amenities to consider
 %           places{m} (String) - Names of polygon areas in OpenSteetMap
 %           gridSizes(i) (Integer) - Grid granularity in metres
-%           sigma(i) (Integer) - Standard deviation to use for gaussian blurring
+%           sigmas(i) (Float) - Standard deviation to use for gaussian blurring
+%           XSectionOf (String) - Switch to indicate whether to take
+%              x-section of 'sigma' or 'gridSize'
+%           XSectionAt (Integer/Float) - Where to take the cross section
+%           saveFigures (boolean) - Optional boolean switch for saving figures
 % OUTPUT:
 %           Image of population and amenity correlation in grid format
 % EXAMPLE:

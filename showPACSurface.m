@@ -5,7 +5,7 @@ function showPACSurface(amenityTag, place, gridSizes, sigmas, crop, saveFigures)
 %           place (String) - Name of polygon areas in OpenSteetMap
 %           gridSizes(i) (Integer Array) - Array of Grid granularity in metres
 %           sigmas (i) (Float Array) - Standard deviation to use for gaussian blurring
-%           cropped (Integer Array) - Indicate the indices to show
+%           crop (Integer Array) - Indicate the indices to crop for use
 %           saveFigures (boolean) - Optional boolean switch for saving figures
 % OUTPUT:
 %           Box plot which describes how gridSize affects population accuracy

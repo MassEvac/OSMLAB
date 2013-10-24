@@ -6,6 +6,7 @@ function showManyAAC(amenityTags,vsAmenityTag,places,gridSizes,sigmas,saveFigure
 %           places (String) - Names of polygon areas in OpenSteetMap
 %           gridSizes(i) (Integer Array) - Array of Grid granularity in metres
 %           sigmas(j) (Integer Array) - Standard deviation to use for gaussian blurring
+%           saveFigures (boolean) - Optional boolean switch for saving figures
 % OUTPUT:
 %           Image of population-amenity correlation in grid format for many
 %           places and amenities for different gridSizes and sigmas

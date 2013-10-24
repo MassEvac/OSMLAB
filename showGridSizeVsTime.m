@@ -6,6 +6,7 @@ function showGridSizeVsTime(amenityTags, places, gridSizes, sigmas, saveFigures)
 %           places (String) - Names of polygon areas in OpenSteetMap
 %           gridSizes(i) (Integer Array) - Array of Grid granularity in metres
 %           sigmas(j) (Integer Array) - Standard deviation to use for gaussian blurring
+%           saveFigures (boolean) - Optional boolean switch for saving figures
 % OUTPUT:
 %           Image of a gridsize vs avg. processing time across many cities
 % EXAMPLE:

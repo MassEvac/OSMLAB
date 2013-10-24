@@ -5,6 +5,7 @@ function showPopulationVsPlaces(places,gridSize,sigma,saveFigures)
 %           places (String) - Names of polygon areas in OpenSteetMap
 %           gridSize (Integer) - Grid granularity in metres
 %           sigma (Integer) - Standard deviation to use for gaussian blurring
+%           saveFigures (boolean) - Optional boolean switch for saving figures
 % OUTPUT:
 %           Image of the population across many cities according to GPWv3 Future Estimates
 % EXAMPLE:

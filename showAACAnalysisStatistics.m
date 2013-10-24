@@ -6,9 +6,10 @@ function showAACAnalysisStatistics(amenityTags,places,gridSizes,sigmas,saveFigur
 %           places (String) - Names of polygon areas in OpenSteetMap
 %           gridSizes(i) (Integer Array) - Array of Grid granularity in metres
 %           sigmas(j) (Integer Array) - Standard deviation to use for gaussian blurring
+%           saveFigures (boolean) - Optional boolean switch for saving figures
 % OUTPUT:
-%           Image of population-amenity correlation in grid format for many
-%           places and amenities for different gridSizes and sigmas
+%           Image of amenity-amenity correlation in grid format for many
+%               places and amenities for different gridSizes and sigmas
 % EXAMPLE:
 %           showAACAnalysisStatistics({'fuel','police','fire_station'},{'London','Manchester', 'Bristol'},[100:100:4000],[0.2:0.2:8],true)
 

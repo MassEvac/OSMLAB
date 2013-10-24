@@ -1,4 +1,4 @@
-function [amenityCount] = getAmenityCountMatrix(places,amenityTags,texFile)
+function [amenityCount] = getAmenityCountMatrix(amenityTags,places,texFile)
 % Spits out the amenity count in each city in latex table format
 %
 % INPUT:
