@@ -24,8 +24,8 @@ fDAM = ['./cache/highwayDAM-' place];
 
 if (and(and(exist(fNode,'file'),exist(fAM,'file')),exist(fDAM,'file')))
     nodes = csvread(fNode);
-    HAM = getResizedAM(spconvert(csvread(fAM)));
-    DAM = getResizedAM(spconvert(csvread(fDAM)));
+    HAM = getResizedAM(spconvert(csvread(fAM)),length(nodes));
+    DAM = getResizedAM(spconvert(csvread(fDAM)),length(nodes));
 else
     tic;
     highwayResult = getHighway(place);

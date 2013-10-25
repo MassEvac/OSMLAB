@@ -14,9 +14,6 @@ function [AM] = getResizedAM(AM,AMLength)
 %           than the length of the inputted adjacency matrix
 
 % If AMLength is not defined, assign the length of the matrix to it
-if (nargin < 2)
-    AMLength = length(AM);
-end    
 
 if size(AM,1) ~= AMLength || size(AM,2) ~= AMLength
     AM(AMLength,AMLength) = 0;

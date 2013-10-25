@@ -14,10 +14,6 @@ function [amenityGrids] = getAmenityGrids(amenityTags, place, gridSize, sigma, p
 % EXAMPLE:
 %           [amenityGrids] = getAmenityGrids({'fuel'},'London',400,0,true)
 
-if (nargin < 5)
-    populationWeighted = false;
-end
-
 [x_lon,x_lat,u_lon,u_lat,max_lon,max_lat,min_lon,min_lat]=getGridParameters(place,gridSize);
 
 % testGridSize(max_lon,max_lat,min_lon,min_lat,u_lon,u_lat);

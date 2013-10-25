@@ -11,10 +11,6 @@ function showWardCommuteData(place, saveFigures)
 % NOTE:
 %           Eventually need to get it to filter a place
 
-if (nargin < 2)
-    saveFigures = false;
-end
-
 [trips, centroids, wardList] = getWardCommuteData;
 try
     figure;

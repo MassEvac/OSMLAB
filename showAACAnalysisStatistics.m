@@ -22,11 +22,7 @@ clims = [-1 1];
 
 %% Produce images of the correlations
 for vsAmenityTag = 1:a
-    if saveFigures
-        figure;
-    else
-        figure('units','normalized','outerposition',[0 0 1 1]);
-    end
+    figure;
 
     deviation = zeros(p,a);
     average = ones(p,a);

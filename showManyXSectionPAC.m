@@ -15,10 +15,6 @@ function showManyXSectionPAC(amenityTags, places, gridSizes, sigmas, XSectionOf,
 % EXAMPLE:
 %           showManyXSectionPAC({'fuel' 'fire_station' 'police'},{'London'},[100:100:4000],[0.2:0.2:8],'sigma',2,true)
 
-if (nargin < 7)
-    saveFigures = false;
-end
-
 %% Retrieve the data
 [PAC, ~] = getManyPAC(amenityTags,places,gridSizes,sigmas);
 

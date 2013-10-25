@@ -12,11 +12,8 @@ function showManyPlacesPAC(amenityTags, places, gridSize, sigma, saveFigures)
 % EXAMPLE:
 %           showManyPlacesPAC({'bar','atm','hospital'},{'London','Bristol'},400,2,true)
 
-if (nargin < 5)
-    saveFigures = false;
-end
-
 manyPAC = getManyPlacesPAC(amenityTags, places, gridSize, sigma);
+
 figure;
 imagesc(manyPAC);
 set(gca,'XTick',1:length(amenityTags),'XTickLabel',upper(strrep(amenityTags, '_', ' ')))

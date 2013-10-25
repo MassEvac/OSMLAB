@@ -11,17 +11,9 @@ function showPopulationGrid(place,gridSize,sigma, saveFigures)
 % EXAMPLE:
 %           showPopulationGrid('London',400,0,true)
 
-if (nargin < 4)
-    saveFigures = false;
-end
-
 populationGrid = getPopulationGrid(place, gridSize, sigma);
 
-if saveFigures
-    figure;
-else
-    figure('units','normalized','outerposition',[0 0 1 1]);
-end
+figure;
 
 imagesc(populationGrid);
 colorbar;

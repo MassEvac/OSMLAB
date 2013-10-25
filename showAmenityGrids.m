@@ -13,15 +13,9 @@ function showAmenityGrids(amenityTags, place, gridSize, sigma, populationWeighte
 % EXAMPLE:
 %           showAmenityGrids({'fuel'},'London',400,0,true,true)
 
-if (nargin < 6)
-    saveFigures = false;
-end
-
 amenityGrids = getAmenityGrids(amenityTags, place, gridSize, sigma, populationWeighted);
 
-n = length(amenityTags);
-
-for i=1:n
+for i=1:length(amenityTags)
     figure;
 
     imagesc(amenityGrids{i});
@@ -36,4 +30,3 @@ for i=1:n
         export_fig(['./figures/point_analysis/image-amenityGrid-' place '-' amenityTags{i} '-gridSize-' num2str(gridSize) '-sigma-' num2str(sigma) '.pdf']);
     end    
 end
-

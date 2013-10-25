@@ -12,20 +12,12 @@ function showAmenityCorrelation(amenityTags, place, gridSize, sigma, populationW
 % EXAMPLE:
 %           showAmenityCorrelation({'atm','police'},'Bristol',250,1,true,true)
 
-if (nargin < 6)
-    saveFigures = false;
-end
-
 amenityCorrelation = getAmenityCorrelation(amenityTags, place, gridSize, sigma, populationWeighted);
 
 % Make the diagonal zero so that the other correlations appear clearly
 amenityCorrelation(eye(size(amenityCorrelation))~=0) = 0;
 
-if saveFigures
-    figure;
-else
-    figure('units','normalized','outerposition',[0 0 1 1]);
-end
+figure;
 
 imagesc(amenityCorrelation);
 set(gca,'XTick',1:length(amenityTags),'XTickLabel',upper(strrep(amenityTags, '_', ' ')))

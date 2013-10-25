@@ -11,10 +11,6 @@ function showPopulationOnHighway( place, gridSize, sigma, saveFigures )
 % EXAMPLE:
 %           showPopulationOnHighway('Bristol',250,1,true)
 
-if (nargin < 4)
-    saveFigures = false;
-end
-
 population = getPopulationGrid(place, gridSize, sigma);
 [longitude,latitude] = getGridCoordinates(place, gridSize);
 [HAM,~,nodes]=getAM(place);

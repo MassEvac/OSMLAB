@@ -10,10 +10,6 @@ function showHighway(place, saveFigures)
 % EXAMPLE:
 %           showHighway('Bristol',false)
 
-if (nargin < 2)
-    saveFigures = false;
-end
-
 visibleHighways = 1:7;
 
 highwayColours = {'black' 'blue' 'magenta' 'green' 'red' 'cyan' 'yellow'};

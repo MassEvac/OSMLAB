@@ -20,10 +20,6 @@ function showTrips(place,gridSize,sigma,saveFigures)
 %           The fonts do the appear in the required size and the diagrams
 %           are not always cropped.
 
-if (nargin < 4)
-    saveFigures = false;
-end
-
 % Read the data to be outputted
 [TR,MF,SP,ODnodes,HAM,DAM,nodes] = getTrips(place,gridSize,sigma);
 
