@@ -11,7 +11,7 @@ function showManyPAC(amenityTags,places,gridSizes,sigmas,saveFigures)
 %           Image of population-amenity correlation in grid format for many
 %           places and amenities for different gridSizes and sigmas
 % EXAMPLE:
-%           showManyPAC({'fuel','hospital','fire_station'},{'London','Bristol'},[100:100:4000],[0.2:0.2:8],false,true)
+%           showManyPAC({'fuel','hospital','fire_station'},{'London','Bristol'},[100:100:4000],[0.2:0.2:8],true)
 
 %% Retrieve the data
 [manyPAC, manyTimes] = getManyPAC(amenityTags,places,gridSizes,sigmas);

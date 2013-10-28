@@ -39,21 +39,14 @@ XSectionAt = 400;
 texFile = 'table.tex';
 crop = 1:20;
 
-%% Still could talk about the following in SPOI section
-% showGridSizeVsCells(places,gridSizes);
-% showPACSurface(amenityTag, place, gridSizes, sigmas, crop, saveFigures);
-% showAmenityPopulationScatter(amenityTag,place, gridSize, sigma, saveFigures);
-
-%% Needs revising 
-showGridSizeVsPopulation(places(1:8), gridSizes, sigma, saveFigures);
-showGridSizeVsPopulation(places(9:11), gridSizes, sigma, saveFigures);
-showGridSizeVsPopulation(places, gridSizes, sigma, saveFigures);
-
 %% I have already talked about these in SPOI
 % showGridSizeVsTime(amenityTags, places, gridSizes, sigmas, saveFigures);
+% showGridSizeVsPopulation(places, gridSizes, sigma, saveFigures);
+% showGridSizeVsCells(places,gridSizes,saveFigures);
 %
 % getAmenityCountMatrix(amenityTags,places,texFile);
 % showAmenities(amenityTags(1:2),place, saveFigures);
+% showAmenityPopulationScatter(amenityTag,place, gridSize, sigma, saveFigures);
 % 
 % showPopulationGrid(place, gridSize, sigma, saveFigures);
 % showPopulationVsPlaces(places,gridSize,sigma,saveFigures);
@@ -64,6 +57,7 @@ showGridSizeVsPopulation(places, gridSizes, sigma, saveFigures);
 % showManyPlacesPAC(amenityTags, places, gridSize, sigma, saveFigures);
 % showManyXSectionPAC(amenityTags, places, gridSizes, sigmas, XSectionOf, XSectionAt, saveFigures);
 %
+% showCroppedPAC(amenityTag, place, gridSizes, sigmas, crop, saveFigures);
 % showManyPAC(amenityTags,places,gridSizes,sigmas,saveFigures);
 % showPACAnalysisStatistics(amenityTags,places,gridSizes,sigmas,saveFigures);
 %

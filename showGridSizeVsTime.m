@@ -28,7 +28,7 @@ end
 theMean = theMean./p;
 
 plot(gridSizes,theMean);
-legend(strrep(amenityTags, '_', ' '));
+legend(upper(strrep(amenityTags, '_', ' ')));
 
 xlabel('Grid cell size (metres)');
 ylabel('Time (% of total processing time)');
