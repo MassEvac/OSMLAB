@@ -11,7 +11,6 @@ function showPopulationVsPlaces(places,gridSize,sigma,saveFigures)
 % EXAMPLE:
 %           showPopulationVsPlaces({'London','Manchester', 'Bristol'},400,2,true)
 
-
 p = length(places);
 
 population = zeros(1,p);
@@ -22,8 +21,8 @@ for i = 1:p
     population(i) = sum(sum(populationGrid));
 end
 
-barh(population);
-set(gca,'YTick',1:length(places),'YTickLabel',upper(strrep(places, '_', ' ')));
+barh(population(end:-1:1));
+set(gca,'YTick',1:length(places),'YTickLabel',upper(strrep(places(end:-1:1), '_', ' ')));
 ylabel('Places');
 xlabel('Population');
 

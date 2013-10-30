@@ -59,7 +59,7 @@ crop = 1:20;
 %
 % showCroppedPAC(amenityTag, place, gridSizes, sigmas, crop, saveFigures);
 % showManyPAC(amenityTags,places,gridSizes,sigmas,saveFigures);
-% showPACAnalysisStatistics(amenityTags,places,gridSizes,sigmas,saveFigures);
+% showSummaryPAC(amenityTags,places,gridSizes,sigmas,saveFigures);
 %
 % showManyAAC(amenityTags,places,gridSizes,sigmas,saveFigures);
-% showAACAnalysisStatistics(amenityTags,places,gridSizes,sigmas,saveFigures);
+% showSummaryAAC(amenityTags,places,gridSizes,sigmas,saveFigures);

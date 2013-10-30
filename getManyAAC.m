@@ -75,8 +75,9 @@ for m = 1:length(places)
                 end
 
                 manyAAC{m,n,o} = correlation;
+                manyAAC{m,o,n} = correlation;
                 manyTimes{m,n,o} = time;
-
+                manyTimes{m,o,n} = time;
         end
     end
 end
