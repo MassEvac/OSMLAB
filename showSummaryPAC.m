@@ -1,4 +1,4 @@
-function showPACAnalysisStatistics(amenityTags,places,gridSizes,sigmas,saveFigures)
+function showSummaryPAC(amenityTags,places,gridSizes,sigmas,saveFigures)
 % Shows the correlation of different granularities of gridSizes and sigmas for many places and amenities
 %
 % INPUT:
@@ -11,7 +11,7 @@ function showPACAnalysisStatistics(amenityTags,places,gridSizes,sigmas,saveFigur
 %           Image of population-amenity correlation in grid format for many
 %           places and amenities for different gridSizes and sigmas
 % EXAMPLE:
-%           showPACAnalysisStatistics({'fuel','police','fire_station'},{'London'},[100:100:4000],[0.2:0.2:8],true)
+%           showSummaryPAC({'fuel','police','fire_station'},{'London'},[100:100:4000],[0.2:0.2:8],true)
 
 %% Retrieve the data
 [manyPAC, ~] = getManyPAC(amenityTags,places,gridSizes,sigmas);
