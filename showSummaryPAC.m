@@ -20,13 +20,21 @@ function showSummaryPAC(amenityTags,places,gridSizes,sigmas,saveFigures)
 
 clims = [-1 1];
 
-%% Produce images of the correlations
-
-figure;
-
 deviation = zeros(p,a);
 average = zeros(p,a);
 crop = 1:20;
+
+%% Do all the calculations
+deviation = zeros(p,a,a);
+average = ones(p,a,a);
+
+cropLengthSq = length(crop)^2;
+
+corrOfPlaces = zeros(p,a*cropLengthSq);
+corrOfAmenities = zeros(a,p*cropLengthSq);
+
+corrPlacesPosition = 1;
+corrAmenitiesPosition = 1;
 
 for m = 1:p
     for n = 1:a
@@ -36,20 +44,45 @@ for m = 1:p
         
         deviation(m,n) = std(this(:));
         average(m,n) = mean(this(:));
+        
+        corrOfPlaces(m,(n-1)*cropLengthSq+1:(n)*cropLengthSq)=this(:);
+        corrOfAmenities(n,(m-1)*cropLengthSq+1:(m)*cropLengthSq)=this(:);
     end
 end
 
-%%
+%% Produce images of the correlations
+figure;
+
 errorbar(average,deviation);
 ylabel('Correlation Coefficient');
 set(gca,'XTick',1:length(places),'XTickLabel',places);
 ylim([-1 1]);
 legend(upper(strrep(amenityTags, '_', ' ')),'location','southwest');
 
-
-%%
 if saveFigures
     set(gcf,'Position', [0, 0, 900, 300]);
     set(gcf, 'Color', 'w');
     export_fig(['./figures/point_analysis/plot-PACAnalysisStatistics.pdf']);
+end
+
+%% Average across amenities
+figure;
+boxplot(corrOfAmenities(:,end:-1:1)',upper(strrep(amenityTags(end:-1:1), '_', ' ')),'orientation','horizontal');
+xlabel('Correlation Coefficient');
+
+if saveFigures
+    set(gcf,'Position', [0, 0, 900, 300]);
+    set(gcf, 'Color', 'w');
+    export_fig(['./figures/point_analysis/boxplot-PACAmenitySummary.pdf']);
+end
+
+%% Average across places
+figure;
+boxplot(corrOfPlaces(end:-1:1,:)',places(end:-1:1),'orientation','horizontal');
+xlabel('Correlation Coefficient');
+
+if saveFigures
+    set(gcf,'Position', [0, 0, 900, 300]);
+    set(gcf, 'Color', 'w');
+    export_fig(['./figures/point_analysis/boxplot-AACPlacesSummary.pdf']);
 end
