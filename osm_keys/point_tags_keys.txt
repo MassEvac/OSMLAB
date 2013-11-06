@@ -1,7 +1,3 @@
-                      key                      
------------------------------------------------
- 48sheetart
- 86248
  abandoned
  abandoned:aeroway
  abandoned:amenity
@@ -3085,5 +3081,3 @@
  year
  zone
  zoo
-(3085 rows)
-

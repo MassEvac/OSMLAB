@@ -18,8 +18,8 @@ populationWeighted = true;
 saveFigures = true;
 
 %
-amenityTags = {'fuel' 'police' 'fire_station' 'hospital' 'school' 'atm' 'post_box' }; % 'library' 'bar'
-places = { 'London' 'Birmingham' 'Leeds' 'Manchester'  'Liverpool' 'York' 'Nottingham' 'Bristol' 'Cardiff' 'Oxford' 'Chester'}; % Newcastle-upon-Tyne
+amenityTags = textread('scopeAmenities.txt','%s','delimiter','\n');
+places = textread('scopePlaces.txt','%s','delimiter','\n');
 
 % DO NOT CHANGE
 gridSizes = [100:100:4000];

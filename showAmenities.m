@@ -20,7 +20,7 @@ boundary = getBoundary(place);
 [max_lon,max_lat,min_lon,min_lat]=getBoundaryLimits(place);
 
 markers = {'.' '+' 'o' '*' 'x' 's' 'd' '^' 'v' '>' '<' 'p' 'h'};
-colours = {'g' 'r' 'b' 'c' 'm' 'y' 'k'};
+colours = {'k' 'g' 'r' 'b' 'c' 'm' 'y'};
 
 markerNumber = 1;
 colourNumber = 1;
@@ -39,7 +39,7 @@ for i = 1:length(amenityTags)
     end
 
     if colourNumber > length(colours)
-        colourNumber = 1;
+        colourNumber = 2;
     end
     
     amenity = getAmenity(amenityTags{i}, place);
