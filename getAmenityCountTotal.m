@@ -1,4 +1,5 @@
-% Gets the number of amenities in the OSM database
+function [amenityCount] = getAmenityCountTotal
+% Gets the total number of amenities in the OSM database
 % 
 % INPUT:
 %           'amenity.txt' - List of amenities to look at
@@ -7,8 +8,12 @@
 % EXAMPLE:
 %           [result] = getAmenity('bar', 'Bristol')
 
-tic;
-query = 'SELECT p.amenity, COUNT(*) as amenityCount from planet_osm_point as p group by p.amenity ORDER BY amenityCount DESC';
-amenityCount =  importDB(query);
-save('cache/amenityCount.mat','amenityCount');
-toc;
+filename = 'cache/_count/amenityCount.mat';
+
+if exist(filename)
+    load(filename);
+else  
+    query = 'SELECT p.amenity, COUNT(*) as amenityCount from planet_osm_point as p GROUP BY p.amenity ORDER BY amenityCount DESC';
+    amenityCount =  importDB(query);
+    save(filename,'amenityCount');
+end

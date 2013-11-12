@@ -19,5 +19,11 @@ query = ['SELECT (ST_Raster2WorldCoordX(p.rast, x) + ST_ScaleX(rast) / 2) AS wx,
         'CROSS JOIN generate_series(1, 50) As x '...
         'CROSS JOIN generate_series(1, 50) As y '...
         'WHERE ST_Intersects(p.rast,f.way)'];  
-  
-result = getFileOrQuery(['./cache/population-' place], query);
+
+filePath = './cache/_population/';
+
+if ~exist(filePath,'file')
+    mkdir(filePath);
+end
+   
+result = getFileOrQuery([filePath place], query);

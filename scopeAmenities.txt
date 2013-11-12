@@ -1,7 +1,0 @@
-fuel
-police
-fire_station
-hospital
-school
-atm
-post_box

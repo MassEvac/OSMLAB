@@ -15,9 +15,11 @@ function [result] = getFileOrQuery(filename,query,varargin)
 %               [result] = getPopulation('Bristol')
 %               [result] = getAmenity('bar', 'Bristol')
 
+filename = [filename '.mat'];
+
 if exist(filename,'file')
     disp(['Reading cache from ' filename '...']);
-    result = csvread(filename);
+    load(filename);
 else
     disp('Executing query...');
     disp(query);
@@ -33,5 +35,5 @@ else
    
     result = cell2mat(result);
     disp(['Saving result to cache file ' filename '...']);
-    dlmwrite(filename, result, 'delimiter', ',', 'precision', 10); 
+    save(filename, 'result'); 
 end
