@@ -23,5 +23,6 @@ saveFigures = true;
 
 % showPopulationOnHighway(place,gridSize,sigma,saveFigures);
 % showHighway(place,saveFigures);
+
 showTrips(place,gridSize,sigma,saveFigures);
 % showWardCommuteData(place,saveFigures);

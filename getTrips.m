@@ -31,18 +31,37 @@ function [TR,MF,SP,ODnodes,HAM,DAM,nodes] = getTrips(place,gridSize,sigma)
 %           assumption that 25 cars/minutes can travel on a lane needs to
 %           be examined and verified as they were purely assumed.
 
-configuration = [ num2str(gridSize) '-' num2str(sigma) '-' place];
+configuration = [ place '-' num2str(gridSize) '-' num2str(sigma)];
 
-fSP = ['./cache/highwayShortestPath-' configuration];
-fMF = ['./cache/highwayMaxFlow-' configuration];
-fTR = ['./cache/highwayTrips-' configuration];
+fpRoot = './cache/_highway/';
+fpSP = [fpRoot 'SP/'];
+fpMF = [fpRoot 'MF/'];
+fpTR = [fpRoot 'TR/'];
+fSP = [fpSP configuration '.mat'];
+fMF = [fpMF configuration '.mat'];
+fTR = [fpTR configuration '.mat'];
+
+if ~exist(fpRoot,'file')
+    mkdir(fpRoot);
+end
+
+if ~exist(fpSP,'file')
+    mkdir(fpSP);
+end
+
+if ~exist(fpMF,'file')
+    mkdir(fpMF);
+end
+
+if ~exist(fpTR,'file')
+    mkdir(fpTR);
+end
 
 disp(['Processing trips for ' place '...']);
 
 tic;
-disp(['Processing adjacency matrix...']);
+disp('Processing adjacency matrix...');
 [HAM,DAM,nodes]=getAM(place);
-nAM = length(HAM);
 
 % Cars per lane per minute
 C = 25;
@@ -61,7 +80,7 @@ DAM = DAM + DAM';
 toc;
 
 tic;
-disp(['Processing population grid...']);
+disp('Processing population grid...');
 populationGrid=getPopulationGrid(place,gridSize,sigma);
 [longitudeGrid, latitudeGrid] = getGridCoordinates(place, gridSize);
 longitude=longitudeGrid(:);   % longitude
@@ -111,7 +130,7 @@ tic;
 step = 'Processing graph shortest path...';
 disp(step);
 if exist(fSP,'file')
-    SP = getResizedAM(spconvert(csvread(fSP)),nOD);
+    load(fSP,'SP');
 else  
     h = waitbar(0,step);
     SP = sparse(nOD,nOD);
@@ -126,9 +145,7 @@ else
     end
     close(h);
     
-    [m,n,o] = find(SP);
-    SP_dump = [m,n,o];
-    dlmwrite(fSP, SP_dump, 'delimiter', ',', 'precision', 10);       
+    save(fSP,'SP');
 end
 toc;
 
@@ -136,7 +153,7 @@ tic;
 step = 'Processing max flow...';
 disp(step);
 if exist(fMF,'file')
-    MF = getResizedAM(spconvert(csvread(fMF)),nOD);
+    load(fMF,'MF');
 else    
     h = waitbar(0,step);
     MF = sparse(nOD,nOD);
@@ -151,9 +168,7 @@ else
     end
     close(h);
     
-    [m,n,o] = find(MF);
-    MF_dump = [m,n,o];
-    dlmwrite(fMF, MF_dump, 'delimiter', ',', 'precision', 10);      
+    save(fMF,'MF');   
 end    
 toc;
 
@@ -161,7 +176,7 @@ tic;
 step = 'Processing trips...';
 disp(step);
 if exist(fTR,'file')
-    TR = getResizedAM(spconvert(csvread(fTR)),nOD);
+    load(fTR,'TR');
 else    
     h = waitbar(0,step);
     TR = sparse(nOD,nOD);
@@ -176,9 +191,7 @@ else
     end
     close(h);
     
-    [m,n,o] = find(TR);
-    TR_dump = [m,n,o];
-    dlmwrite(fTR, TR_dump, 'delimiter', ',', 'precision', 10);
+    save(fTR,'TR');
 end
 toc;
 

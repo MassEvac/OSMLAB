@@ -29,6 +29,27 @@ function [highwayQueryResult] = getHighwayTagsAsNumbers(highwayQueryResult)
 % track, bridleway
 % platform
 % proposed, construction
+%     'access'
+%     'access_ramp'
+%     'bridleway'
+%     'byway'
+%     'construction'
+%     'consultation'
+%     'conveyor'
+%     'crossing'
+%     'depot'
+%     'disused'
+%     'elevator'
+%     'escalator'
+%     'footpath'
+%     'no'
+%     'private'
+%     'proposed'
+%     'raceway'
+%     'subway'
+%     'track'
+%     'unsurfaced'
+
 % also option for tunnel = 'yes'
 % http://wiki.openstreetmap.org/wiki/Key:highway
 
@@ -39,7 +60,7 @@ highwayClass{3} = {'primary' 'primary_link'};
 highwayClass{4} = {'secondary' 'secondary_link'};
 highwayClass{5} = {'tertiary' 'tertiary_link'};
 highwayClass{6} = {'residential' 'unclassified' 'road' 'bus_guideway' 'living_street'};
-highwayClass{7} = {'pedestrian' 'service' 'footway' 'path' 'cycleway' 'steps' };
+highwayClass{7} = {'pedestrian' 'service' 'footway' 'path' 'cycleway' 'steps' 'subway' 'footpath' 'elevator' 'escalator' };
 
 highways = [];
 highwayType = [];

@@ -18,14 +18,35 @@ function [HAM, DAM, nodes] = getAM(place)
 % EXAMPLE:
 %           [HAM, DAM, nodes] = getAM('Bristol')
 
-fNode = ['./cache/highwayNode-' place];
-fAM = ['./cache/highwayHAM-' place];
-fDAM = ['./cache/highwayDAM-' place];
+fpRoot = './cache/_highway/';
+fpNodes = [fpRoot 'nodes/'];
+fpHAM = [fpRoot 'HAM/'];
+fpDAM = [fpRoot 'DAM/'];
+fNodes = [fpNodes place '.mat'];
+fHAM = [fpHAM place '.mat'];
+fDAM = [fpDAM place '.mat'];
 
-if (and(and(exist(fNode,'file'),exist(fAM,'file')),exist(fDAM,'file')))
-    nodes = csvread(fNode);
-    HAM = getResizedAM(spconvert(csvread(fAM)),length(nodes));
-    DAM = getResizedAM(spconvert(csvread(fDAM)),length(nodes));
+
+if ~exist(fpRoot,'file')
+    mkdir(fpRoot);
+end
+
+if ~exist(fpNodes,'file')
+    mkdir(fpNodes);
+end
+
+if ~exist(fpHAM,'file')
+    mkdir(fpHAM);
+end
+
+if ~exist(fpDAM,'file')
+    mkdir(fpDAM);
+end
+
+if (and(and(exist(fNodes,'file'),exist(fHAM,'file')),exist(fDAM,'file')))
+    load(fNodes,'nodes');
+    load(fHAM,'HAM');
+    load(fDAM,'DAM');
 else
     tic;
     highwayResult = getHighway(place);
@@ -43,7 +64,10 @@ else
     HAM = sparse(m,m);
     DAM = sparse(m,m);
 
-    for i = 1:length(highwayResult)
+    nR = length(highwayResult);
+    step = 'Converting result to AM...';
+    h = waitbar(0,step);
+    for i = 1:nR
 
         if (highwayResult(i,3) == 1)
             thisNode = 0;
@@ -57,17 +81,15 @@ else
             HAM(thisNode,thatNode)=highwayResult(i,4);
             DAM(thisNode,thatNode)=haversine([nodes(thisNode,1) nodes(thatNode,1)],[nodes(thisNode,2) nodes(thatNode,2)]);
         end
+        
+        completed = i/nR;
+        waitbar(completed,h,[step num2str(completed*100) '%']);        
     end
+    close(h);
     
-    [m,n,o] = find(HAM);
-    HAM_dump = [m,n,o];
-    
-    [m,n,o] = find(DAM);
-    DAM_dump = [m,n,o];
-    
-    dlmwrite(fNode, nodes, 'delimiter', ',', 'precision', 10);
-    dlmwrite(fAM, HAM_dump, 'delimiter', ',', 'precision', 10);
-    dlmwrite(fDAM, DAM_dump, 'delimiter', ',', 'precision', 10);
+    save(fNodes,'nodes');
+    save(fHAM,'HAM');
+    save(fDAM,'DAM');
     toc;
 end
 
