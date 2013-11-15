@@ -13,12 +13,12 @@ function [amenityCount] = getAmenityCountByPlace(amenityTags,places)
 filename = 'cache/_count/amenityCountByPlace.mat';
 
 if exist(filename)
-    load(filename);
+    load(filename,'result');
 else  
     tic;
     query = ['SELECT DISTINCT p.amenity,q.name, COUNT(*) AS amenityCount FROM planet_osm_point AS p, planet_osm_polygon AS q WHERE q.name IN (''' strjoin(places,''',''') ''') AND p.amenity IN (''' strjoin(amenityTags,''',''') ''') AND ST_Intersects(p.way, q.way) GROUP BY p.amenity,q.name ORDER BY q.name, amenityCount DESC'];
     result = importDB(query);
-    save(filename,'amenityCount');
+    save(filename,'result');
     toc;
 end
 
