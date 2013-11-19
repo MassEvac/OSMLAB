@@ -1,3 +1,6 @@
+load('scope/topAmenities.mat');
+load('scope/topPlaces.mat');
+
 %% Load amenity data
 for i = 1:length(amenityTags)
     for j = 1:length(places)

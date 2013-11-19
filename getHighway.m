@@ -25,5 +25,11 @@ query = ['SELECT ST_X((g.p).geom), ST_Y((g.p).geom), (g.p).path[1], g.q '...
         ' ) AS s '...
         ' WHERE highway <> '''' AND ST_Intersects(r.way, s.way)'...
         ') AS g'];
-  
-result = getFileOrQuery(['./cache/highway-' place], query,'highway');
+
+filePath = './cache/_highway/';
+
+if ~exist(filePath,'file')
+    mkdir(filePath);
+end
+    
+result = getFileOrQuery([filePath place], query,'highway');
