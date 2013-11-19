@@ -57,10 +57,12 @@ for n = 1:m
     
     if length(thisX) > 1
         p = polyfit(thisX,thisY,1);
+        r = corrcoef(thisX,thisY);
         k(n) = p(1); % Gradient
-        n
+        c(n) = r(2);
     else
         k(n) = 0;
+        c(n) = 0;
     end
     
     if find(ismember(range,n))
@@ -89,20 +91,22 @@ xlabel('log (Population)');
 ylabel('log (SPOIs)');
 lsline;
 
-%%
-texFile = 'extendedAmenity.tex';
-latextable(amenityCount,'horiz',amenityTags,'vert',places,'name',texFile,'Hline',[1],'Vline',[1])
+saveFigures = true;
 
+if saveFigures
+    set(gcf,'Position', [0, 0, 600, 500]);
+    set(gcf, 'Color', 'w');
+    export_fig(['./figures/point_analysis/loglog-PopulationVsAmenity.pdf']);
+end
+
+%%
+x1=populationCount(logical(populationCount))';
+y1=[x1 amenityCount(logical(populationCount),:)];
+p1=places(logical(populationCount));
+texFile = 'extendedAmenity.tex';
+latextable(y1(:,1:11),'format','%0.0f','horiz',strcat('\rotatebox{90}{', strrep(tags(1:11), '_', '\_')','}'),'vert',p1,'name',texFile,'Hline',[1],'Vline',[1]);
 
 %%
 [~,index]=sort(k,'descend');
 texFile = 'gradient.tex';
-latextable(k(index)','format','%0.2f','vert',strcat('$\beta_{', strrep(tags(index)', '_', '\_')','}$'),'name',texFile,'Hline',[1],'Vline',[1])
-
-saveFigures = true;
-
-if saveFigures
-    set(gcf,'Position', [0, 0, 800, 800]);
-    set(gcf, 'Color', 'w');
-    export_fig(['./figures/point_analysis/loglog-PopulationVsAmenity.pdf']);
-end
+latextable([k(index)' c(index)'],'format','%0.2f','vert',strcat('$\beta_{', strrep(tags(index)', '_', '\_')','}$'),'name',texFile,'Vline',[1]);
