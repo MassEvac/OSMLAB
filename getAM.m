@@ -18,29 +18,13 @@ function [HAM, DAM, nodes] = getAM(place)
 % EXAMPLE:
 %           [HAM, DAM, nodes] = getAM('Bristol')
 
-fpRoot = './cache/_highway/';
-fpNodes = [fpRoot 'nodes/'];
-fpHAM = [fpRoot 'HAM/'];
-fpDAM = [fpRoot 'DAM/'];
-fNodes = [fpNodes place '.mat'];
-fHAM = [fpHAM place '.mat'];
-fDAM = [fpDAM place '.mat'];
+fp = ['./cache/_highway/' place '/'];
+fNodes = [fp 'nodes.mat'];
+fHAM = [fp 'HAM.mat'];
+fDAM = [fp 'DAM.mat'];
 
-
-if ~exist(fpRoot,'file')
-    mkdir(fpRoot);
-end
-
-if ~exist(fpNodes,'file')
-    mkdir(fpNodes);
-end
-
-if ~exist(fpHAM,'file')
-    mkdir(fpHAM);
-end
-
-if ~exist(fpDAM,'file')
-    mkdir(fpDAM);
+if ~exist(fp,'file')
+    mkdir(fp);
 end
 
 if (and(and(exist(fNodes,'file'),exist(fHAM,'file')),exist(fDAM,'file')))
@@ -80,6 +64,10 @@ else
         if (thisNode && thatNode)
             HAM(thisNode,thatNode)=highwayResult(i,4);
             DAM(thisNode,thatNode)=haversine([nodes(thisNode,1) nodes(thatNode,1)],[nodes(thisNode,2) nodes(thatNode,2)]);
+            if ~highwayResult(i,5) % If not one-way
+                HAM(thatNode,thisNode) = HAM(thisNode,thatNode);
+                DAM(thatNode,thisNode) = DAM(thisNode,thatNode);
+            end
         end
         
         completed = i/nR;

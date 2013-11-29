@@ -31,36 +31,26 @@ function [TR,MF,SP,ODnodes,HAM,DAM,nodes] = getTrips(place,gridSize,sigma)
 %           assumption that 25 cars/minutes can travel on a lane needs to
 %           be examined and verified as they were purely assumed.
 
-configuration = [ place '-' num2str(gridSize) '-' num2str(sigma)];
+configuration = [num2str(gridSize) '-' num2str(sigma)];
 
-fpRoot = './cache/_highway/';
-fpSP = [fpRoot 'SP/'];
-fpMF = [fpRoot 'MF/'];
-fpTR = [fpRoot 'TR/'];
-fSP = [fpSP configuration '.mat'];
-fMF = [fpMF configuration '.mat'];
-fTR = [fpTR configuration '.mat'];
+fp = ['./cache/_highway/' place '/'];
+fSP = [fp 'SP-' configuration '.mat'];
+fMF = [fp 'MF-' configuration '.mat'];
+fTR = [fp 'TR-' configuration '.mat'];
 
-if ~exist(fpRoot,'file')
-    mkdir(fpRoot);
+if ~exist(fp,'file')
+    mkdir(fp);
 end
 
-if ~exist(fpSP,'file')
-    mkdir(fpSP);
-end
+stateFile = ['./state/getTrips-' place '-' configuration '.mat'];
 
-if ~exist(fpMF,'file')
-    mkdir(fpMF);
-end
-
-if ~exist(fpTR,'file')
-    mkdir(fpTR);
-end
-
-disp(['Processing trips for ' place '...']);
+step = ['Running getTrips.m for ' place '...'];
+disp(step);
+email(step);
 
 tic;
-disp('Processing adjacency matrix...');
+step = ['Processing adjacency matrix for ' place '...'];
+disp(step);
 [HAM,DAM,nodes]=getAM(place);
 
 % Cars per lane per minute
@@ -74,13 +64,11 @@ HAM(HAM==4)=C*0.8;
 HAM(HAM==5)=C*0.6;
 HAM(HAM==6)=C*0.4;
 HAM(HAM==7)=C*0.2;
-
-HAM = HAM + HAM';
-DAM = DAM + DAM';
 toc;
 
 tic;
-disp('Processing population grid...');
+step = ['Processing population grid for ' place '...'];
+disp(step);
 populationGrid=getPopulationGrid(place,gridSize,sigma);
 [longitudeGrid, latitudeGrid] = getGridCoordinates(place, gridSize);
 longitude=longitudeGrid(:);   % longitude
@@ -89,7 +77,8 @@ population=populationGrid(:); % population
 toc;
 
 tic;
-disp('Processing origin/destination vector..');
+step = ['Processing origin/destination vector for ' place '...'];
+disp(step);
 
 nOD=length(population);
 
@@ -121,23 +110,26 @@ longitude(a) = [];
 latitude(a) = [];
 population(a) = [];
 ODnodes = [longitude latitude];
-toc;
 
 % recalculate OD since the matrix dimension has now changed
 nOD=length(OD);
+toc;
 
 tic;
-step = 'Processing graph shortest path...';
+step = ['Processing graph shortest path for ' place '...'];
 disp(step);
 if exist(fSP,'file')
     load(fSP,'SP');
 else  
+    i = 1;
+    load(stateFile);
     h = waitbar(0,step);
     SP = sparse(nOD,nOD);
-    for i = 1:nOD
+    for i = i:nOD
+        save(stateFile);
         for j = 1:nOD
-            if (i ~= j)
-                [SP(i,j)]=graphshortestpath(DAM,OD(i),OD(j));
+            if (OD(i) ~= OD(j))
+                [SP(i,j)]=graphshortestpath(DAM,OD(i),OD(j));         
                 completed = (i-1+j/nOD)/nOD;
                 waitbar(completed,h,[step num2str(completed*100) '%']);
             end
@@ -146,20 +138,24 @@ else
     close(h);
     
     save(fSP,'SP');
+    email([step 'complete.']);
 end
 toc;
 
 tic;
-step = 'Processing max flow...';
+step = ['Processing max flow for ' place '...'];
 disp(step);
 if exist(fMF,'file')
     load(fMF,'MF');
-else    
+else
+    i = 1;
+    load(stateFile);
     h = waitbar(0,step);
     MF = sparse(nOD,nOD);
-    for i = 1:nOD
+    for i = i:nOD
+        save(stateFile);   
         for j = 1:nOD
-            if (i ~= j)
+            if (OD(i) ~= OD(j))
                 MF(i,j)=max_flow(HAM,OD(i),OD(j));
                 completed = (i-1+j/nOD)/nOD;
                 waitbar(completed,h,[step num2str(completed*100) '%']);
@@ -169,21 +165,25 @@ else
     close(h);
     
     save(fMF,'MF');   
+    email([step 'complete.']);
 end    
 toc;
 
 tic;
-step = 'Processing trips...';
+step = ['Processing trips for ' place '...'];
 disp(step);
 if exist(fTR,'file')
     load(fTR,'TR');
-else    
+else
+    i = 1;
+    load(stateFile);    
     h = waitbar(0,step);
     TR = sparse(nOD,nOD);
-    for i = 1:nOD
+    for i = i:nOD
+        save(stateFile);        
         for j = 1:nOD
-            if i~=j
-                TR(i,j)=(population(i)*population(j))/SP(i,j);
+            if (OD(i) ~= OD(j))
+                TR(i,j)=(population(i)*population(j))/SP(i,j);        
                 completed = (i-1+j/nOD)/nOD;
                 waitbar(completed,h,[step num2str(completed*100) '%']);
             end
@@ -192,8 +192,14 @@ else
     close(h);
     
     save(fTR,'TR');
+    email([step 'complete.']);
 end
+% recalculate OD since the matrix dimension has now changed
+nOD=length(OD);
 toc;
+
+% Delete the saved state file since there were no issues
+delete(stateFile);
 
 % [length(SP) length(TR) length(MF)]
 % [length(Sp) length(Tr) length(Mf)]

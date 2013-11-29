@@ -28,7 +28,6 @@ else
     % Check if there are special conditions with which to process the result
     if (nargin > 2)
         if (strmatch(varargin{1},'highway'))
-            disp('Processing highway...');
             result = getHighwayTagsAsNumbers(result);
         end
     end
