@@ -1,3 +1,5 @@
+cd ~/OSM;
+
 load('scope/topAmenities.mat','amenityTags');
 load('scope/topPlaces.mat','places');
 gridSize = 400;

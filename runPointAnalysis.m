@@ -14,6 +14,8 @@
 % OUTPUT:
 %           Several depending on what is required
 
+cd ~/OSM;
+
 populationWeighted = true;
 saveFigures = true;
 

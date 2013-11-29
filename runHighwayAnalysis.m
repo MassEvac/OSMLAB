@@ -15,8 +15,10 @@
 % OUTPUT:
 %           Several depending on what is required
 
+cd ~/OSM;
+
 places = { 'London' 'Birmingham' 'Leeds' 'Manchester'  'Liverpool' 'York' 'Nottingham' 'Bristol' 'Cardiff' 'Oxford' 'Chester'}; % Newcastle-upon-Tyne
-place = places{1};
+place = places{8};
 gridSize = 1000;
 sigma = 2;
 saveFigures = true;
@@ -24,5 +26,10 @@ saveFigures = true;
 % showPopulationOnHighway(place,gridSize,sigma,saveFigures);
 % showHighway(place,saveFigures);
 
-showTrips(place,gridSize,sigma,saveFigures);
+for i = 1:length(places)
+    showTrips(places{i},gridSize,sigma,saveFigures);
+end
+
+% showTrips(place,gridSize,sigma,saveFigures);
+
 % showWardCommuteData(place,saveFigures);
