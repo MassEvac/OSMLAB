@@ -14,12 +14,12 @@ if ~exist(filePath,'file')
     mkdir(filePath);
 end
 
-fileName = [filePath 'placesByArea.mat'];
+fileName = [filePath 'placesByAreaINm2.mat'];
 
-if exist(fileName)
+if exist(fileName,'file')
     load(fileName);
 else  
-    query = 'SELECT p.name, ST_area(p.way) AS area FROM planet_osm_polygon AS p ORDER BY area DESC;';
+    query = 'SELECT p.name, ST_area(p.way,false) AS area FROM planet_osm_polygon AS p ORDER BY area DESC;';
     placesByArea =  importDB(query);
     save(fileName,'placesByArea');
 end
