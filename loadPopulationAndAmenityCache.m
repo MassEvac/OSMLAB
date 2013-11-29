@@ -1,3 +1,9 @@
+%% Instructions
+% If you want to load a fresh cache of population and amenity location
+% data, simply delete all the amenity folders and _population folder in the
+% cache and run this program. You would usually want to do this if you have
+% a new version of OSM database on the system which you want to refer to.
+
 load('scope/topAmenities.mat');
 load('scope/topPlaces.mat');
 
