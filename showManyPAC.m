@@ -45,6 +45,6 @@ for m = 1:p
     if saveFigures
         set(gcf,'Position', [0, 0, a*300, 250]);
         set(gcf, 'Color', 'w');
-        export_fig(['./figures/point_analysis/PAC/image-manyGridSizesSigmasPAC-' places{m} '.pdf']);
+        export_fig(['./figures/point/PAC/image-manyGridSizesSigmasPAC-' places{m} '.pdf']);
     end
 end

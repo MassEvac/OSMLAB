@@ -12,7 +12,7 @@ function [amenityGrids] = getAmenityGrids(amenityTags, place, gridSize, sigma, p
 %           longitude(i,j) (Double) - Longitude of amenityGrid(i,j) in degrees
 %           latitude(i,j) (Double) - Latitude of amenityGrid(i,j) in degrees
 % EXAMPLE:
-%           [amenityGrids] = getAmenityGrids({'fuel'},'London',400,0,true)
+%           [amenityGrids] = getAmenityGrids({'fuel'},'Bristol',400,2,true)
 
 [x_lon,x_lat,u_lon,u_lat,max_lon,max_lat,min_lon,min_lat]=getGridParameters(place,gridSize);
 
@@ -42,9 +42,11 @@ for i=1:n
     amenityGrids = [amenityGrids {smoothAmenityGrid}];
 end
 
+% Load the population data and longitude, latitude vector data
+populationGrid = getPopulationGrid(place, gridSize, sigma);
+
 if (populationWeighted)
     disp('Processing result in terms of amenity/person...');
-    populationGrid = getPopulationGrid(place, gridSize, sigma);
 
     % Number of each of the amenities
     [p, q]=size(populationGrid);

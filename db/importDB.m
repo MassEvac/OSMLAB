@@ -18,13 +18,13 @@ javaclasspath('./db/postgresql-9.2-1002.jdbc4.jar');
 
 [~, name] = system('hostname');
 
+DBase = 'osm_gb';
+
 if (strcmp(name(1:8),'IT050339'))
-    DBase = 'osm';
     username = 'postgres'; %username = '';
     password = 'postgres'; %password = '';  
     databaseURL = 'jdbc:postgresql://localhost:5432/';
 else
-    DBase = 'osm';
     username = 'bharatkunwar'; %username = '';
     password = ''; %password = '';
     databaseURL = 'jdbc:postgresql://localhost:5432/';    

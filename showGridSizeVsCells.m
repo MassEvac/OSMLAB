@@ -34,5 +34,5 @@ ylabel('x_{lon}/x_{lat}');
 if saveFigures
     set(gcf,'Position', [0, 0, 800, 300]);
     set(gcf, 'Color', 'w');
-    export_fig(['./figures/point_analysis/plot-gridSizeVsCells.pdf']);
+    export_fig(['./figures/point/plot-gridSizeVsCells.pdf']);
 end

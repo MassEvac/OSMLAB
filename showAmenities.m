@@ -55,5 +55,5 @@ ylabel('Latitude (degrees)');
 if saveFigures
     set(gcf,'Position', [0, 0, 800, 300]);
     set(gcf, 'Color', 'w');
-    export_fig(['./figures/point_analysis/plot-' strjoin(amenityTags,'-') '-' place '.pdf']);
+    export_fig(['./figures/point/plot-' strjoin(amenityTags,'-') '-' place '.pdf']);
 end

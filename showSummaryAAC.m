@@ -59,41 +59,51 @@ for m = 1:p
     end
 end
 
-%% Produce images of the correlations
-for o = 1:a
-    figure;
+% Produce images of the correlations
+% for o = 1:a
+%     figure;
+% 
+%     errorbar(squeeze(average(:,:,o)),squeeze(deviation(:,:,o)));
+%     ylabel('Correlation Coefficient');
+%     set(gca,'XTick',1:length(places),'XTickLabel',places);
+%     ylim([-1 1]);
+%     legend(upper(strrep(amenityTags, '_', ' ')),'location','southwest');
+% 
+%     if saveFigures
+%         set(gcf,'Position', [0, 0, 900, 300]);
+%         set(gcf, 'Color', 'w');
+%         export_fig(['./figures/point/plot-AACAnalysisStatistics-vs-' amenityTags{o} '.pdf']);
+%     end
+% end
 
-    errorbar(squeeze(average(:,:,o)),squeeze(deviation(:,:,o)));
-    ylabel('Correlation Coefficient');
-    set(gca,'XTick',1:length(places),'XTickLabel',places);
-    ylim([-1 1]);
-    legend(upper(strrep(amenityTags, '_', ' ')),'location','southwest');
+FontSize = 12;
 
-    if saveFigures
-        set(gcf,'Position', [0, 0, 900, 300]);
-        set(gcf, 'Color', 'w');
-        export_fig(['./figures/point_analysis/plot-AACAnalysisStatistics-vs-' amenityTags{o} '.pdf']);
-    end
-end
+[~,index]=sort(median(corrOfAmenities,2));
 
 %% Average across amenities
 figure;
-boxplot(corrOfAmenities(:,end:-1:1)',upper(strrep(amenityTags(end:-1:1), '_', ' ')),'orientation','horizontal');
-xlabel('Correlation Coefficient');
+set(gcf,'DefaultTextFontSize', FontSize);
+boxplot(corrOfAmenities(index,:)',upper(strrep(amenityTags(index), '_', ' ')),'orientation','horizontal');
+xlabel('Correlation Coefficient','FontSize',FontSize);
+set(gca,'FontSize',FontSize);
 
 if saveFigures
     set(gcf,'Position', [0, 0, 900, 300]);
     set(gcf, 'Color', 'w');
-    export_fig(['./figures/point_analysis/boxplot-AACAmenitySummary.pdf']);
+    export_fig(['./figures/point/boxplot-AACAmenitySummary.pdf']);
 end
+
+[~,index]=sort(median(corrOfPlaces,2));
 
 %% Average across places
 figure;
-boxplot(corrOfPlaces(end:-1:1,:)',places(end:-1:1),'orientation','horizontal');
-xlabel('Correlation Coefficient');
+set(gcf,'DefaultTextFontSize', FontSize);
+boxplot(corrOfPlaces(index,:)',places(index),'orientation','horizontal');
+xlabel('Correlation Coefficient','FontSize',FontSize);
+set(gca,'FontSize',FontSize);
 
 if saveFigures
     set(gcf,'Position', [0, 0, 900, 300]);
     set(gcf, 'Color', 'w');
-    export_fig(['./figures/point_analysis/boxplot-AACPlacesSummary.pdf']);
+    export_fig(['./figures/point/boxplot-AACPlacesSummary.pdf']);
 end

@@ -26,7 +26,7 @@ query = ['SELECT ST_X((g.p).geom), ST_Y((g.p).geom), (g.p).path[1], g.h, g.o '..
         ' WHERE r.highway <> '''' AND ST_Intersects(r.way, s.way)'...
         ') AS g'];
 
-rootPath = './cache/_highway/';
+rootPath = './cache/highway/';
 
 if ~exist(rootPath,'file')
     mkdir(rootPath);

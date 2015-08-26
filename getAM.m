@@ -1,4 +1,4 @@
-function [HAM, DAM, nodes] = getAM(place)
+function [nodes, HAM, DAM, OAM] = getAM(place,simple)
 % Outputs highway class & distance adjacency sparse matrix and node list
 %
 % DETAIL:
@@ -16,21 +16,27 @@ function [HAM, DAM, nodes] = getAM(place)
 %           nodes (Double x 2) - Node longitude and latitude of the array
 %               index for reference by HAM & DAM
 % EXAMPLE:
-%           [HAM, DAM, nodes] = getAM('Bristol')
+%           [nodes, HAM, DAM, OAM] = getAM('Bristol')
 
-fp = ['./cache/_highway/' place '/'];
+if ~exist('simple','var')
+    simple = false;
+end
+
+fp = ['./cache/highway/' place '/'];
 fNodes = [fp 'nodes.mat'];
 fHAM = [fp 'HAM.mat'];
 fDAM = [fp 'DAM.mat'];
+fOAM = [fp 'OAM.mat'];
 
 if ~exist(fp,'file')
     mkdir(fp);
 end
 
-if (and(and(exist(fNodes,'file'),exist(fHAM,'file')),exist(fDAM,'file')))
+if exist(fNodes,'file')&&exist(fHAM,'file')&&exist(fDAM,'file')&&exist(fOAM,'file')
     load(fNodes,'nodes');
     load(fHAM,'HAM');
     load(fDAM,'DAM');
+    load(fOAM,'OAM');
 else
     tic;
     highwayResult = getHighway(place);
@@ -47,6 +53,7 @@ else
     % process adjacency matrix
     HAM = sparse(m,m);
     DAM = sparse(m,m);
+    OAM = sparse(m,m);
 
     nR = length(highwayResult);
     step = 'Converting result to AM...';
@@ -67,6 +74,9 @@ else
             if ~highwayResult(i,5) % If not one-way
                 HAM(thatNode,thisNode) = HAM(thisNode,thatNode);
                 DAM(thatNode,thisNode) = DAM(thisNode,thatNode);
+                OAM(thisNode,thatNode) = 2;                
+            else
+                OAM(thisNode,thatNode) = 1;
             end
         end
         
@@ -78,7 +88,25 @@ else
     save(fNodes,'nodes');
     save(fHAM,'HAM');
     save(fDAM,'DAM');
+    save(fOAM,'OAM');    
     toc;
 end
 
-% figure; gplot(AM,nodes);
+if (simple)    
+    fNodes = [fp 'nodesSimple.mat'];
+    fHAM = [fp 'HAMsimple.mat'];
+    fDAM = [fp 'DAMsimple.mat'];
+    fOAM = [fp 'OAMsimple.mat'];
+    if exist(fNodes,'file')&&exist(fHAM,'file')&&exist(fDAM,'file')&&exist(fOAM,'file')
+        load(fNodes,'nodes');
+        load(fHAM,'HAM');
+        load(fDAM,'DAM');
+        load(fOAM,'OAM');
+    else
+        [nodes,HAM,DAM,OAM]=simplifyAM(nodes,HAM,DAM,OAM);
+        save(fNodes,'nodes');
+        save(fHAM,'HAM');
+        save(fDAM,'DAM');
+        save(fOAM,'OAM');        
+    end
+end

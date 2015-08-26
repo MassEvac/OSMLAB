@@ -1,4 +1,4 @@
-function [populationCountGrid] = getPopulationGrid(place,gridSize,sigma,averageArea,interpolationMethod)
+function [populationGrid] = getPopulationGrid(place,gridSize,sigma,averageArea,interpolationMethod)
 % Returns the population count bitmap matrix of a given place with input attributes
 %
 % DETAIL:
@@ -37,10 +37,12 @@ unitCell = 0.0416666667;
 
 % Work out the extent
 % Includes an extra unitCell/2 because the measure is from centre to centre
-max_pop_lat=max(population(:,2))+unitCell/2;
-min_pop_lat=min(population(:,2))-unitCell/2;
+% The longitude and latitudes in population(:,1:2) are the centroids
+% (+/-)unitCell/2 accounts for the extent of the grid cells
 max_pop_lon=max(population(:,1))+unitCell/2;
 min_pop_lon=min(population(:,1))-unitCell/2;
+max_pop_lat=max(population(:,2))+unitCell/2;
+min_pop_lat=min(population(:,2))-unitCell/2;
 
 % Measures the magnitute of the raster map extent
 l_lon = max_pop_lon-min_pop_lon;
@@ -96,14 +98,15 @@ thisArea = haversineArea(mean(longitude(:))-u_lon/2,mean(latitude(:))-u_lat/2,u_
 
 %% Convert to population count
 
-populationCountGrid = zeros(x_lat,x_lon);
+populationGrid = zeros(x_lat,x_lon);
 
-% Switch off this area calculation when you are not near the poles to speed up calcs.
+% Switch on this area calculation when you are not near the poles to speed up calcs.
 % Precalculated average area is normally adequate.
-if ~averageArea
+if averageArea
+    populationGrid = croppedPopulationDensityGrid * thisArea;
+else
     for j = 1:x_lon,
         for i = 1:x_lat,
-
             thisArea = haversineArea(longitude(i,j)-u_lon/2,latitude(i,j)-u_lat/2,u_lon,u_lat)/10^6;
 
             % Use the following test routine to check the distance
@@ -113,11 +116,9 @@ if ~averageArea
             % the population density by the area of the grid cell being considered
             % Population in the database is in terms of person/km^2. times by
             % area in km^2 to get the exact number of people in each square
-            populationCountGrid(i,j) = round(thisArea * croppedPopulationDensityGrid(i,j));
+            populationGrid(i,j) = round(thisArea * croppedPopulationDensityGrid(i,j));
         end
-    end
-else
-    populationCountGrid = croppedPopulationDensityGrid * thisArea;
+    end    
 end
 
-[populationCountGrid, ~] = gsmooth2(populationCountGrid, sigma, 'same');
+[populationGrid, ~] = gsmooth2(populationGrid, sigma, 'same');

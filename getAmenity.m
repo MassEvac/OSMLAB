@@ -14,10 +14,16 @@ query = ['SELECT DISTINCT ST_X(p.way), ST_Y(p.way) '...
         '(SELECT way FROM planet_osm_polygon WHERE name = ''' place ''' ORDER BY ST_NPoints(way) DESC LIMIT 1) AS q '...
         'WHERE p.amenity=''' amenityTag ''' AND ST_Intersects(p.way, q.way)'];
 
-filePath = ['./cache/' amenityTag '/'];
+rootPath = './cache/amenity/';
+
+if ~exist(rootPath,'file')
+    mkdir(rootPath);
+end
+
+filePath = [rootPath place '/'];
 
 if ~exist(filePath,'file')
     mkdir(filePath);
 end
-    
-result = getFileOrQuery([filePath place], query);
+            
+result = getFileOrQuery([filePath amenityTag], query);

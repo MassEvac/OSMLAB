@@ -6,14 +6,9 @@ function [amenityCount] = getAmenityCountTotal
 % OUTPUT:
 %           result(:,1:2) (Double) - Longitude and Latitude of the amenity
 % EXAMPLE:
-%           [result] = getAmenity('bar', 'Bristol')
+%           [result] = getAmenityCountTotal
 
-filename = 'cache/_count/amenityCount.mat';
+fileName = 'cache/count/amenityCount';
 
-if exist(filename)
-    load(filename);
-else  
-    query = 'SELECT p.amenity, COUNT(*) as amenityCount from planet_osm_point as p GROUP BY p.amenity ORDER BY amenityCount DESC';
-    amenityCount =  importDB(query);
-    save(filename,'amenityCount');
-end
+query = 'SELECT p.amenity, COUNT(*) AS amenityCount from planet_osm_point AS p GROUP BY p.amenity ORDER BY amenityCount DESC';
+amenityCount =  getFileOrQuery(fileName,query);

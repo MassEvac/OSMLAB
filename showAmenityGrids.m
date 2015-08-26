@@ -27,6 +27,6 @@ for i=1:length(amenityTags)
     if saveFigures
         set(gcf,'Position', [0, 0, 800, 300]);
         set(gcf, 'Color', 'w');
-        export_fig(['./figures/point_analysis/image-amenityGrid-' place '-' amenityTags{i} '-gridSize-' num2str(gridSize) '-sigma-' num2str(sigma) '.pdf']);
+        export_fig(['./figures/point/image-amenityGrid-' place '-' amenityTags{i} '-gridSize-' num2str(gridSize) '-sigma-' num2str(sigma) '.pdf']);
     end    
 end

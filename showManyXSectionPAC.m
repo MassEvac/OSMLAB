@@ -57,7 +57,7 @@ for m = 1:p
         if saveFigures
             set(gcf,'Position', [0, 0, 800, 300]);
             set(gcf, 'Color', 'w');
-            export_fig(['./figures/point_analysis/image-manyGridSizesPAC-' XSectionOf '-' num2str(XSectionAt) '-' place '.pdf']);
+            export_fig(['./figures/point/image-manyGridSizesPAC-' XSectionOf '-' num2str(XSectionAt) '-' place '.pdf']);
         end
         
         %
@@ -71,7 +71,7 @@ for m = 1:p
         if saveFigures
             set(gcf,'Position', [0, 0, 800, 300]);
             set(gcf, 'Color', 'w');
-            export_fig(['./figures/point_analysis/corr-manyGridSizesPAC-' XSectionOf '-' num2str(XSectionAt) '-' place '.pdf']);
+            export_fig(['./figures/point/corr-manyGridSizesPAC-' XSectionOf '-' num2str(XSectionAt) '-' place '.pdf']);
         end
 
         %
@@ -84,7 +84,7 @@ for m = 1:p
         if saveFigures
             set(gcf,'Position', [0, 0, 800, 300]);
             set(gcf, 'Color', 'w');
-            export_fig(['./figures/point_analysis/corr-unitManyGridSizesPAC-' XSectionOf '-' num2str(XSectionAt) '-' place '.pdf']);
+            export_fig(['./figures/point/corr-unitManyGridSizesPAC-' XSectionOf '-' num2str(XSectionAt) '-' place '.pdf']);
         end
         
     % If it is a cross section of gridSize...
@@ -100,7 +100,7 @@ for m = 1:p
         if saveFigures
             set(gcf,'Position', [0, 0, 800, 300]);
             set(gcf, 'Color', 'w');
-            export_fig(['./figures/point_analysis/image-manySigmasPAC-' XSectionOf '-' num2str(XSectionAt) '-' place '.pdf']);
+            export_fig(['./figures/point/image-manySigmasPAC-' XSectionOf '-' num2str(XSectionAt) '-' place '.pdf']);
         end
 
         % 
@@ -114,7 +114,7 @@ for m = 1:p
         if saveFigures
             set(gcf,'Position', [0, 0, 800, 300]);
             set(gcf, 'Color', 'w');
-            export_fig(['./figures/point_analysis/corr-manySigmasPAC-' XSectionOf '-' num2str(XSectionAt) '-' place '.pdf']);
+            export_fig(['./figures/point/corr-manySigmasPAC-' XSectionOf '-' num2str(XSectionAt) '-' place '.pdf']);
         end
 
         %
@@ -127,7 +127,7 @@ for m = 1:p
         if saveFigures
             set(gcf,'Position', [0, 0, 800, 300]);
             set(gcf, 'Color', 'w');
-            export_fig(['./figures/point_analysis/corr-unitManySigmasPAC-' XSectionOf '-' num2str(XSectionAt) '-' place '.pdf']);
+            export_fig(['./figures/point/corr-unitManySigmasPAC-' XSectionOf '-' num2str(XSectionAt) '-' place '.pdf']);
         end
     end     
 end

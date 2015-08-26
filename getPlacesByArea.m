@@ -8,18 +8,13 @@ function [placesByArea] = getPlacesByArea
 % EXAMPLE:
 %           [placesByArea] = getPlacesByArea
 
-filePath = './cache/_area/';
+filePath = './cache/area/';
 
 if ~exist(filePath,'file')
     mkdir(filePath);
 end
 
-fileName = [filePath 'placesByAreaINm2.mat'];
+fileName = [filePath 'placesByAreaInMetricBD'];
 
-if exist(fileName,'file')
-    load(fileName);
-else  
-    query = 'SELECT p.name, ST_area(p.way,false) AS area FROM planet_osm_polygon AS p ORDER BY area DESC;';
-    placesByArea =  importDB(query);
-    save(fileName,'placesByArea');
-end
+query = 'SELECT p.name, ST_Area(p.way,false) AS area FROM planet_osm_polygon AS p WHERE p.name <> '''' ORDER BY area DESC;';
+placesByArea =  getFileOrQuery(fileName, query,'nocell2mat');

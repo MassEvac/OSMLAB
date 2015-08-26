@@ -42,5 +42,5 @@ colorbar;
 if saveFigures
     set(gcf,'Position', [0, 0, 800, 250]);
     set(gcf, 'Color', 'w');
-    export_fig(['./figures/point_analysis/image-CroppedPAC-' amenityTag '-' place '.pdf']);
+    export_fig(['./figures/point/image-CroppedPAC-' amenityTag '-' place '.pdf']);
 end

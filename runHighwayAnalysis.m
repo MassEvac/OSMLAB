@@ -15,19 +15,28 @@
 % OUTPUT:
 %           Several depending on what is required
 
-cd ~/OSM;
+cd ~/Dropbox/Coding/MATLAB/OSM;
 
-places = { 'London' 'Birmingham' 'Leeds' 'Manchester'  'Liverpool' 'York' 'Nottingham' 'Bristol' 'Cardiff' 'Oxford' 'Chester'}; % Newcastle-upon-Tyne
-place = places{8};
+load('scope/topPlaces.mat','places');
+
+place = places{12};
 gridSize = 1000;
 sigma = 2;
 saveFigures = true;
 
+%showTrips('Chester',gridSize,sigma,saveFigures);
+
 % showPopulationOnHighway(place,gridSize,sigma,saveFigures);
 % showHighway(place,saveFigures);
 
+
 for i = 1:length(places)
-    showTrips(places{i},gridSize,sigma,saveFigures);
+    % showTrips(places{i},gridSize,sigma,saveFigures);
+    try
+        getTrips(places{i},gridSize,sigma);
+    catch err
+        %
+    end
 end
 
 % showTrips(place,gridSize,sigma,saveFigures);

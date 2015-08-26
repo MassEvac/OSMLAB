@@ -48,5 +48,5 @@ legend(['R_{AAC} = ' num2str(c(1,2))]);
 if saveFigures
     set(gcf,'Position', [0, 0, 800, 300]);
     set(gcf, 'Color', 'w');
-    export_fig(['./figures/point_analysis/scatter-populationVsAmenity-' strjoin(amenityTags,'-') '-' place '-' num2str(gridSize) '-' num2str(sigma) '.pdf']);
+    export_fig(['./figures/point/scatter-populationVsAmenity-' strjoin(amenityTags,'-') '-' place '-' num2str(gridSize) '-' num2str(sigma) '.pdf']);
 end    

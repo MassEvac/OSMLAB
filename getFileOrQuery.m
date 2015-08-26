@@ -1,4 +1,4 @@
-function [result] = getFileOrQuery(filename,query,varargin)
+function [result] = getFileOrQuery(fileName,query,varargin)
 % Either returns the cache or runs the query and saves it to cache
 %
 % INPUT:
@@ -15,24 +15,37 @@ function [result] = getFileOrQuery(filename,query,varargin)
 %               [result] = getPopulation('Bristol')
 %               [result] = getAmenity('bar', 'Bristol')
 
-filename = [filename '.mat'];
+fileName = [fileName '.mat'];
 
-if exist(filename,'file')
-    disp(['Reading cache from ' filename '...']);
-    load(filename);
+disp(query);
+
+tic;
+if exist(fileName,'file')
+    disp(['Reading cache from ' fileName '...']);
+    load(fileName);
 else
+    disp(['File ' fileName ' does not exist...']);
     disp('Executing query...');
-    disp(query);
     result = importDB(query);
     
     % Check if there are special conditions with which to process the result
+
+    convertToMatrix = true;
+    
     if (nargin > 2)
-        if (strmatch(varargin{1},'highway'))
+        if strmatch(varargin{1},'highway')
             result = getHighwayTagsAsNumbers(result);
+        elseif strmatch(varargin{1},'nocell2mat')
+            convertToMatrix = false;
         end
     end
-   
-    result = cell2mat(result);
-    disp(['Saving result to cache file ' filename '...']);
-    save(filename, 'result'); 
+
+    if convertToMatrix
+        disp('Converting cell to matrix...');
+        result = cell2mat(result);
+    end
+    
+    disp(['Saving result to cache file ' fileName '...']);
+    save(fileName, 'result'); 
 end
+toc;

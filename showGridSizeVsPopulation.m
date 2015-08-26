@@ -44,7 +44,7 @@ for i = 1:p
     if saveFigures
         set(gcf,'Position', [0, 0, 400, 300]);
         set(gcf, 'Color', 'w');
-        export_fig(['./figures/point_analysis/boxplot-GridSizeVsPopulation-' num2str(sigma) '-' places{i} '.pdf']);
+        export_fig(['./figures/point/boxplot-GridSizeVsPopulation-' num2str(sigma) '-' places{i} '.pdf']);
     end
 end
 
@@ -58,5 +58,5 @@ ylabel('(P/P(average)) - 1) %');
 if saveFigures
     set(gcf,'Position', [0, 0, 400, 300]);
     set(gcf, 'Color', 'w');
-    export_fig(['./figures/point_analysis/boxplot-GridSizeVsPopulation-' num2str(sigma) '-' places{1} '-' places{p} '-overall.pdf']);
+    export_fig(['./figures/point/boxplot-GridSizeVsPopulation-' num2str(sigma) '-' places{1} '-' places{p} '-overall.pdf']);
 end

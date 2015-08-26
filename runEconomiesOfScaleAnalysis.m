@@ -98,7 +98,7 @@ saveFigures = true;
 if saveFigures
     set(gcf,'Position', [0, 0, 600, 500]);
     set(gcf, 'Color', 'w');
-    export_fig(['./figures/point_analysis/loglog-PopulationVsAmenity.pdf']);
+    export_fig(['./figures/point/loglog-PopulationVsAmenity.pdf']);
 end
 
 %%

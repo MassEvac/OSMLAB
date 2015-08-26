@@ -29,5 +29,5 @@ xlabel('Population');
 if saveFigures
     set(gcf,'Position', [0, 0, 800, 300]);
     set(gcf, 'Color', 'w');
-    export_fig(['./figures/point_analysis/bar-populationVsPlaces-' num2str(gridSize) '-' num2str(sigma) '.pdf']);
+    export_fig(['./figures/point/bar-populationVsPlaces-' num2str(gridSize) '-' num2str(sigma) '.pdf']);
 end

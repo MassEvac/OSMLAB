@@ -8,7 +8,7 @@ function [result] = getPopulation(place)
 % INPUT:
 %           place (String) - Name of an area polygon in OpenSteetMap
 % OUTPUT:
-%           result(:,1:2) (Double) - Longitude and Latitude of the data centroid
+%           result(:,1:2) (Double) - Longitude and Latitude of the cell centroid
 %           result(:,3) (Double) - Population Density (persons/km^2)
 % EXAMPLE:
 %           [result] = getPopulation('Bristol')
@@ -20,7 +20,7 @@ query = ['SELECT (ST_Raster2WorldCoordX(p.rast, x) + ST_ScaleX(rast) / 2) AS wx,
         'CROSS JOIN generate_series(1, 50) As y '...
         'WHERE ST_Intersects(p.rast,f.way)'];  
 
-filePath = './cache/_population/';
+filePath = './cache/population/';
 
 if ~exist(filePath,'file')
     mkdir(filePath);

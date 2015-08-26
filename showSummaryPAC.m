@@ -33,9 +33,6 @@ cropLengthSq = length(crop)^2;
 corrOfPlaces = zeros(p,a*cropLengthSq);
 corrOfAmenities = zeros(a,p*cropLengthSq);
 
-corrPlacesPosition = 1;
-corrAmenitiesPosition = 1;
-
 for m = 1:p
     for n = 1:a
         
@@ -62,27 +59,37 @@ legend(upper(strrep(amenityTags, '_', ' ')),'location','southwest');
 if saveFigures
     set(gcf,'Position', [0, 0, 900, 300]);
     set(gcf, 'Color', 'w');
-    export_fig(['./figures/point_analysis/plot-PACAnalysisStatistics.pdf']);
+    export_fig(['./figures/point/plot-PACAnalysisStatistics.pdf']);
 end
+
+FontSize = 12;
+
+[~,index]=sort(median(corrOfAmenities,2));
 
 %% Average across amenities
 figure;
-boxplot(corrOfAmenities(:,end:-1:1)',upper(strrep(amenityTags(end:-1:1), '_', ' ')),'orientation','horizontal');
-xlabel('Correlation Coefficient');
+set(gcf,'DefaultTextFontSize', FontSize);
+boxplot(corrOfAmenities(index,:)',upper(strrep(amenityTags(index), '_', ' ')),'orientation','horizontal');
+xlabel('Correlation Coefficient','FontSize',FontSize);
+set(gca,'FontSize',FontSize);
 
 if saveFigures
     set(gcf,'Position', [0, 0, 900, 300]);
     set(gcf, 'Color', 'w');
-    export_fig(['./figures/point_analysis/boxplot-PACAmenitySummary.pdf']);
+    export_fig(['./figures/point/boxplot-PACAmenitySummary.pdf']);
 end
+
+[~,index]=sort(median(corrOfPlaces,2));
 
 %% Average across places
 figure;
-boxplot(corrOfPlaces(end:-1:1,:)',places(end:-1:1),'orientation','horizontal');
-xlabel('Correlation Coefficient');
+set(gcf,'DefaultTextFontSize', FontSize);
+boxplot(corrOfPlaces(index,:)',places(index),'orientation','horizontal');
+xlabel('Correlation Coefficient','FontSize',FontSize);
+set(gca,'FontSize',FontSize);
 
 if saveFigures
     set(gcf,'Position', [0, 0, 900, 300]);
     set(gcf, 'Color', 'w');
-    export_fig(['./figures/point_analysis/boxplot-AACPlacesSummary.pdf']);
+    export_fig(['./figures/point/boxplot-PACPlacesSummary.pdf']);
 end

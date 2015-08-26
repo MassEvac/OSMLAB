@@ -6,14 +6,9 @@ function [highwayCount] = getHighwayCountTotal
 % OUTPUT:
 %           result(:,1:2) (Double) - Longitude and Latitude of the amenity
 % EXAMPLE:
-%           [result] = getAmenity('bar', 'Bristol')
+%           [highwayCount] = getHighwayCountTotal
 
-filename = 'cache/_count/highwayCount.mat';
+fileName = 'cache/count/highwayCount';
 
-if exist(filename)
-    load(filename);
-else  
-    query = 'SELECT r.highway, COUNT(*) AS highwayCount FROM planet_osm_line AS r GROUP BY r.highway ORDER BY highwayCount DESC;';
-    highwayCount =  importDB(query);
-    save(filename,'highwayCount');
-end
+query = 'SELECT r.highway, COUNT(*) AS highwayCount FROM planet_osm_line AS r GROUP BY r.highway ORDER BY highwayCount DESC;';
+highwayCount =  getFileOrQuery(fileName, query);

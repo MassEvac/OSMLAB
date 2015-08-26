@@ -20,8 +20,8 @@ populationWeighted = true;
 saveFigures = true;
 
 %
-amenityTags = textread('scopeAmenities.txt','%s','delimiter','\n');
-places = textread('scopePlaces.txt','%s','delimiter','\n');
+load('scope/7Amenities.mat','amenityTags');
+load('scope/11Places.mat','places');
 
 % DO NOT CHANGE
 gridSizes = [100:100:4000];
@@ -46,7 +46,7 @@ crop = 1:20;
 % showGridSizeVsPopulation(places, gridSizes, sigma, saveFigures);
 % showGridSizeVsCells(places,gridSizes,saveFigures);
 %
-% getAmenityCountMatrix(amenityTags,places,texFile);
+getPopulationAmenityTable(amenityTags,places,gridSize,sigma,texFile);
 % showAmenities(amenityTags(1:2),place, saveFigures);
 % showAmenityPopulationScatter(amenityTag,place, gridSize, sigma, saveFigures);
 % 

@@ -65,7 +65,7 @@ ylabel('log(Trips (Pi*Pj/Dij))');
 if saveFigures
     set(gcf,'Position', [0, 0, 800, 300]);
     set(gcf, 'Color', 'w');
-    export_fig(['./figures/highway_analysis/corr-shortestPathVsTrips-' place '.pdf']);
+    export_fig(['./figures/highway/corr-shortestPathVsTrips-' place '.pdf']);
 end
 
 %% Correlation - Max Flow vs Shortest Path
@@ -93,7 +93,7 @@ ylabel('log(Shortest Path (m))');
 if saveFigures
     set(gcf,'Position', [0, 0, 800, 300]);
     set(gcf, 'Color', 'w');
-    export_fig(['./figures/highway_analysis/corr-maxFlowVsShortestPath-' place '.pdf']);
+    export_fig(['./figures/highway/corr-maxFlowVsShortestPath-' place '.pdf']);
 end
 
 %% Correlation - Max Flow vs Trips
@@ -120,7 +120,7 @@ ylabel('log(Trips (Pi*Pj/Dij))');
 if saveFigures
     set(gcf,'Position', [0, 0, 800, 300]);
     set(gcf, 'Color', 'w');
-    export_fig(['./figures/highway_analysis/corr-maxFlowVsTrips-' place '.pdf']);
+    export_fig(['./figures/highway/corr-maxFlowVsTrips-' place '.pdf']);
 end
 
 %% Histogram - Shortest Path
@@ -135,7 +135,7 @@ xlabel('Shortest Path (m)','FontSize',20);
 ylabel('Count','FontSize',20);
 if saveFigures
     set(gcf, 'Color', 'w');
-    export_fig(['./figures/highway_analysis/hist-shortestPath-' place '.pdf']);
+    export_fig(['./figures/highway/hist-shortestPath-' place '.pdf']);
 end
 
 %% Histogram - Max Flow
@@ -150,7 +150,7 @@ xlabel('Max Flow (cars/min)','FontSize',20);
 ylabel('Count','FontSize',20);
 if saveFigures
     set(gcf, 'Color', 'w');
-    export_fig(['./figures/highway_analysis/hist-maxFlow-' place '.pdf']);
+    export_fig(['./figures/highway/hist-maxFlow-' place '.pdf']);
 end
 
 %% Histogram - Trips
@@ -165,7 +165,7 @@ xlabel('Trips (Pi*Pj/Dij)','FontSize',20);
 ylabel('Count','FontSize',20);
 if saveFigures
     set(gcf, 'Color', 'w');
-    export_fig(['./figures/highway_analysis/hist-trips-' place '.pdf']);
+    export_fig(['./figures/highway/hist-trips-' place '.pdf']);
 end
 
 %% Graph - Max Flow
@@ -177,7 +177,7 @@ legend('Max Flow');
 if saveFigures
     set(gcf,'Position', [0, 0, 800, 500]);
     set(gcf, 'Color', 'w');
-    export_fig(['./figures/highway_analysis/graph-maxFlow-' place '.pdf']);
+    export_fig(['./figures/highway/graph-maxFlow-' place '.pdf']);
 end
 
 %% Graph - Trips
@@ -189,7 +189,7 @@ legend('Trips');
 if saveFigures
     set(gcf,'Position', [0, 0, 800, 500]);
     set(gcf, 'Color', 'w');
-    export_fig(['./figures/highway_analysis/graph-trips-' place '.pdf']);
+    export_fig(['./figures/highway/graph-trips-' place '.pdf']);
 end
 
 %% Graph - Shortest Path
@@ -201,5 +201,5 @@ legend('Shortest Path');
 if saveFigures
     set(gcf,'Position', [0, 0, 800, 500]);
     set(gcf, 'Color', 'w');
-    export_fig(['./figures/highway_analysis/graph-shortestPath-' place '.pdf']);
+    export_fig(['./figures/highway/graph-shortestPath-' place '.pdf']);
 end

@@ -36,5 +36,5 @@ ylabel('Time (% of total processing time)');
 if saveFigures
     set(gcf,'Position', [0, 0, 800, 300]);
     set(gcf, 'Color', 'w');
-    export_fig(['./figures/point_analysis/plot-gridSizeVsTime.pdf']);
+    export_fig(['./figures/point/plot-gridSizeVsTime.pdf']);
 end

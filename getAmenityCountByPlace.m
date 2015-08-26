@@ -7,23 +7,16 @@ function [amenityCount] = getAmenityCountByPlace(amenityTags,places)
 % OUTPUT:
 %           amenityCount(i,j) (Integer) - Number of amenityTag{i} in places{j}
 % EXAMPLE:
-%           [result] = getAmenity('bar', 'Bristol')
-
-
-filename = 'cache/_count/amenityCountByPlace.mat';
-
-if exist(filename)
-    load(filename,'result');
-else  
-    tic;
-    query = ['SELECT DISTINCT p.amenity,q.name, COUNT(*) AS amenityCount FROM planet_osm_point AS p, planet_osm_polygon AS q WHERE q.name IN (''' strjoin(places,''',''') ''') AND p.amenity IN (''' strjoin(amenityTags,''',''') ''') AND ST_Intersects(p.way, q.way) GROUP BY p.amenity,q.name ORDER BY q.name, amenityCount DESC'];
-    result = importDB(query);
-    save(filename,'result');
-    toc;
-end
+%           [result] = getAmenityCountByPlace({'bar'}, {'Bristol'})
+%
 
 a = length(amenityTags);
 p = length(places);
+
+fileName = ['cache/count/amenityCountByPlace-' num2str(p) '-' num2str(a)];
+
+query = ['SELECT DISTINCT p.amenity,q.name, COUNT(*) AS amenityCount FROM planet_osm_point AS p, planet_osm_polygon AS q WHERE q.name IN (''' strjoin(places,''',''') ''') AND p.amenity IN (''' strjoin(amenityTags,''',''') ''') AND ST_Intersects(p.way, q.way) GROUP BY p.amenity,q.name ORDER BY q.name, amenityCount DESC'];
+result = getFileOrQuery(fileName,query);
 
 amenityCount = zeros(p,a);
 

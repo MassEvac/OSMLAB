@@ -58,7 +58,7 @@ for vsAmenityTag = 1:a
         if saveFigures
             set(gcf,'Position', [0, 0, (a-1)*300, 250]);
             set(gcf, 'Color', 'w');
-            export_fig(['./figures/point_analysis/AAC/image-manyGridSizesSigmasAAC-' places{m} '-' amenityTags{vsAmenityTag} '.pdf']);
+            export_fig(['./figures/point/AAC/image-manyGridSizesSigmasAAC-' places{m} '-' amenityTags{vsAmenityTag} '.pdf']);
         end
     end
 
