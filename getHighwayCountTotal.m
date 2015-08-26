@@ -8,7 +8,15 @@ function [highwayCount] = getHighwayCountTotal
 % EXAMPLE:
 %           [highwayCount] = getHighwayCountTotal
 
-fileName = 'cache/count/highwayCount';
+load('global');
+
+rootPath = ['./cache/count/' DBase '/'];
+
+if ~exist(rootPath,'file')
+    mkdir(rootPath);
+end
+
+fileName = [rootPath 'highwayCount'];
 
 query = 'SELECT r.highway, COUNT(*) AS highwayCount FROM planet_osm_line AS r GROUP BY r.highway ORDER BY highwayCount DESC;';
-highwayCount =  getFileOrQuery(fileName, query);
+highwayCount =  getFileOrQuery(fileName, DBase, query);

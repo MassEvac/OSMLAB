@@ -18,11 +18,13 @@ function [nodes, HAM, DAM, OAM] = getAM(place,simple)
 % EXAMPLE:
 %           [nodes, HAM, DAM, OAM] = getAM('Bristol')
 
+load('global');
+
 if ~exist('simple','var')
     simple = false;
 end
 
-fp = ['./cache/highway/' place '/'];
+fp = ['./cache/highway/' DBase '/' place '/'];
 fNodes = [fp 'nodes.mat'];
 fHAM = [fp 'HAM.mat'];
 fDAM = [fp 'DAM.mat'];
@@ -57,9 +59,9 @@ else
 
     nR = length(highwayResult);
     step = 'Converting result to AM...';
-    h = waitbar(0,step);
     for i = 1:nR
 
+	% If the index of the line segment is 1, start a new road
         if (highwayResult(i,3) == 1)
             thisNode = 0;
         else
@@ -79,11 +81,13 @@ else
                 OAM(thisNode,thatNode) = 1;
             end
         end
-        
-        completed = i/nR;
-        waitbar(completed,h,[step num2str(completed*100) '%']);        
+
+        if mod(i,100) == 0 || mod(i,nR) == 0
+            completed = i/nR;            
+            progress = [num2str(i) ' of ' num2str(nR) ' complete.'];
+            disp([place ': ' step progress]);
+        end
     end
-    close(h);
     
     save(fNodes,'nodes');
     save(fHAM,'HAM');
@@ -93,17 +97,17 @@ else
 end
 
 if (simple)    
-    fNodes = [fp 'nodesSimple.mat'];
-    fHAM = [fp 'HAMsimple.mat'];
-    fDAM = [fp 'DAMsimple.mat'];
-    fOAM = [fp 'OAMsimple.mat'];
+    fNodes = [fp 'snodes.mat'];
+    fHAM = [fp 'sHAM.mat'];
+    fDAM = [fp 'sDAM.mat'];
+    fOAM = [fp 'sOAM.mat'];
     if exist(fNodes,'file')&&exist(fHAM,'file')&&exist(fDAM,'file')&&exist(fOAM,'file')
         load(fNodes,'nodes');
         load(fHAM,'HAM');
         load(fDAM,'DAM');
         load(fOAM,'OAM');
     else
-        [nodes,HAM,DAM,OAM]=simplifyAM(nodes,HAM,DAM,OAM);
+        [nodes,HAM,DAM,OAM]=simplifyAM(nodes,HAM,DAM,OAM,place);
         save(fNodes,'nodes');
         save(fHAM,'HAM');
         save(fDAM,'DAM');

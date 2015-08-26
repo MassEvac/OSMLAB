@@ -31,9 +31,11 @@ function [TR,MF,SP,SPlist,ODnodes,HAM,DAM,TAM,nodes] = getTrips(place,gridSize,s
 %           assumption that 25 cars/minutes can travel on a lane needs to
 %           be examined and verified as they were purely assumed.
 
+load('global');
+
 configuration = [num2str(gridSize) '-' num2str(sigma)];
 
-fp = ['./cache/highway/' place '/'];
+fp = ['./cache/highway/' DBase '/' place '/'];
 fSP = [fp 'SP-' configuration '.mat'];
 fSPlist = [fp 'SPlist-' configuration '.mat'];
 fOD = [fp 'OD-' configuration '.mat'];
@@ -62,13 +64,7 @@ disp(step);
 C = 25;
 
 % Undirected network
-HAM(HAM==1)=C*3;
-HAM(HAM==2)=C*2;
-HAM(HAM==3)=C*1;
-HAM(HAM==4)=C*0.8;
-HAM(HAM==5)=C*0.6;
-HAM(HAM==6)=C*0.4;
-HAM(HAM==7)=C*0.2;
+CAM = getCAM(HAM, C);
 toc;
 
 tic;
@@ -180,7 +176,7 @@ else
         save(stateFile);   
         for j = 1:nOD
             if (OD(i) ~= OD(j))
-                MF(i,j)=max_flow(HAM,OD(i),OD(j));
+                MF(i,j)=max_flow(CAM,OD(i),OD(j));
                 completed = (i-1+j/nOD)/nOD;
                 waitbar(completed,h,[step num2str(completed*100) '%']);
             end

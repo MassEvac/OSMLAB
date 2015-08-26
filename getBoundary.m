@@ -12,15 +12,17 @@ function [result] = getBoundary(place)
 %           (g.p).path[1] is the index of polygon when there are multiple
 %           (g.p).path[2] is the index of coordinate within each polygon
 
+load('global');
+
 query = ['SELECT ST_X((g.p).geom), ST_Y((g.p).geom), (g.p).path[1], (g.p).path[2] '...
         'FROM '...
         '(SELECT ST_DumpPoints(f.way) AS p FROM '...
-        ' (SELECT way FROM planet_osm_polygon WHERE name = ''' place ''' ORDER BY ST_NPoints(way) DESC LIMIT 1) AS f) AS g'];
+        ' (SELECT way FROM planet_osm_polygon WHERE name = ''' place ''' AND boundary=''administrative'' ORDER BY ST_area(way) DESC LIMIT 1) AS f) AS g'];
 
-filePath = './cache/boundary/';
+rootPath = ['./cache/boundary/' DBase '/'];
 
-if ~exist(filePath,'file')
-    mkdir(filePath);
+if ~exist(rootPath,'file')
+    mkdir(rootPath);
 end
     
-result = getFileOrQuery([filePath place], query);
+result = getFileOrQuery([rootPath place], DBase, query);

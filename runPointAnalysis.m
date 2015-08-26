@@ -46,7 +46,7 @@ crop = 1:20;
 % showGridSizeVsPopulation(places, gridSizes, sigma, saveFigures);
 % showGridSizeVsCells(places,gridSizes,saveFigures);
 %
-getPopulationAmenityTable(amenityTags,places,gridSize,sigma,texFile);
+% getPopulationAmenityTable(amenityTags,places,gridSize,sigma,texFile);
 % showAmenities(amenityTags(1:2),place, saveFigures);
 % showAmenityPopulationScatter(amenityTag,place, gridSize, sigma, saveFigures);
 % 

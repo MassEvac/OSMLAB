@@ -1,0 +1,70 @@
+Aberdeen City
+Bath & North East Somerset
+Birmingham
+Blackpool
+Bradford
+Brighton
+Cambridge
+Canterbury
+Cardiff
+Carlisle
+City of Chester
+Chichester
+City of Bristol
+City of Edinburgh
+Coventry
+Derby
+Dundee City
+County Durham
+Ely
+Exeter District
+Glasgow City
+Gloucester
+Herefordshire
+Kingston upon Hull
+Lancaster
+Leeds
+Leicester
+Lichfield
+Lincoln
+Liverpool
+City of London
+Manchester
+Newcastle upon Tyne
+Newport
+Norwich
+Nottingham
+Oxford
+Peterborough
+Plymouth
+Portsmouth
+Salford
+Salisbury CP
+Sheffield
+Southampton
+St Albans
+Stirling Council
+Stoke-on-Trent
+Sunderland
+Swansea
+Truro
+Wakefield
+Wells CP
+City of Westminster
+Winchester
+Wolverhampton
+Worcester
+York
+Basildon
+Bracknell Forest
+Corby
+Crawley
+Harlow
+Welwyn Hatfield
+Dacorum
+Milton Keynes
+Northampton
+Redditch
+Stevenage
+Telford and Wrekin
+Warrington

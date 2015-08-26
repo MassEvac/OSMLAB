@@ -147,10 +147,11 @@ if vWeighted
   %--------------------
   if exist('vrtxCol','var')
     colormap(vrtxMap);
-    hV=scatter(coord(qq,1),coord(qq,2),vWt,vrtxCol,'filled');
+    hV=scatter(coord(qq,1),coord(qq,2),vWt(qq),vrtxCol,'filled');
     colorbar;
   else
-    hV=scatter(coord(qq,1),coord(qq,2),vWt,'filled','MarkerFaceColor',[1,0.5,0.2]);
+    qq
+    hV=scatter(coord(qq,1),coord(qq,2),vWt(qq),'filled','MarkerFaceColor',[1,0.5,0.2]);
   end
   
 else

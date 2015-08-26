@@ -8,7 +8,14 @@ function [amenityCount] = getAmenityCountTotal
 % EXAMPLE:
 %           [result] = getAmenityCountTotal
 
-fileName = 'cache/count/amenityCount';
+load('global');
+
+filePath = ['./cache/count/' DBase '/'];
+
+if ~exist(filePath,'file')
+    mkdir(filePath);
+end
 
 query = 'SELECT p.amenity, COUNT(*) AS amenityCount from planet_osm_point AS p GROUP BY p.amenity ORDER BY amenityCount DESC';
-amenityCount =  getFileOrQuery(fileName,query);
+
+amenityCount =  getFileOrQuery([fileName 'amenityCount'],query);

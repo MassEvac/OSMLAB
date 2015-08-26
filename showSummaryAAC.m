@@ -1,4 +1,4 @@
-function showSummaryAAC(amenityTags,places,gridSizes,sigmas,saveFigures)
+%function showSummaryAAC(amenityTags,places,gridSizes,sigmas,saveFigures)
 % Shows the correlation of different granularities of gridSizes and sigmas for many places and amenities
 %
 % INPUT:

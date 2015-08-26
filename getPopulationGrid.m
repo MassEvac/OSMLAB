@@ -18,7 +18,7 @@ function [populationGrid] = getPopulationGrid(place,gridSize,sigma,averageArea,i
 
 if ~exist('averageArea','var')
     averageArea = true;
-end     
+end
 
 if ~exist('interpolationMethod','var')
     interpolationMethod = 'bicubic';    
@@ -32,8 +32,9 @@ end
 
 population = getPopulation(place);
 
-% 2.5 arc minutes = 0.0416666667 degrees.
-unitCell = 0.0416666667;
+% 2.5 arc minutes = 2.5/60 = 0.0416666667 degrees.
+% 30 arc seconds = 30/60/60 = 0.0416666667 degrees.
+unitCell = 0.00833333333333;
 
 % Work out the extent
 % Includes an extra unitCell/2 because the measure is from centre to centre

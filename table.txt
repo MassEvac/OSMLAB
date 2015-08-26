@@ -1,0 +1,6 @@
+\begin{tabular}{c|cccc}
+& population & bar & hospital & atm \\
+\hline
+London & 8555606 & 300 & 76 & 642 \\
+Bristol & 253664 & 28 & 5 & 47 \\
+\end{tabular}

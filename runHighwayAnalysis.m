@@ -15,9 +15,14 @@
 % OUTPUT:
 %           Several depending on what is required
 
-cd ~/Dropbox/Coding/MATLAB/OSM;
+cd ~/Dropbox/OSM;
 
-load('scope/topPlaces.mat','places');
+%% Load the list of cities
+fid = fopen('cities.txt');
+allData = textscan(fid,'%s','Delimiter','\n');
+places=allData{1};
+
+%load('scope/topPlaces.mat','places');
 
 place = places{12};
 gridSize = 1000;
@@ -29,13 +34,19 @@ saveFigures = true;
 % showPopulationOnHighway(place,gridSize,sigma,saveFigures);
 % showHighway(place,saveFigures);
 
+%% Create a working pool
+if matlabpool('size') == 0 
+    matlabpool;
+end
 
-for i = 1:length(places)
+parfor i = 1:length(places)
     % showTrips(places{i},gridSize,sigma,saveFigures);
+    close all hidden;    
     try
-        getTrips(places{i},gridSize,sigma);
+        getAM(places{i},true);
+        %getTrips(places{i},gridSize,sigma);
     catch err
-        %
+        disp([places{i} ': ' err.message]);
     end
 end
 

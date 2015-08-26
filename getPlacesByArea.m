@@ -8,13 +8,16 @@ function [placesByArea] = getPlacesByArea
 % EXAMPLE:
 %           [placesByArea] = getPlacesByArea
 
-filePath = './cache/area/';
+load('global');
 
-if ~exist(filePath,'file')
-    mkdir(filePath);
+rootPath = ['./cache/area/' DBase '/list'];
+
+if ~exist(rootPath,'file')
+    mkdir(rootPath);
 end
 
-fileName = [filePath 'placesByAreaInMetricBD'];
+fileName = [rootPath 'placesByAreaInMetricAdministrative'];
 
-query = 'SELECT p.name, ST_Area(p.way,false) AS area FROM planet_osm_polygon AS p WHERE p.name <> '''' ORDER BY area DESC;';
-placesByArea =  getFileOrQuery(fileName, query,'nocell2mat');
+
+query = 'SELECT p.osm_id, p.name, p.admin_level, sum(ST_Area(p.way,false)) AS area FROM planet_osm_polygon AS p WHERE boundary=''administrative'' GROUP BY p.osm_id, p.name, p.admin_level ORDER BY area DESC;';
+placesByArea =  getFileOrQuery(fileName, DBase, query,'nocell2mat');

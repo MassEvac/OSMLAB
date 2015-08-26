@@ -10,13 +10,21 @@ function [amenityCount] = getAmenityCountByPlace(amenityTags,places)
 %           [result] = getAmenityCountByPlace({'bar'}, {'Bristol'})
 %
 
+load('global');
+
+rootPath = ['./cache/count/' DBase '/'];
+
+if ~exist(rootPath,'file')
+    mkdir(rootPath);
+end
+
 a = length(amenityTags);
 p = length(places);
 
-fileName = ['cache/count/amenityCountByPlace-' num2str(p) '-' num2str(a)];
+fileName = [rootPath '/amenityCountByPlace-' num2str(p) '-' num2str(a)];
 
 query = ['SELECT DISTINCT p.amenity,q.name, COUNT(*) AS amenityCount FROM planet_osm_point AS p, planet_osm_polygon AS q WHERE q.name IN (''' strjoin(places,''',''') ''') AND p.amenity IN (''' strjoin(amenityTags,''',''') ''') AND ST_Intersects(p.way, q.way) GROUP BY p.amenity,q.name ORDER BY q.name, amenityCount DESC'];
-result = getFileOrQuery(fileName,query);
+result = getFileOrQuery(fileName,DBase,query);
 
 amenityCount = zeros(p,a);
 

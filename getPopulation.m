@@ -13,17 +13,26 @@ function [result] = getPopulation(place)
 % EXAMPLE:
 %           [result] = getPopulation('Bristol')
 
-query = ['SELECT (ST_Raster2WorldCoordX(p.rast, x) + ST_ScaleX(rast) / 2) AS wx, (ST_Raster2WorldCoordY(p.rast,y) + ST_ScaleY(rast) / 2) AS wy, ST_Value(p.rast, x, y) as v '...
-        'FROM population AS p, '...
-        '(SELECT way FROM planet_osm_polygon WHERE name = ''' place ''' ORDER BY ST_NPoints(way) DESC LIMIT 1) AS f '...
-        'CROSS JOIN generate_series(1, 50) As x '...
-        'CROSS JOIN generate_series(1, 50) As y '...
-        'WHERE ST_Intersects(p.rast,f.way)'];  
+load('global');
 
-filePath = './cache/population/';
+table = 'population_grumpv1';
+
+query = ['SELECT ST_RasterToWorldCoordX(p.rast, x) AS wx, ST_RasterToWorldCoordY(p.rast,y) AS wy, ST_Value(p.rast, x, y) as v '...
+        'FROM ' table ' AS p, '...
+        '(SELECT way FROM planet_osm_polygon WHERE name = ''' place ''' AND boundary=''administrative'' ORDER BY ST_NPoints(way) DESC LIMIT 1) AS f '...
+        'CROSS JOIN generate_series(1, 100) As x '...
+        'CROSS JOIN generate_series(1, 100) As y '...
+        'WHERE ST_Intersects(p.rast,f.way)'];  
+filePath = ['./cache/' table '/'];
 
 if ~exist(filePath,'file')
     mkdir(filePath);
 end
-   
-result = getFileOrQuery([filePath place], query);
+
+rootPath = [filePath DBase '/']
+
+if ~exist(rootPath,'file')
+    mkdir(rootPath);
+end
+
+result = getFileOrQuery([rootPath place], DBase, query);
