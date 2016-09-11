@@ -16,6 +16,6 @@ if ~exist(filePath,'file')
     mkdir(filePath);
 end
 
-query = 'SELECT p.amenity, COUNT(*) AS amenityCount from planet_osm_point AS p GROUP BY p.amenity ORDER BY amenityCount DESC';
+query = 'SELECT p.amenity, COUNT(*) AS amenityCount FROM planet_osm_point AS p GROUP BY p.amenity ORDER BY amenityCount DESC';
 
-amenityCount =  getFileOrQuery([fileName 'amenityCount'],query);
+amenityCount =  getFileOrQuery([filePath 'amenityCount'],DBase,query,'nocell2mat');

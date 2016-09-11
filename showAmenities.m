@@ -46,7 +46,7 @@ for i = 1:length(amenityTags)
     plot(amenity(:,1),amenity(:,2),[colours{colourNumber} markers{markerNumber}]);
 end
 
-legend([place upper(strrep(amenityTags, '_', ' '))],'location','southeast');
+legend([place lower(strrep(amenityTags, '_', ' '))],'location','northwest');
 
 axis([min_lon max_lon min_lat max_lat]);
 xlabel('Longitude (degrees)');
@@ -55,5 +55,5 @@ ylabel('Latitude (degrees)');
 if saveFigures
     set(gcf,'Position', [0, 0, 800, 300]);
     set(gcf, 'Color', 'w');
-    export_fig(['./figures/point/plot-' strjoin(amenityTags,'-') '-' place '.pdf']);
+    export_fig(['./figures/point/plot-' strcat(amenityTags,'-') '-' place '.pdf']);
 end

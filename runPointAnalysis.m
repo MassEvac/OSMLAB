@@ -14,14 +14,14 @@
 % OUTPUT:
 %           Several depending on what is required
 
-cd ~/OSM;
+cd ~/Drive/OSM;
 
 populationWeighted = true;
 saveFigures = true;
 
 %
-load('scope/7Amenities.mat','amenityTags');
-load('scope/11Places.mat','places');
+load('scope/50Amenities.mat','amenityTags');
+load('scope/50Places.mat','places');
 
 % DO NOT CHANGE
 gridSizes = [100:100:4000];
@@ -42,7 +42,7 @@ texFile = 'table.tex';
 crop = 1:20;
 
 %% I have already talked about these in SPOI
-% showGridSizeVsTime(amenityTags, places, gridSizes, sigmas, saveFigures);
+showGridSizeVsTime(amenityTags, places, gridSizes, sigmas, saveFigures);
 % showGridSizeVsPopulation(places, gridSizes, sigma, saveFigures);
 % showGridSizeVsCells(places,gridSizes,saveFigures);
 %
